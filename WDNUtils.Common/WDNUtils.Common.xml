@@ -1,0 +1,172 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>WDNUtils.Common</name>
+    </assembly>
+    <members>
+        <member name="T:WDNUtils.Common.StringComparerEx">
+            <summary>
+            Extended string comparer
+            </summary>
+        </member>
+        <member name="P:WDNUtils.Common.StringComparerEx.ComparisonType">
+            <summary>
+            String comparison type.
+            </summary>
+        </member>
+        <member name="P:WDNUtils.Common.StringComparerEx.NullIsLower">
+            <summary>
+            Indicates if null precedes non-null values in the sort order.
+            </summary>
+        </member>
+        <member name="P:WDNUtils.Common.StringComparerEx.IsNull">
+            <summary>
+            Custom predicate to consider the values as null.
+            </summary>
+        </member>
+        <member name="M:WDNUtils.Common.StringComparerEx.#ctor(WDNUtils.Common.StringComparisonEx,System.Boolean,System.Func{System.String,System.Boolean})">
+            <summary>
+            Creates an instance of the string comparer
+            </summary>
+            <param name="comparisonType">Indicates if a case-insensitive comparison should be performed (default is Ordinal). WARNING: InvariantCulture should not be used in most cases; use Ordinal for application data, and Natural or CurrentCulture for user displayed data.</param>
+            <param name="nullIsLower">Indicates if null precedes non-null values in the sort order (default is true)</param>
+            <param name="isNull">Custom predicate to consider the values as null</param>
+        </member>
+        <member name="M:WDNUtils.Common.StringComparerEx.Compare(System.String,System.String)">
+            <summary>
+            Compares two strings
+            </summary>
+            <param name="v1">The first string to compare</param>
+            <param name="v2">The second string to compare</param>
+            <returns>Less than zero if v1 precedes v2 in the sort order. Zero v1 if occurs in the same position as v2 in the sort order. Greater than zero if v1 follows v2 in the sort order</returns>
+        </member>
+        <member name="M:WDNUtils.Common.StringComparerEx.Compare(System.String,System.String,WDNUtils.Common.StringComparisonEx,System.Boolean,System.Func{System.String,System.Boolean})">
+            <summary>
+            Compares two strings
+            </summary>
+            <param name="v1">The first string to compare</param>
+            <param name="v2">The second string to compare</param>
+            <param name="comparisonType">Indicates if a case-insensitive comparison should be performed (default is StringComparison.Ordinal). WARNING: InvariantCulture should not be used in most cases; use Ordinal for application data, and Natural or CurrentCulture for user displayed data.</param>
+            <param name="nullIsLower">Indicates if null precedes non-null values in the sort order (default is true)</param>
+            <param name="isNull">Custom predicate to consider the values as null</param>
+            <returns>Less than zero if v1 precedes v2 in the sort order. Zero v1 if occurs in the same position as v2 in the sort order. Greater than zero if v1 follows v2 in the sort order</returns>
+        </member>
+        <member name="M:WDNUtils.Common.StringComparerEx.NaturalStringCompare(System.String,System.String,System.Boolean)">
+            <summary>
+            Natural string comparison
+            </summary>
+            <param name="v1">The first string to compare</param>
+            <param name="v2">The second string to compare</param>
+            <param name="ignoreCase">Indicates if the case of the strings being compared should be ignored</param>
+            <returns>Less than zero if v1 precedes v2 in the sort order. Zero v1 if occurs in the same position as v2 in the sort order. Greater than zero if v1 follows v2 in the sort order</returns>
+        </member>
+        <member name="T:WDNUtils.Common.StringComparisonEx">
+            <summary>
+            Specifies the culture, case, and sort rules to be used by StringComparerEx.
+            </summary>
+        </member>
+        <member name="F:WDNUtils.Common.StringComparisonEx.CurrentCulture">
+            <summary>
+            Compare strings using culture-sensitive sort rules and the current culture.
+            </summary>
+        </member>
+        <member name="F:WDNUtils.Common.StringComparisonEx.CurrentCultureIgnoreCase">
+            <summary>
+            Compare strings using culture-sensitive sort rules, the current culture, and ignoring the case of the strings being compared.
+            </summary>
+        </member>
+        <member name="F:WDNUtils.Common.StringComparisonEx.InvariantCulture">
+            <summary>
+            Compare strings using culture-sensitive sort rules and the invariant culture.
+            </summary>
+        </member>
+        <member name="F:WDNUtils.Common.StringComparisonEx.InvariantCultureIgnoreCase">
+            <summary>
+            Compare strings using culture-sensitive sort rules, the invariant culture, and ignoring the case of the strings being compared.
+            </summary>
+        </member>
+        <member name="F:WDNUtils.Common.StringComparisonEx.Ordinal">
+            <summary>
+            Compare strings using ordinal (binary) sort rules.
+            </summary>
+        </member>
+        <member name="F:WDNUtils.Common.StringComparisonEx.OrdinalIgnoreCase">
+            <summary>
+            Compare strings using ordinal (binary) sort rules and ignoring the case of the strings being compared.
+            </summary>
+        </member>
+        <member name="F:WDNUtils.Common.StringComparisonEx.Natural">
+            <summary>
+            Compare strings using natural order (natural numbers in latin digits are parsed and compared), culture-sensitive sort rules, and the current culture.
+            </summary>
+        </member>
+        <member name="F:WDNUtils.Common.StringComparisonEx.NaturalIgnoreCase">
+            <summary>
+            Compare strings using natural order (natural numbers in latin digits are parsed and compared), culture-sensitive sort rules, the current culture, and ignoring the case of the strings being compared.
+            </summary>
+        </member>
+        <member name="T:WDNUtils.Common.StructComparer`1">
+            <summary>
+            Extended nullable struct comparer
+            </summary>
+        </member>
+        <member name="P:WDNUtils.Common.StructComparer`1.NullIsLower">
+            <summary>
+            Indicates if null precedes non-null values in the sort order
+            </summary>
+        </member>
+        <member name="P:WDNUtils.Common.StructComparer`1.IsNull">
+            <summary>
+            Custom predicate to consider the values as null
+            </summary>
+        </member>
+        <member name="M:WDNUtils.Common.StructComparer`1.#ctor(System.Boolean,System.Func{`0,System.Boolean})">
+            <summary>
+            Creates an instance of the struct comparer
+            </summary>
+            <param name="nullIsLower">Indicates if null precedes non-null values in the sort order (default is true)</param>
+            <param name="isNull">Custom predicate to consider the values as null</param>
+        </member>
+        <member name="M:WDNUtils.Common.StructComparer`1.Compare(System.Nullable{`0},System.Nullable{`0})">
+            <summary>
+            Compares two nullable structs
+            </summary>
+            <param name="v1">The first struct to compare</param>
+            <param name="v2">The second struct to compare</param>
+            <returns>Less than zero if v1 precedes v2 in the sort order. Zero v1 if occurs in the same position as v2 in the sort order. Greater than zero if v1 follows v2 in the sort order</returns>
+        </member>
+        <member name="M:WDNUtils.Common.StructComparer`1.Compare(`0,`0)">
+            <summary>
+            Compares two structs
+            </summary>
+            <param name="v1">The first struct to compare</param>
+            <param name="v2">The second struct to compare</param>
+            <returns>Less than zero if v1 precedes v2 in the sort order. Zero v1 if occurs in the same position as v2 in the sort order. Greater than zero if v1 follows v2 in the sort order</returns>
+        </member>
+        <member name="M:WDNUtils.Common.StructComparer`1.Compare(System.Nullable{`0},System.Nullable{`0},System.Boolean,System.Func{`0,System.Boolean})">
+            <summary>
+            Compares two nullable structs
+            </summary>
+            <param name="v1">The first struct to compare</param>
+            <param name="v2">The second struct to compare</param>
+            <param name="nullIsLower">Indicates if null precedes non-null values in the sort order (default is true)</param>
+            <param name="isNull">Custom predicate to consider the values as null</param>
+            <returns>Less than zero if v1 precedes v2 in the sort order. Zero v1 if occurs in the same position as v2 in the sort order. Greater than zero if v1 follows v2 in the sort order</returns>
+        </member>
+        <member name="T:WDNUtils.Common.StructComparer">
+            <summary>
+            Extended nullable struct comparer (non generic static class)
+            </summary>
+        </member>
+        <member name="M:WDNUtils.Common.StructComparer.Compare``1(System.Nullable{``0},System.Nullable{``0},System.Boolean,System.Func{``0,System.Boolean})">
+            <summary>
+            Compares two nullable structs
+            </summary>
+            <param name="v1">The first struct to compare</param>
+            <param name="v2">The second struct to compare</param>
+            <param name="nullIsLower">Indicates if null precedes non-null values in the sort order (default is true)</param>
+            <param name="isNull">Custom predicate to consider the values as null</param>
+            <returns>Less than zero if v1 precedes v2 in the sort order. Zero v1 if occurs in the same position as v2 in the sort order. Greater than zero if v1 follows v2 in the sort order</returns>
+        </member>
+    </members>
+</doc>
