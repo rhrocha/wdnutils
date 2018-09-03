@@ -122,8 +122,8 @@ namespace WDNUtils.Common
 
             while ((next1 < v1.Length) && (next2 < v2.Length))
             {
-                var isDigit1 = char.IsDigit(v1[next1]);
-                var isDigit2 = char.IsDigit(v2[next2]);
+                var isDigit1 = (v1[next1] >= '0') && (v1[next1] <= '9');
+                var isDigit2 = (v2[next2] >= '0') && (v2[next2] <= '9');
 
                 if (isDigit1 != isDigit2)
                 {
@@ -138,18 +138,21 @@ namespace WDNUtils.Common
                     var start2 = next2;
 
                     // Seek the end of the non-digit group (next1 will be at a digit char or the end of string)
-                    while ((++next1 < v1.Length) && (!char.IsDigit(v1[next1]))) { }
+                    while ((++next1 < v1.Length) && ((v1[next1] < '0') || (v1[next1] > '9'))) { }
 
                     // Seek the end of the non-digit group (next2 will be at a digit char or the end of string)
-                    while ((++next2 < v2.Length) && (!char.IsDigit(v2[next2]))) { }
+                    while ((++next2 < v2.Length) && ((v2[next2] < '0') || (v2[next2] > '9'))) { }
 
                     #endregion
 
                     #region Compare non-digit group
 
                     var result = string.Compare(
-                        strA: v1.Substring(start1, next1 - start1),
-                        strB: v2.Substring(start2, next2 - start2),
+                        strA: v1,
+                        indexA: start1,
+                        strB: v2,
+                        indexB: start2,
+                        length: Math.Max(next1 - start1, next2 - start2),
                         comparisonType: comparisonType);
 
                     if (result != 0)
@@ -166,10 +169,10 @@ namespace WDNUtils.Common
                     var start2 = next2;
 
                     // Seek the end of the digit group (next1 will be at a non-digit char or the end of string)
-                    while ((++next1 < v1.Length) && (char.IsDigit(v1[next1]))) { }
+                    while ((++next1 < v1.Length) && (v1[next1] >= '0') && (v1[next1] <= '9')) { }
 
                     // Seek the end of the digit group (next2 will be at a non-digit char or the end of string)
-                    while ((++next2 < v2.Length) && (char.IsDigit(v2[next2]))) { }
+                    while ((++next2 < v2.Length) && (v2[next2] >= '0') && (v2[next2] <= '9')) { }
 
                     #endregion
 
@@ -177,10 +180,13 @@ namespace WDNUtils.Common
 
                     var count1 = next1 - start1; // Digit group length in v1
                     var count2 = next2 - start2; // Digit group length in v2
+                    int countMin;
 
                     if (count1 > count2)
                     {
-                        var last = next1 - count2;
+                        countMin = count2;
+
+                        var last = next1 - countMin;
 
                         for (int digit = start1; digit < last; digit++)
                         {
@@ -193,12 +199,12 @@ namespace WDNUtils.Common
                             // Only the first difference of leading zeros is stored, to be used if remaining contents of the strings are equal
                             leadingZerosDiff = 1;
                         }
-
-                        count1 = count2;
                     }
                     else if (count2 > count1)
                     {
-                        var last = next2 - count1;
+                        countMin = count1;
+
+                        var last = next2 - countMin;
 
                         for (int digit = start2; digit < last; digit++)
                         {
@@ -211,28 +217,26 @@ namespace WDNUtils.Common
                             // Only the first difference of leading zeros is stored, to be used if remaining contents of the strings are equal
                             leadingZerosDiff = -1;
                         }
-
-                        count2 = count1;
+                    }
+                    else // count1 == count2
+                    {
+                        countMin = count1;
                     }
 
                     #endregion
 
-                    #region Compare digits in both strings
+                    #region Compare latin digits in both strings
 
-                    for (int digit1 = next1 - count1, digit2 = next2 - count2 /* count1 == count2 */; digit1 < next1; digit1++, digit2++)
-                    {
-                        var c1 = v1[digit1];
-                        var c2 = v2[digit2];
+                    var result = string.Compare(
+                        strA: v1,
+                        indexA: next1 - countMin,
+                        strB: v2,
+                        indexB: next2 - countMin,
+                        length: countMin,
+                        comparisonType: StringComparison.Ordinal);
 
-                        if (c1 > c2)
-                        {
-                            return 1;
-                        }
-                        else if (c1 < c2)
-                        {
-                            return -1;
-                        }
-                    }
+                    if (result != 0)
+                        return result;
 
                     #endregion
                 }
