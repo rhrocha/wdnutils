@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using System.Runtime.ExceptionServices;
 using System.Runtime.Serialization;
 using System.Threading;
@@ -164,7 +165,17 @@ namespace WDNUtils.Common
         /// Default constructor for generic parameter type
         /// </summary>
         protected static readonly Func<Task<T>> DefaultCreateValue =
-                () => Task.FromResult<T>((T)Activator.CreateInstance(typeof(T)));
+            () =>
+            {
+                try
+                {
+                    return Task.FromResult<T>((T)Activator.CreateInstance(typeof(T)));
+                }
+                catch (TargetInvocationException ex)
+                {
+                    throw ex.InnerException;
+                }
+            };
 
         #endregion
 
