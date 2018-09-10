@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace WDNUtils.Common.Test
 {
@@ -9,22 +10,26 @@ namespace WDNUtils.Common.Test
     public class StructComparerTest
     {
         [TestMethod]
-        public void TestStructComparer()
+        public async Task TestStructComparer()
         {
-            Test<long>(long.MinValue, long.MaxValue, 0, val => -val, 1, 5, 10, 50, 100);
-            Test<int>(int.MinValue, int.MaxValue, 0, val => -val, 1, 5, 10, 50, 100);
-            Test<short>(short.MinValue, short.MaxValue, 0, val => (short)-val, 1, 5, 10, 50, 100);
-            Test<sbyte>(sbyte.MinValue, sbyte.MaxValue, 0, val => (sbyte)-val, 1, 5, 10, 50, 100);
-            Test<ulong>(ulong.MinValue, ulong.MaxValue, 0, null, 1, 5, 10, 50, 100);
-            Test<uint>(uint.MinValue, uint.MaxValue, 0, null, 1, 5, 10, 50, 100);
-            Test<ushort>(ushort.MinValue, ushort.MaxValue, 0, null, 1, 5, 10, 50, 100);
-            Test<byte>(byte.MinValue, byte.MaxValue, 0, null, 1, 5, 10, 50, 100);
-            Test<decimal>(decimal.MinValue, decimal.MaxValue, 0, val => -val, 1, 5, 10, 50, 100);
-            Test<double>(double.MinValue, double.MaxValue, 0, val => -val, 1, 5, 10, 50, 100);
-            Test<float>(float.MinValue, float.MaxValue, 0, val => -val, 1, 5, 10, 50, 100);
-            Test<char>(char.MinValue, char.MaxValue, '\0', null, '0', 'A', 'Z', 'a', 'z');
-            Test<DateTime>(DateTime.MinValue, DateTime.MaxValue, new DateTime(0), null, new DateTime(1990, 1, 1), new DateTime(2012, 2, 29), new DateTime(2012, 12, 31), new DateTime(2999, 12, 31));
-            Test<TimeSpan>(TimeSpan.MinValue, TimeSpan.MaxValue, TimeSpan.Zero, val => val.Negate(), TimeSpan.FromMilliseconds(100), TimeSpan.FromMinutes(1), TimeSpan.FromHours(1), TimeSpan.FromDays(366));
+            var taskList = new List<Task>();
+
+            taskList.Add(Task.Run(() => Test<long>(long.MinValue, long.MaxValue, 0, val => -val, 1, 5, 10, 50, 100)));
+            taskList.Add(Task.Run(() => Test<int>(int.MinValue, int.MaxValue, 0, val => -val, 1, 5, 10, 50, 100)));
+            taskList.Add(Task.Run(() => Test<short>(short.MinValue, short.MaxValue, 0, val => (short)-val, 1, 5, 10, 50, 100)));
+            taskList.Add(Task.Run(() => Test<sbyte>(sbyte.MinValue, sbyte.MaxValue, 0, val => (sbyte)-val, 1, 5, 10, 50, 100)));
+            taskList.Add(Task.Run(() => Test<ulong>(ulong.MinValue, ulong.MaxValue, 0, null, 1, 5, 10, 50, 100)));
+            taskList.Add(Task.Run(() => Test<uint>(uint.MinValue, uint.MaxValue, 0, null, 1, 5, 10, 50, 100)));
+            taskList.Add(Task.Run(() => Test<ushort>(ushort.MinValue, ushort.MaxValue, 0, null, 1, 5, 10, 50, 100)));
+            taskList.Add(Task.Run(() => Test<byte>(byte.MinValue, byte.MaxValue, 0, null, 1, 5, 10, 50, 100)));
+            taskList.Add(Task.Run(() => Test<decimal>(decimal.MinValue, decimal.MaxValue, 0, val => -val, 1, 5, 10, 50, 100)));
+            taskList.Add(Task.Run(() => Test<double>(double.MinValue, double.MaxValue, 0, val => -val, 1, 5, 10, 50, 100)));
+            taskList.Add(Task.Run(() => Test<float>(float.MinValue, float.MaxValue, 0, val => -val, 1, 5, 10, 50, 100)));
+            taskList.Add(Task.Run(() => Test<char>(char.MinValue, char.MaxValue, '\0', null, '0', 'A', 'Z', 'a', 'z')));
+            taskList.Add(Task.Run(() => Test<DateTime>(DateTime.MinValue, DateTime.MaxValue, new DateTime(0), null, new DateTime(1990, 1, 1), new DateTime(2012, 2, 29), new DateTime(2012, 12, 31), new DateTime(2999, 12, 31))));
+            taskList.Add(Task.Run(() => Test<TimeSpan>(TimeSpan.MinValue, TimeSpan.MaxValue, TimeSpan.Zero, val => val.Negate(), TimeSpan.FromMilliseconds(100), TimeSpan.FromMinutes(1), TimeSpan.FromHours(1), TimeSpan.FromDays(366))));
+
+            await Task.WhenAll(taskList);
         }
 
         public void Test<T>(T minValue, T maxValue, T zero, Func<T, T> negative, params T[] valueList) where T : struct, IComparable<T>
