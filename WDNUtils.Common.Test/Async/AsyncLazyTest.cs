@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -11,192 +12,88 @@ namespace WDNUtils.Common.Test
         [TestMethod]
         public async Task TestAsyncLazyConcurrency()
         {
-            await AsyncLazyTester.TestConcurrent(mode: LazyThreadSafetyMode.None, keepValue: false);
-            await AsyncLazyTester.TestConcurrent(mode: LazyThreadSafetyMode.PublicationOnly, keepValue: true);
-            await AsyncLazyTester.TestConcurrent(mode: LazyThreadSafetyMode.ExecutionAndPublication, keepValue: true);
+            var test1 = new AsyncLazyConcurrentTester().Test(mode: LazyThreadSafetyMode.None, keepValue: false);
+            var test2 = new AsyncLazyConcurrentTester().Test(mode: LazyThreadSafetyMode.PublicationOnly, keepValue: true);
+            var test3 = new AsyncLazyConcurrentTester().Test(mode: LazyThreadSafetyMode.ExecutionAndPublication, keepValue: true);
+
+            await Task.WhenAll(test1, test2, test3);
         }
 
         [TestMethod]
-        public async Task TestAsyncLazyModes()
+        public async Task TestAsyncLazyNormal()
         {
-            #region LazyThreadSafetyMode.None
+            var modeList = (LazyThreadSafetyMode[])Enum.GetValues(typeof(LazyThreadSafetyMode));
+            var taskList = new List<Task>();
 
-            // Recursion is always blocked, exceptions are captured by default for custom value factory only
+            foreach (var mode in modeList)
+            {
+                // Default constructor
 
-            // Normal - Default constructor
+                taskList.Add(new AsyncLazyNormalTester().Test(customFactory: false, captureException: null, mode: mode));
+                taskList.Add(new AsyncLazyNormalTester().Test(customFactory: false, captureException: false, mode: mode));
+                taskList.Add(new AsyncLazyNormalTester().Test(customFactory: false, captureException: true, mode: mode));
 
-            await AsyncLazyTester.Test(customFactory: false, recursive: false, throwException: false, captureException: null, mode: LazyThreadSafetyMode.None, expectedException1: null, expectedException2: null);
-            await AsyncLazyTester.Test(customFactory: false, recursive: false, throwException: false, captureException: false, mode: LazyThreadSafetyMode.None, expectedException1: null, expectedException2: null);
-            await AsyncLazyTester.Test(customFactory: false, recursive: false, throwException: false, captureException: true, mode: LazyThreadSafetyMode.None, expectedException1: null, expectedException2: null);
+                // Custom value factory
 
-            // Normal - Custom value factory
+                taskList.Add(new AsyncLazyNormalTester().Test(customFactory: true, captureException: null, mode: mode));
+                taskList.Add(new AsyncLazyNormalTester().Test(customFactory: true, captureException: false, mode: mode));
+                taskList.Add(new AsyncLazyNormalTester().Test(customFactory: true, captureException: true, mode: mode));
+            }
 
-            await AsyncLazyTester.Test(customFactory: true, recursive: false, throwException: false, captureException: null, mode: LazyThreadSafetyMode.None, expectedException1: null, expectedException2: null);
-            await AsyncLazyTester.Test(customFactory: true, recursive: false, throwException: false, captureException: false, mode: LazyThreadSafetyMode.None, expectedException1: null, expectedException2: null);
-            await AsyncLazyTester.Test(customFactory: true, recursive: false, throwException: false, captureException: true, mode: LazyThreadSafetyMode.None, expectedException1: null, expectedException2: null);
+            await Task.WhenAll(taskList);
+        }
 
-            // Throw exception - Default constructor
+        [TestMethod]
+        public async Task TestAsyncLazyException()
+        {
+            var modeList = (LazyThreadSafetyMode[])Enum.GetValues(typeof(LazyThreadSafetyMode));
 
-            await AsyncLazyTester.Test(customFactory: false, recursive: false, throwException: true, captureException: null, mode: LazyThreadSafetyMode.None, expectedException1: typeof(AssertFailedException), expectedException2: null);
-            await AsyncLazyTester.Test(customFactory: false, recursive: false, throwException: true, captureException: false, mode: LazyThreadSafetyMode.None, expectedException1: typeof(AssertFailedException), expectedException2: null);
-            await AsyncLazyTester.Test(customFactory: false, recursive: false, throwException: true, captureException: true, mode: LazyThreadSafetyMode.None, expectedException1: typeof(AssertFailedException), expectedException2: typeof(AssertFailedException));
+            foreach (var mode in modeList)
+            {
+                // Default constructor
 
-            // Throw exception - Custom value factory
+                await AsyncLazyExceptionTester.Test(customFactory: false, captureException: null, mode: mode, expectedException1: typeof(AssertFailedException), expectedException2: null);
+                await AsyncLazyExceptionTester.Test(customFactory: false, captureException: false, mode: mode, expectedException1: typeof(AssertFailedException), expectedException2: null);
+                await AsyncLazyExceptionTester.Test(customFactory: false, captureException: true, mode: mode, expectedException1: typeof(AssertFailedException), expectedException2: typeof(AssertFailedException));
 
-            await AsyncLazyTester.Test(customFactory: true, recursive: false, throwException: true, captureException: null, mode: LazyThreadSafetyMode.None, expectedException1: typeof(AssertFailedException), expectedException2: typeof(AssertFailedException));
-            await AsyncLazyTester.Test(customFactory: true, recursive: false, throwException: true, captureException: false, mode: LazyThreadSafetyMode.None, expectedException1: typeof(AssertFailedException), expectedException2: null);
-            await AsyncLazyTester.Test(customFactory: true, recursive: false, throwException: true, captureException: true, mode: LazyThreadSafetyMode.None, expectedException1: typeof(AssertFailedException), expectedException2: typeof(AssertFailedException));
+                // Custom value factory
 
-            // Recursive - Default constructor
+                await AsyncLazyExceptionTester.Test(customFactory: true, captureException: null, mode: mode, expectedException1: typeof(AssertFailedException), expectedException2: (mode == LazyThreadSafetyMode.PublicationOnly) ? null : typeof(AssertFailedException));
+                await AsyncLazyExceptionTester.Test(customFactory: true, captureException: false, mode: mode, expectedException1: typeof(AssertFailedException), expectedException2: null);
+                await AsyncLazyExceptionTester.Test(customFactory: true, captureException: true, mode: mode, expectedException1: typeof(AssertFailedException), expectedException2: typeof(AssertFailedException));
+            }
+        }
 
-            await AsyncLazyTester.Test(customFactory: false, recursive: true, throwException: false, captureException: null, mode: LazyThreadSafetyMode.None, expectedException1: typeof(InvalidOperationException), expectedException2: null);
-            await AsyncLazyTester.Test(customFactory: false, recursive: true, throwException: false, captureException: false, mode: LazyThreadSafetyMode.None, expectedException1: typeof(InvalidOperationException), expectedException2: null);
-            await AsyncLazyTester.Test(customFactory: false, recursive: true, throwException: false, captureException: true, mode: LazyThreadSafetyMode.None, expectedException1: typeof(InvalidOperationException), expectedException2: typeof(InvalidOperationException));
+        [TestMethod]
+        public async Task TestAsyncLazyRecursive()
+        {
+            var modeList = (LazyThreadSafetyMode[])Enum.GetValues(typeof(LazyThreadSafetyMode));
 
-            // Recursive - Custom value factory
+            foreach (var mode in modeList)
+            {
+                // Default constructor
 
-            await AsyncLazyTester.Test(customFactory: true, recursive: true, throwException: false, captureException: null, mode: LazyThreadSafetyMode.None, expectedException1: typeof(InvalidOperationException), expectedException2: typeof(InvalidOperationException));
-            await AsyncLazyTester.Test(customFactory: true, recursive: true, throwException: false, captureException: false, mode: LazyThreadSafetyMode.None, expectedException1: typeof(InvalidOperationException), expectedException2: null);
-            await AsyncLazyTester.Test(customFactory: true, recursive: true, throwException: false, captureException: true, mode: LazyThreadSafetyMode.None, expectedException1: typeof(InvalidOperationException), expectedException2: typeof(InvalidOperationException));
+                await AsyncLazyRecursiveTester.Test(customFactory: false, captureException: null, mode: mode, expectedException1: (mode == LazyThreadSafetyMode.PublicationOnly) ? null : typeof(InvalidOperationException), expectedException2: null);
+                await AsyncLazyRecursiveTester.Test(customFactory: false, captureException: false, mode: mode, expectedException1: (mode == LazyThreadSafetyMode.PublicationOnly) ? null : typeof(InvalidOperationException), expectedException2: null);
+                await AsyncLazyRecursiveTester.Test(customFactory: false, captureException: true, mode: mode, expectedException1: (mode == LazyThreadSafetyMode.PublicationOnly) ? null : typeof(InvalidOperationException), expectedException2: (mode == LazyThreadSafetyMode.PublicationOnly) ? null : typeof(InvalidOperationException));
 
-            #endregion
+                // Custom value factory
 
-            #region LazyThreadSafetyMode.PublicationOnly
-
-            // Recursion is not blocked, exceptions are not captured by default
-
-            // Normal - Default constructor
-
-            await AsyncLazyTester.Test(customFactory: false, recursive: false, throwException: false, captureException: null, mode: LazyThreadSafetyMode.PublicationOnly, expectedException1: null, expectedException2: null);
-            await AsyncLazyTester.Test(customFactory: false, recursive: false, throwException: false, captureException: false, mode: LazyThreadSafetyMode.PublicationOnly, expectedException1: null, expectedException2: null);
-            await AsyncLazyTester.Test(customFactory: false, recursive: false, throwException: false, captureException: true, mode: LazyThreadSafetyMode.PublicationOnly, expectedException1: null, expectedException2: null);
-
-            // Normal - Custom value factory
-
-            await AsyncLazyTester.Test(customFactory: true, recursive: false, throwException: false, captureException: null, mode: LazyThreadSafetyMode.PublicationOnly, expectedException1: null, expectedException2: null);
-            await AsyncLazyTester.Test(customFactory: true, recursive: false, throwException: false, captureException: false, mode: LazyThreadSafetyMode.PublicationOnly, expectedException1: null, expectedException2: null);
-            await AsyncLazyTester.Test(customFactory: true, recursive: false, throwException: false, captureException: true, mode: LazyThreadSafetyMode.PublicationOnly, expectedException1: null, expectedException2: null);
-
-            // Throw exception - Default constructor
-
-            await AsyncLazyTester.Test(customFactory: false, recursive: false, throwException: true, captureException: null, mode: LazyThreadSafetyMode.PublicationOnly, expectedException1: typeof(AssertFailedException), expectedException2: null);
-            await AsyncLazyTester.Test(customFactory: false, recursive: false, throwException: true, captureException: false, mode: LazyThreadSafetyMode.PublicationOnly, expectedException1: typeof(AssertFailedException), expectedException2: null);
-            await AsyncLazyTester.Test(customFactory: false, recursive: false, throwException: true, captureException: true, mode: LazyThreadSafetyMode.PublicationOnly, expectedException1: typeof(AssertFailedException), expectedException2: typeof(AssertFailedException));
-
-            // Throw exception - Custom value factory
-
-            await AsyncLazyTester.Test(customFactory: true, recursive: false, throwException: true, captureException: null, mode: LazyThreadSafetyMode.PublicationOnly, expectedException1: typeof(AssertFailedException), expectedException2: null);
-            await AsyncLazyTester.Test(customFactory: true, recursive: false, throwException: true, captureException: false, mode: LazyThreadSafetyMode.PublicationOnly, expectedException1: typeof(AssertFailedException), expectedException2: null);
-            await AsyncLazyTester.Test(customFactory: true, recursive: false, throwException: true, captureException: true, mode: LazyThreadSafetyMode.PublicationOnly, expectedException1: typeof(AssertFailedException), expectedException2: typeof(AssertFailedException));
-
-            // Recursive - Default constructor
-
-            await AsyncLazyTester.Test(customFactory: false, recursive: true, throwException: false, captureException: null, mode: LazyThreadSafetyMode.PublicationOnly, expectedException1: null, expectedException2: null);
-            await AsyncLazyTester.Test(customFactory: false, recursive: true, throwException: false, captureException: false, mode: LazyThreadSafetyMode.PublicationOnly, expectedException1: null, expectedException2: null);
-            await AsyncLazyTester.Test(customFactory: false, recursive: true, throwException: false, captureException: true, mode: LazyThreadSafetyMode.PublicationOnly, expectedException1: null, expectedException2: null);
-
-            // Recursive - Custom value factory
-
-            await AsyncLazyTester.Test(customFactory: true, recursive: true, throwException: false, captureException: null, mode: LazyThreadSafetyMode.PublicationOnly, expectedException1: null, expectedException2: null);
-            await AsyncLazyTester.Test(customFactory: true, recursive: true, throwException: false, captureException: false, mode: LazyThreadSafetyMode.PublicationOnly, expectedException1: null, expectedException2: null);
-            await AsyncLazyTester.Test(customFactory: true, recursive: true, throwException: false, captureException: true, mode: LazyThreadSafetyMode.PublicationOnly, expectedException1: null, expectedException2: null);
-
-            #endregion
-
-            #region LazyThreadSafetyMode.ExecutionAndPublication
-
-            // Recursion is always blocked, exceptions are captured by default for custom value factory only
-
-            // Normal - Default constructor
-
-            await AsyncLazyTester.Test(customFactory: false, recursive: false, throwException: false, captureException: null, mode: LazyThreadSafetyMode.ExecutionAndPublication, expectedException1: null, expectedException2: null);
-            await AsyncLazyTester.Test(customFactory: false, recursive: false, throwException: false, captureException: false, mode: LazyThreadSafetyMode.ExecutionAndPublication, expectedException1: null, expectedException2: null);
-            await AsyncLazyTester.Test(customFactory: false, recursive: false, throwException: false, captureException: true, mode: LazyThreadSafetyMode.ExecutionAndPublication, expectedException1: null, expectedException2: null);
-
-            // Normal - Custom value factory
-
-            await AsyncLazyTester.Test(customFactory: true, recursive: false, throwException: false, captureException: null, mode: LazyThreadSafetyMode.ExecutionAndPublication, expectedException1: null, expectedException2: null);
-            await AsyncLazyTester.Test(customFactory: true, recursive: false, throwException: false, captureException: false, mode: LazyThreadSafetyMode.ExecutionAndPublication, expectedException1: null, expectedException2: null);
-            await AsyncLazyTester.Test(customFactory: true, recursive: false, throwException: false, captureException: true, mode: LazyThreadSafetyMode.ExecutionAndPublication, expectedException1: null, expectedException2: null);
-
-            // Throw exception - Default constructor
-
-            await AsyncLazyTester.Test(customFactory: false, recursive: false, throwException: true, captureException: null, mode: LazyThreadSafetyMode.ExecutionAndPublication, expectedException1: typeof(AssertFailedException), expectedException2: null);
-            await AsyncLazyTester.Test(customFactory: false, recursive: false, throwException: true, captureException: false, mode: LazyThreadSafetyMode.ExecutionAndPublication, expectedException1: typeof(AssertFailedException), expectedException2: null);
-            await AsyncLazyTester.Test(customFactory: false, recursive: false, throwException: true, captureException: true, mode: LazyThreadSafetyMode.ExecutionAndPublication, expectedException1: typeof(AssertFailedException), expectedException2: typeof(AssertFailedException));
-
-            // Throw exception - Custom value factory
-
-            await AsyncLazyTester.Test(customFactory: true, recursive: false, throwException: true, captureException: null, mode: LazyThreadSafetyMode.ExecutionAndPublication, expectedException1: typeof(AssertFailedException), expectedException2: typeof(AssertFailedException));
-            await AsyncLazyTester.Test(customFactory: true, recursive: false, throwException: true, captureException: false, mode: LazyThreadSafetyMode.ExecutionAndPublication, expectedException1: typeof(AssertFailedException), expectedException2: null);
-            await AsyncLazyTester.Test(customFactory: true, recursive: false, throwException: true, captureException: true, mode: LazyThreadSafetyMode.ExecutionAndPublication, expectedException1: typeof(AssertFailedException), expectedException2: typeof(AssertFailedException));
-
-            // Recursive - Default constructor
-
-            await AsyncLazyTester.Test(customFactory: false, recursive: true, throwException: false, captureException: null, mode: LazyThreadSafetyMode.ExecutionAndPublication, expectedException1: typeof(InvalidOperationException), expectedException2: null);
-            await AsyncLazyTester.Test(customFactory: false, recursive: true, throwException: false, captureException: false, mode: LazyThreadSafetyMode.ExecutionAndPublication, expectedException1: typeof(InvalidOperationException), expectedException2: null);
-            await AsyncLazyTester.Test(customFactory: false, recursive: true, throwException: false, captureException: true, mode: LazyThreadSafetyMode.ExecutionAndPublication, expectedException1: typeof(InvalidOperationException), expectedException2: typeof(InvalidOperationException));
-
-            // Recursive - Custom value factory
-
-            await AsyncLazyTester.Test(customFactory: true, recursive: true, throwException: false, captureException: null, mode: LazyThreadSafetyMode.ExecutionAndPublication, expectedException1: typeof(InvalidOperationException), expectedException2: typeof(InvalidOperationException));
-            await AsyncLazyTester.Test(customFactory: true, recursive: true, throwException: false, captureException: false, mode: LazyThreadSafetyMode.ExecutionAndPublication, expectedException1: typeof(InvalidOperationException), expectedException2: null);
-            await AsyncLazyTester.Test(customFactory: true, recursive: true, throwException: false, captureException: true, mode: LazyThreadSafetyMode.ExecutionAndPublication, expectedException1: typeof(InvalidOperationException), expectedException2: typeof(InvalidOperationException));
-
-            #endregion
+                await AsyncLazyRecursiveTester.Test(customFactory: true, captureException: null, mode: mode, expectedException1: (mode == LazyThreadSafetyMode.PublicationOnly) ? null : typeof(InvalidOperationException), expectedException2: (mode == LazyThreadSafetyMode.PublicationOnly) ? null : typeof(InvalidOperationException));
+                await AsyncLazyRecursiveTester.Test(customFactory: true, captureException: false, mode: mode, expectedException1: (mode == LazyThreadSafetyMode.PublicationOnly) ? null : typeof(InvalidOperationException), expectedException2: null);
+                await AsyncLazyRecursiveTester.Test(customFactory: true, captureException: true, mode: mode, expectedException1: (mode == LazyThreadSafetyMode.PublicationOnly) ? null : typeof(InvalidOperationException), expectedException2: (mode == LazyThreadSafetyMode.PublicationOnly) ? null : typeof(InvalidOperationException));
+            }
         }
 
         #region Internal methods
 
-        private static class AsyncLazyTester
+        #region Concurrent
+
+        private class AsyncLazyConcurrentTester
         {
-            public static long RecursiveCounter { get; set; }
-            public static bool ThrowException { get; set; }
-            public static AsyncLazyEx<LazyValueClass> LazyValue { get; set; }
+            private bool IsSlowTask { get; set; }
 
-            public async static Task Test(bool customFactory, bool recursive, bool throwException, bool? captureException, LazyThreadSafetyMode mode, Type expectedException1, Type expectedException2)
-            {
-                // Each recursive iteration blocks a thread because LazyValueClass will call the method 'GetValueAsync' from
-                // the constructor using 'Task.Run(...).Wait()', this cannot be fixed because the constructor cannot be async.
-                // So running more recursive iterations will affect the performance of the unit test execution.
-                RecursiveCounter = (recursive) ? 1 : 0;
-
-                ThrowException = throwException;
-                LazyValue = null;
-
-                LazyValue = (!customFactory)
-                    ? new AsyncLazyEx<LazyValueClass>(mode: mode, captureException: captureException)
-                    : new AsyncLazyEx<LazyValueClass>(valueFactory: async () => await Task.FromResult(new LazyValueClass()), mode: mode, captureException: captureException);
-
-                try
-                {
-                    await LazyValue.GetValueAsync();
-
-                    Assert.IsNull(expectedException1);
-                }
-                catch (Exception ex)
-                {
-                    Assert.AreEqual(expectedException1, ex.GetType());
-                }
-
-                RecursiveCounter = 0;
-                ThrowException = false;
-
-                try
-                {
-                    await LazyValue.GetValueAsync();
-
-                    Assert.IsNull(expectedException2);
-                }
-                catch (Exception ex)
-                {
-                    Assert.AreEqual(expectedException2, ex.GetType());
-                }
-            }
-
-            public static bool IsSlowTask { get; set; }
-
-            public async static Task TestConcurrent(LazyThreadSafetyMode mode, bool keepValue)
+            public async Task Test(LazyThreadSafetyMode mode, bool keepValue)
             {
                 var lazyValue = new AsyncLazy<bool>(valueFactory: async () =>
                 {
@@ -234,26 +131,147 @@ namespace WDNUtils.Common.Test
             }
         }
 
-        private class LazyValueClass
-        {
-            public LazyValueClass()
-            {
-                if (AsyncLazyTester.ThrowException)
-                    throw new AssertFailedException();
+        #endregion
 
-                if (AsyncLazyTester.RecursiveCounter-- > 0)
+        #region Normal
+
+        private class AsyncLazyNormalTester
+        {
+            public async Task Test(bool customFactory, bool? captureException, LazyThreadSafetyMode mode)
+            {
+                var lazyValue = (!customFactory)
+                    ? new AsyncLazyEx<int>(mode: mode, captureException: captureException)
+                    : new AsyncLazyEx<int>(valueFactory: async () => await Task.FromResult<int>(default(int)), mode: mode, captureException: captureException);
+
+                try
                 {
-                    try
+                    Assert.AreEqual(default(int), await lazyValue.GetValueAsync());
+                }
+                catch (Exception ex)
+                {
+                    Assert.Fail($@"{ex.GetType().Name}: {ex.Message}");
+                }
+            }
+        }
+
+        #endregion
+
+        #region Exception
+
+        private static class AsyncLazyExceptionTester
+        {
+            private static bool ThrowException { get; set; }
+
+            public async static Task Test(bool customFactory, bool? captureException, LazyThreadSafetyMode mode, Type expectedException1, Type expectedException2)
+            {
+                ThrowException = true;
+
+                var lazyValue = (!customFactory)
+                    ? new AsyncLazyEx<LazyValueClass>(mode: mode, captureException: captureException)
+                    : new AsyncLazyEx<LazyValueClass>(valueFactory: async () => await Task.FromResult(new LazyValueClass()), mode: mode, captureException: captureException);
+
+                try
+                {
+                    await lazyValue.GetValueAsync();
+
+                    Assert.IsNull(expectedException1);
+                }
+                catch (Exception ex)
+                {
+                    Assert.AreEqual(expectedException1, ex.GetType());
+                }
+
+                ThrowException = false;
+
+                try
+                {
+                    await lazyValue.GetValueAsync();
+
+                    Assert.IsNull(expectedException2);
+                }
+                catch (Exception ex)
+                {
+                    Assert.AreEqual(expectedException2, ex.GetType());
+                }
+            }
+
+            private class LazyValueClass
+            {
+                public LazyValueClass()
+                {
+                    if (ThrowException)
+                        throw new AssertFailedException();
+                }
+            }
+        }
+
+        #endregion
+
+        #region Recursive
+
+        private static class AsyncLazyRecursiveTester
+        {
+            private static long RecursiveCounter { get; set; }
+            private static AsyncLazyEx<LazyValueClass> LazyValue { get; set; }
+
+            public async static Task Test(bool customFactory, bool? captureException, LazyThreadSafetyMode mode, Type expectedException1, Type expectedException2)
+            {
+                // Each recursive iteration blocks a thread because LazyValueClass will call the method 'GetValueAsync' from
+                // the constructor using 'Task.Run(...).Wait()', this cannot be fixed because the constructor cannot be async.
+                // So running more recursive iterations will affect the performance of the unit test execution.
+                RecursiveCounter = 1;
+
+                LazyValue = null;
+
+                LazyValue = (!customFactory)
+                    ? new AsyncLazyEx<LazyValueClass>(mode: mode, captureException: captureException)
+                    : new AsyncLazyEx<LazyValueClass>(valueFactory: async () => await Task.FromResult(new LazyValueClass()), mode: mode, captureException: captureException);
+
+                try
+                {
+                    await LazyValue.GetValueAsync();
+
+                    Assert.IsNull(expectedException1);
+                }
+                catch (Exception ex)
+                {
+                    Assert.AreEqual(expectedException1, ex.GetType());
+                }
+
+                RecursiveCounter = 0;
+
+                try
+                {
+                    await LazyValue.GetValueAsync();
+
+                    Assert.IsNull(expectedException2);
+                }
+                catch (Exception ex)
+                {
+                    Assert.AreEqual(expectedException2, ex.GetType());
+                }
+            }
+
+            private class LazyValueClass
+            {
+                public LazyValueClass()
+                {
+                    if (RecursiveCounter-- > 0)
                     {
-                        Task.Run(async () => await AsyncLazyTester.LazyValue.GetValueAsync().ConfigureAwait(false)).Wait();
-                    }
-                    catch (AggregateException ex)
-                    {
-                        throw ex.InnerException;
+                        try
+                        {
+                            Task.Run(async () => await LazyValue.GetValueAsync().ConfigureAwait(false)).Wait();
+                        }
+                        catch (AggregateException ex)
+                        {
+                            throw ex.InnerException;
+                        }
                     }
                 }
             }
         }
+
+        #endregion
 
         #endregion
     }
