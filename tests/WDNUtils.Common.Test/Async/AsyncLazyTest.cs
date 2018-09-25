@@ -91,6 +91,9 @@ namespace WDNUtils.Common.Test
 
         private class AsyncLazyConcurrentTester
         {
+            private static readonly TimeSpan TimeSpan1 = TimeSpan.FromMilliseconds(Math.Max(25, 100 / Environment.ProcessorCount));
+            private static readonly TimeSpan TimeSpan2 = TimeSpan.FromTicks(TimeSpan1.Ticks * 2);
+
             private bool IsSlowTask { get; set; }
 
             public async Task Test(LazyThreadSafetyMode mode, bool keepValue)
@@ -98,7 +101,7 @@ namespace WDNUtils.Common.Test
                 var lazyValue = new AsyncLazy<bool>(valueFactory: async () =>
                 {
                     var isSlowTask = IsSlowTask;
-                    await Task.Delay(TimeSpan.FromMilliseconds(isSlowTask ? 100 : 50)).ConfigureAwait(false);
+                    await Task.Delay(isSlowTask ? TimeSpan2 : TimeSpan1).ConfigureAwait(false);
                     return isSlowTask;
                 },
                 mode: mode);

@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WDNUtils.Common\WDNUtils.Common.csproj" />
+    <ProjectReference Include="..\..\src\WDNUtils.Common\WDNUtils.Common.csproj" />
   </ItemGroup>
 
 </Project>
