@@ -11,13 +11,13 @@
     <Company>Ricardo H. Rocha</Company>
     <Description>WDNUtils Common library</Description>
     <Copyright>Copyright © 2018 Ricardo H. Rocha</Copyright>
-    <AssemblyVersion>1.0.3.3</AssemblyVersion>
-    <FileVersion>1.0.3.3</FileVersion>
+    <AssemblyVersion>1.0.4.4</AssemblyVersion>
+    <FileVersion>1.0.4.4</FileVersion>
     <RepositoryType></RepositoryType>
     <PackageLicenseUrl>https://github.com/rhrocha/wdnutils/blob/master/LICENSE</PackageLicenseUrl>
     <PackageTags>WDN</PackageTags>
-    <PackageReleaseNotes>Added InterlockedEx, TaskUtils and AsyncLazy; improvements in StringComparisonEx.</PackageReleaseNotes>
-    <Version>1.0.3-beta</Version>
+    <PackageReleaseNotes></PackageReleaseNotes>
+    <Version>1.0.4-beta</Version>
     <PackageProjectUrl>https://github.com/rhrocha/wdnutils/</PackageProjectUrl>
   </PropertyGroup>
 
