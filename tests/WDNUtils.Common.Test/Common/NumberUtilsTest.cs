@@ -169,6 +169,12 @@ namespace WDNUtils.Common.Test
             Assert.IsTrue(NumberUtils.TryParseHex(@"0123456789abcdef", out result));
             Assert.AreEqual(0x0123456789ABCDEFul, result);
 
+            // Ignore leading zeros
+
+            Assert.AreEqual(0x0123456789ABCDEFul, NumberUtils.ParseHex(@"000000123456789ABCDEF"));
+            Assert.IsTrue(NumberUtils.TryParseHex(@"000000123456789ABCDEF", out result));
+            Assert.AreEqual(0x0123456789ABCDEFul, result);
+
             // NULL
 
             Assert.IsFalse(NumberUtils.TryParseHex(null, out result));
@@ -285,7 +291,7 @@ namespace WDNUtils.Common.Test
 
             try
             {
-                NumberUtils.ParseHex(@"01234567890123456");
+                NumberUtils.ParseHex(@"12345678901234567");
                 Assert.Fail();
             }
             catch (ArgumentOutOfRangeException)
@@ -295,7 +301,7 @@ namespace WDNUtils.Common.Test
 
             try
             {
-                NumberUtils.ParseHex(@"01234567890123456", 0, 17);
+                NumberUtils.ParseHex(@"12345678901234567", 0, 17);
                 Assert.Fail();
             }
             catch (ArgumentOutOfRangeException)
@@ -303,8 +309,8 @@ namespace WDNUtils.Common.Test
                 // OK
             }
 
-            Assert.IsFalse(NumberUtils.TryParseHex(@"01234567890123456", out result));
-            Assert.IsFalse(NumberUtils.TryParseHex(@"01234567890123456", 0, 17, out result));
+            Assert.IsFalse(NumberUtils.TryParseHex(@"12345678901234567", out result));
+            Assert.IsFalse(NumberUtils.TryParseHex(@"12345678901234567", 0, 17, out result));
         }
     }
 }

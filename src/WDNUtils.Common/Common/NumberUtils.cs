@@ -336,6 +336,14 @@ namespace WDNUtils.Common
         /// <returns>True if the hexadecimal string was converted to a numeric value successfully, otherwise false</returns>
         public static bool TryParseHex(string value, int startIndex, int length, out ulong result)
         {
+            if (startIndex < 0)
+                throw new ArgumentOutOfRangeException(nameof(startIndex));
+
+            var end = startIndex + length;
+
+            if ((length < 0) || (end > value?.Length))
+                throw new ArgumentOutOfRangeException(nameof(length));
+
             if ((length <= 0) || (string.IsNullOrEmpty(value)))
             {
                 result = 0;
@@ -344,17 +352,18 @@ namespace WDNUtils.Common
 
             if (length > 16) // 16 hex == 8 bytes == 64 bits
             {
-                result = ulong.MaxValue;
-                return false;
+                while ((length > 16) && (value[startIndex] == '0'))
+                {
+                    length--;
+                    startIndex++;
+                }
+
+                if (length > 16)
+                {
+                    result = ulong.MaxValue;
+                    return false;
+                }
             }
-
-            if (startIndex < 0)
-                throw new ArgumentOutOfRangeException(nameof(startIndex));
-
-            var end = startIndex + length;
-
-            if (end > value.Length)
-                throw new ArgumentOutOfRangeException(nameof(length));
 
             result = 0;
 
