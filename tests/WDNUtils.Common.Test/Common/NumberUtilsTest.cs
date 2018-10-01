@@ -178,7 +178,15 @@ namespace WDNUtils.Common.Test
             // NULL
 
             Assert.IsFalse(NumberUtils.TryParseHex(null, out result));
-            Assert.IsFalse(NumberUtils.TryParseHex(null, 1, 6, out result));
+
+            try
+            {
+                Assert.IsFalse(NumberUtils.TryParseHex(null, 1, 6, out result));
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                // OK
+            }
 
             try
             {
@@ -201,7 +209,15 @@ namespace WDNUtils.Common.Test
             // Empty
 
             Assert.IsFalse(NumberUtils.TryParseHex(string.Empty, out result));
-            Assert.IsFalse(NumberUtils.TryParseHex(string.Empty, 1, 6, out result));
+
+            try
+            {
+                Assert.IsFalse(NumberUtils.TryParseHex(string.Empty, 1, 6, out result));
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                // OK
+            }
 
             try
             {

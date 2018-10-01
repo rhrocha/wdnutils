@@ -341,7 +341,7 @@ namespace WDNUtils.Common
 
             var end = startIndex + length;
 
-            if ((length < 0) || (end > value?.Length))
+            if ((length < 0) || (end > (value?.Length ?? 0)))
                 throw new ArgumentOutOfRangeException(nameof(length));
 
             if ((length <= 0) || (string.IsNullOrEmpty(value)))
