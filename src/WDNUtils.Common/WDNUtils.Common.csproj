@@ -16,7 +16,7 @@
     <RepositoryType></RepositoryType>
     <PackageLicenseUrl>https://github.com/rhrocha/wdnutils/blob/master/LICENSE</PackageLicenseUrl>
     <PackageTags>WDN</PackageTags>
-    <PackageReleaseNotes></PackageReleaseNotes>
+    <PackageReleaseNotes>Added DateUtils.</PackageReleaseNotes>
     <Version>1.0.4-beta</Version>
     <PackageProjectUrl>https://github.com/rhrocha/wdnutils/</PackageProjectUrl>
   </PropertyGroup>
