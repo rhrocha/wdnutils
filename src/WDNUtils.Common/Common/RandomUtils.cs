@@ -136,7 +136,7 @@ namespace WDNUtils.Common
             if ((maxValue < Int32.MinValue) || (maxValue > (Int32.MaxValue + 1L)))
                 throw new ArgumentOutOfRangeException(nameof(maxValue));
 
-            if (minValue >= maxValue)
+            if (minValue > maxValue)
                 throw new ArgumentOutOfRangeException(nameof(minValue));
 
             if (minValue == maxValue)
