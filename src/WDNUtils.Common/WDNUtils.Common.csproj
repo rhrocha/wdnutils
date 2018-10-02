@@ -16,7 +16,7 @@
     <RepositoryType></RepositoryType>
     <PackageLicenseUrl>https://github.com/rhrocha/wdnutils/blob/master/LICENSE</PackageLicenseUrl>
     <PackageTags>WDN</PackageTags>
-    <PackageReleaseNotes>Added DateUtils, NumberUtils, RandomUtils and TextUtils.</PackageReleaseNotes>
+    <PackageReleaseNotes>Added CollectionUtils, DateUtils, NumberUtils, RandomUtils and TextUtils.</PackageReleaseNotes>
     <Version>1.0.4-beta</Version>
     <PackageProjectUrl>https://github.com/rhrocha/wdnutils/</PackageProjectUrl>
   </PropertyGroup>
