@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net461</TargetFramework>
+    <ApplicationIcon />
+    <OutputType>Library</OutputType>
+    <StartupObject />
+    <Product>WDNUtils Oracle for .Net Framework</Product>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>Ricardo H. Rocha</Authors>
+    <Company>Ricardo H. Rocha</Company>
+    <Description>WDNUtils Oracle for .Net Framework library</Description>
+    <Copyright>Copyright © 2018 Ricardo H. Rocha</Copyright>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    <RepositoryType></RepositoryType>
+    <PackageLicenseUrl>https://github.com/rhrocha/wdnutils/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageTags>WDN</PackageTags>
+    <PackageReleaseNotes></PackageReleaseNotes>
+    <Version>1.0.0-beta</Version>
+    <PackageProjectUrl>https://github.com/rhrocha/wdnutils/</PackageProjectUrl>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="log4net" Version="2.0.8" />
+    <PackageReference Include="Oracle.ManagedDataAccess" Version="18.3.0" />
+    <PackageReference Include="WDNUtils.Common" Version="1.0.4-beta" />
+  </ItemGroup>
+
+</Project>
