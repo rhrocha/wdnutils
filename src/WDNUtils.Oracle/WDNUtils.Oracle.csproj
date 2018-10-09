@@ -1,23 +1,23 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFrameworks>netcoreapp2.0;net461</TargetFrameworks>
     <ApplicationIcon />
     <OutputType>Library</OutputType>
     <StartupObject />
-    <Product>WDNUtils Oracle for .Net Core</Product>
+    <Product>WDNUtils Oracle</Product>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Ricardo H. Rocha</Authors>
     <Company>Ricardo H. Rocha</Company>
-    <Description>WDNUtils Oracle for .Net Core library</Description>
+    <Description>WDNUtils Oracle library</Description>
     <Copyright>Copyright © 2018 Ricardo H. Rocha</Copyright>
-    <AssemblyVersion>1.0.0.0</AssemblyVersion>
-    <FileVersion>1.0.0.0</FileVersion>
+    <AssemblyVersion>1.0.1.1</AssemblyVersion>
+    <FileVersion>1.0.1.1</FileVersion>
     <RepositoryType></RepositoryType>
     <PackageLicenseUrl>https://github.com/rhrocha/wdnutils/blob/master/LICENSE</PackageLicenseUrl>
     <PackageTags>WDN</PackageTags>
     <PackageReleaseNotes></PackageReleaseNotes>
-    <Version>1.0.0-beta</Version>
+    <Version>1.0.1-beta</Version>
     <PackageProjectUrl>https://github.com/rhrocha/wdnutils/</PackageProjectUrl>
   </PropertyGroup>
 
@@ -31,8 +31,15 @@
 
   <ItemGroup>
     <PackageReference Include="log4net" Version="2.0.8" />
-    <PackageReference Include="Oracle.ManagedDataAccess.Core" Version="2.18.3" />
     <PackageReference Include="WDNUtils.Common" Version="1.0.4-beta" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)'=='netcoreapp2.0'">
+    <PackageReference Include="Oracle.ManagedDataAccess.Core" Version="2.18.3" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)'=='net461'">
+    <PackageReference Include="Oracle.ManagedDataAccess" Version="18.3.0" />
   </ItemGroup>
 
 </Project>

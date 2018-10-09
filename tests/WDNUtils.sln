@@ -5,9 +5,7 @@ VisualStudioVersion = 15.0.28010.2003
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WDNUtils.Common", "..\src\WDNUtils.Common\WDNUtils.Common.csproj", "{9EBE97FE-EBE5-47AF-B0F8-800C3A8C8F10}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WDNUtils.Oracle.Core", "..\src\WDNUtils.Oracle.Core\WDNUtils.Oracle.Core.csproj", "{547E2A68-462B-4B4E-A38A-135035899009}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WDNUtils.Oracle.Win32", "..\src\WDNUtils.Oracle.Win32\WDNUtils.Oracle.Win32.csproj", "{1A8B0316-3EB9-4E2C-B714-29F6AAAEB978}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WDNUtils.Oracle", "..\src\WDNUtils.Oracle\WDNUtils.Oracle.csproj", "{547E2A68-462B-4B4E-A38A-135035899009}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WDNUtils.Common.Test", "WDNUtils.Common.Test\WDNUtils.Common.Test.csproj", "{6C1917A9-4AF3-4F52-8028-0E5E8A05A583}"
 EndProject
@@ -25,10 +23,6 @@ Global
 		{547E2A68-462B-4B4E-A38A-135035899009}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{547E2A68-462B-4B4E-A38A-135035899009}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{547E2A68-462B-4B4E-A38A-135035899009}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1A8B0316-3EB9-4E2C-B714-29F6AAAEB978}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1A8B0316-3EB9-4E2C-B714-29F6AAAEB978}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1A8B0316-3EB9-4E2C-B714-29F6AAAEB978}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1A8B0316-3EB9-4E2C-B714-29F6AAAEB978}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6C1917A9-4AF3-4F52-8028-0E5E8A05A583}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6C1917A9-4AF3-4F52-8028-0E5E8A05A583}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6C1917A9-4AF3-4F52-8028-0E5E8A05A583}.Release|Any CPU.ActiveCfg = Release|Any CPU

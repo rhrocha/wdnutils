@@ -11,22 +11,13 @@ IF EXIST "..\src\WDNUtils.Common\obj" DEL /A /F /S /Q "..\src\WDNUtils.Common\ob
 IF EXIST "..\src\WDNUtils.Common\obj" RMDIR /S /Q "..\src\WDNUtils.Common\obj"
 
 REM ========================================================================
-ECHO ### Clean up WDNUtils.Oracle.Core
+ECHO ### Clean up WDNUtils.Oracle
 
-IF EXIST "..\src\WDNUtils.Oracle.Core\WDNUtils.Oracle.Core.csproj.user" DEL /A /F /Q "..\src\WDNUtils.Oracle.Core\WDNUtils.Oracle.Core.csproj.user"
-IF EXIST "..\src\WDNUtils.Oracle.Core\bin" DEL /A /F /S /Q "..\src\WDNUtils.Oracle.Core\bin"
-IF EXIST "..\src\WDNUtils.Oracle.Core\bin" RMDIR /S /Q "..\src\WDNUtils.Oracle.Core\bin"
-IF EXIST "..\src\WDNUtils.Oracle.Core\obj" DEL /A /F /S /Q "..\src\WDNUtils.Oracle.Core\obj"
-IF EXIST "..\src\WDNUtils.Oracle.Core\obj" RMDIR /S /Q "..\src\WDNUtils.Oracle.Core\obj"
-
-REM ========================================================================
-ECHO ### Clean up WDNUtils.Oracle.Win32
-
-IF EXIST "..\src\WDNUtils.Oracle.Win32\WDNUtils.Oracle.Win32.csproj.user" DEL /A /F /Q "..\src\WDNUtils.Oracle.Win32\WDNUtils.Oracle.Win32.csproj.user"
-IF EXIST "..\src\WDNUtils.Oracle.Win32\bin" DEL /A /F /S /Q "..\src\WDNUtils.Oracle.Win32\bin"
-IF EXIST "..\src\WDNUtils.Oracle.Win32\bin" RMDIR /S /Q "..\src\WDNUtils.Oracle.Win32\bin"
-IF EXIST "..\src\WDNUtils.Oracle.Win32\obj" DEL /A /F /S /Q "..\src\WDNUtils.Oracle.Win32\obj"
-IF EXIST "..\src\WDNUtils.Oracle.Win32\obj" RMDIR /S /Q "..\src\WDNUtils.Oracle.Win32\obj"
+IF EXIST "..\src\WDNUtils.Oracle\WDNUtils.Oracle.csproj.user" DEL /A /F /Q "..\src\WDNUtils.Oracle\WDNUtils.Oracle.csproj.user"
+IF EXIST "..\src\WDNUtils.Oracle\bin" DEL /A /F /S /Q "..\src\WDNUtils.Oracle\bin"
+IF EXIST "..\src\WDNUtils.Oracle\bin" RMDIR /S /Q "..\src\WDNUtils.Oracle\bin"
+IF EXIST "..\src\WDNUtils.Oracle\obj" DEL /A /F /S /Q "..\src\WDNUtils.Oracle\obj"
+IF EXIST "..\src\WDNUtils.Oracle\obj" RMDIR /S /Q "..\src\WDNUtils.Oracle\obj"
 
 REM ========================================================================
 ECHO ### Clean up WDNUtils.Common.Test
