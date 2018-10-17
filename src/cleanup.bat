@@ -11,13 +11,13 @@ IF EXIST ".\WDNUtils.Common\obj" DEL /A /F /S /Q ".\WDNUtils.Common\obj"
 IF EXIST ".\WDNUtils.Common\obj" RMDIR /S /Q ".\WDNUtils.Common\obj"
 
 REM ========================================================================
-ECHO ### Clean up WDNUtils.Oracle
+ECHO ### Clean up WDNUtils.DBOracle
 
-IF EXIST ".\WDNUtils.Oracle\WDNUtils.Oracle.csproj.user" DEL /A /F /Q ".\WDNUtils.Oracle\WDNUtils.Oracle.csproj.user"
-IF EXIST ".\WDNUtils.Oracle\bin" DEL /A /F /S /Q ".\WDNUtils.Oracle\bin"
-IF EXIST ".\WDNUtils.Oracle\bin" RMDIR /S /Q ".\WDNUtils.Oracle\bin"
-IF EXIST ".\WDNUtils.Oracle\obj" DEL /A /F /S /Q ".\WDNUtils.Oracle\obj"
-IF EXIST ".\WDNUtils.Oracle\obj" RMDIR /S /Q ".\WDNUtils.Oracle\obj"
+IF EXIST ".\WDNUtils.DBOracle\WDNUtils.DBOracle.csproj.user" DEL /A /F /Q ".\WDNUtils.DBOracle\WDNUtils.DBOracle.csproj.user"
+IF EXIST ".\WDNUtils.DBOracle\bin" DEL /A /F /S /Q ".\WDNUtils.DBOracle\bin"
+IF EXIST ".\WDNUtils.DBOracle\bin" RMDIR /S /Q ".\WDNUtils.DBOracle\bin"
+IF EXIST ".\WDNUtils.DBOracle\obj" DEL /A /F /S /Q ".\WDNUtils.DBOracle\obj"
+IF EXIST ".\WDNUtils.DBOracle\obj" RMDIR /S /Q ".\WDNUtils.DBOracle\obj"
 
 REM ========================================================================
 ECHO ### Clean up vistual studio generated files

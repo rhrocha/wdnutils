@@ -11,13 +11,13 @@ IF EXIST "..\src\WDNUtils.Common\obj" DEL /A /F /S /Q "..\src\WDNUtils.Common\ob
 IF EXIST "..\src\WDNUtils.Common\obj" RMDIR /S /Q "..\src\WDNUtils.Common\obj"
 
 REM ========================================================================
-ECHO ### Clean up WDNUtils.Oracle
+ECHO ### Clean up WDNUtils.DBOracle
 
-IF EXIST "..\src\WDNUtils.Oracle\WDNUtils.Oracle.csproj.user" DEL /A /F /Q "..\src\WDNUtils.Oracle\WDNUtils.Oracle.csproj.user"
-IF EXIST "..\src\WDNUtils.Oracle\bin" DEL /A /F /S /Q "..\src\WDNUtils.Oracle\bin"
-IF EXIST "..\src\WDNUtils.Oracle\bin" RMDIR /S /Q "..\src\WDNUtils.Oracle\bin"
-IF EXIST "..\src\WDNUtils.Oracle\obj" DEL /A /F /S /Q "..\src\WDNUtils.Oracle\obj"
-IF EXIST "..\src\WDNUtils.Oracle\obj" RMDIR /S /Q "..\src\WDNUtils.Oracle\obj"
+IF EXIST "..\src\WDNUtils.DBOracle\WDNUtils.DBOracle.csproj.user" DEL /A /F /Q "..\src\WDNUtils.DBOracle\WDNUtils.DBOracle.csproj.user"
+IF EXIST "..\src\WDNUtils.DBOracle\bin" DEL /A /F /S /Q "..\src\WDNUtils.DBOracle\bin"
+IF EXIST "..\src\WDNUtils.DBOracle\bin" RMDIR /S /Q "..\src\WDNUtils.DBOracle\bin"
+IF EXIST "..\src\WDNUtils.DBOracle\obj" DEL /A /F /S /Q "..\src\WDNUtils.DBOracle\obj"
+IF EXIST "..\src\WDNUtils.DBOracle\obj" RMDIR /S /Q "..\src\WDNUtils.DBOracle\obj"
 
 REM ========================================================================
 ECHO ### Clean up WDNUtils.Common.Test

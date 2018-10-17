@@ -5,11 +5,11 @@
     <ApplicationIcon />
     <OutputType>Library</OutputType>
     <StartupObject />
-    <Product>WDNUtils Oracle</Product>
+    <Product>WDNUtils DBOracle</Product>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Ricardo H. Rocha</Authors>
     <Company>Ricardo H. Rocha</Company>
-    <Description>WDNUtils Oracle library</Description>
+    <Description>WDNUtils DBOracle library</Description>
     <Copyright>Copyright © 2018 Ricardo H. Rocha</Copyright>
     <AssemblyVersion>1.0.1.1</AssemblyVersion>
     <FileVersion>1.0.1.1</FileVersion>

@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.28010.2003
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WDNUtils.Common", "WDNUtils.Common\WDNUtils.Common.csproj", "{9EBE97FE-EBE5-47AF-B0F8-800C3A8C8F10}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WDNUtils.Oracle", "WDNUtils.Oracle\WDNUtils.Oracle.csproj", "{547E2A68-462B-4B4E-A38A-135035899009}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WDNUtils.DBOracle", "WDNUtils.DBOracle\WDNUtils.DBOracle.csproj", "{547E2A68-462B-4B4E-A38A-135035899009}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

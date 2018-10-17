@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WDNUtils.Oracle.Localization {
+namespace WDNUtils.DBOracle.Localization {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace WDNUtils.Oracle.Localization {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("WDNUtils.Oracle.Localization.DBOracleLocalizedText", typeof(DBOracleLocalizedText).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("WDNUtils.DBOracle.Localization.DBOracleLocalizedText", typeof(DBOracleLocalizedText).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
