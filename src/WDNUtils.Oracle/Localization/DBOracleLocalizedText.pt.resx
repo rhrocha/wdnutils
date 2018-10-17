@@ -1,0 +1,231 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="DBOracleCommand_BindError" xml:space="preserve">
+    <value>Erro ao fazer bind do parâmetro {0}</value>
+  </data>
+  <data name="DBOracleCommand_DataAdapter_Disposal_Error" xml:space="preserve">
+    <value>Erro ao liberar os recursos do DataAdapter</value>
+  </data>
+  <data name="DBOracleCommand_Disposal_Error" xml:space="preserve">
+    <value>Erro ao liberar os recursos do comando da base de dados</value>
+  </data>
+  <data name="DBOracleCommand_Error" xml:space="preserve">
+    <value>Erro ao criar o objeto de comando para a base de dados</value>
+  </data>
+  <data name="DBOracleCommand_ExecuteNonQuery_Error" xml:space="preserve">
+    <value>Erro ao executar comando na base de dados</value>
+  </data>
+  <data name="DBOracleCommand_GetDataSet_DataAdapterError" xml:space="preserve">
+    <value>Erro ao criar o DataAdapter</value>
+  </data>
+  <data name="DBOracleCommand_GetDataSet_DataRetrieveError" xml:space="preserve">
+    <value>Erro ao carregar as linhas retornadas pela query</value>
+  </data>
+  <data name="DBOracleCommand_GetDataTable_Error" xml:space="preserve">
+    <value>O DataSet retornado não contém ao menos um DataTable</value>
+  </data>
+  <data name="DBOracleCommand_LocalReplicaDenied" xml:space="preserve">
+    <value>Esta função não pode ser realizada na réplica local da base de dados (modo offline)</value>
+  </data>
+  <data name="DBOracleCommand_ParameterCollectionClear_Error" xml:space="preserve">
+    <value>Erro ao limpar a lista de parâmetros do comando</value>
+  </data>
+  <data name="DBOracleConnection_BeginTransaction_Closed" xml:space="preserve">
+    <value>A conexão com a base de dados está fechada</value>
+  </data>
+  <data name="DBOracleConnection_BeginTransaction_Error" xml:space="preserve">
+    <value>Erro ao iniciar a transação na base de dados</value>
+  </data>
+  <data name="DBOracleConnection_ClosedWithActiveTransaction" xml:space="preserve">
+    <value>Conexão com a base de dados sendo finalizada sem fazer commit da transação</value>
+  </data>
+  <data name="DBOracleConnection_Close_Error" xml:space="preserve">
+    <value>Erro ao fechar a conexão com a base de dados</value>
+  </data>
+  <data name="DBOracleConnection_Commit_Error" xml:space="preserve">
+    <value>Erro ao fazer commit na transação na base de dados</value>
+  </data>
+  <data name="DBOracleConnection_Constructor_Error" xml:space="preserve">
+    <value>Não foi possível estabelecer a conexão com a base de dados</value>
+  </data>
+  <data name="DBOracleErrorHandler_DatabaseDown" xml:space="preserve">
+    <value>O servidor de base de dados rejeitou a conexão. Erro: {0}.</value>
+  </data>
+  <data name="DBOracleConnection_Disposal_Error" xml:space="preserve">
+    <value>Erro ao liberar os recursos da conexão com a base de dados</value>
+  </data>
+  <data name="DBOracleConnection_EmptyConnectionString" xml:space="preserve">
+    <value>A string de conexão não pode ser vazia</value>
+  </data>
+  <data name="DBOracleErrorHandler_NetworkError" xml:space="preserve">
+    <value>Não foi possível acessar a base de dados, por favor verifique a conexão com a rede.{0}Erro: {1}.</value>
+  </data>
+  <data name="DBOracleConnection_NullConnection" xml:space="preserve">
+    <value>A conexão com a base de dados não pode ser nula</value>
+  </data>
+  <data name="DBOracleConnection_Rollback_Error" xml:space="preserve">
+    <value>Erro ao fazer rollback na transação na base de dados</value>
+  </data>
+  <data name="DBOracleConnection_Timeout" xml:space="preserve">
+    <value>Tempo limite para conexão com a base de dados excedido</value>
+  </data>
+  <data name="DBOracleDataReaderAdapter_Close" xml:space="preserve">
+    <value>Erro ao fechar o DataReader</value>
+  </data>
+  <data name="DBOracleDataReaderAdapter_CommandClose" xml:space="preserve">
+    <value>Erro ao fechar o Command do DataReader</value>
+  </data>
+  <data name="DBOracleDataReaderAdapter_Disposal" xml:space="preserve">
+    <value>Erro ao liberar os recursos do DataReader</value>
+  </data>
+  <data name="DBOracleDataReaderAdapter_Error" xml:space="preserve">
+    <value>Erro ao executar a query</value>
+  </data>
+  <data name="DBOracleDataReader_ColumnNotFound" xml:space="preserve">
+    <value>A coluna '{0}' não existe no conjunto de dados</value>
+  </data>
+  <data name="DBOracleParameter_CastError" xml:space="preserve">
+    <value>O parâmetro '{0}' é do tipo {1}, e não pode ser convertido para {2}</value>
+  </data>
+  <data name="DBOracleParameter_InvalidMaxSizeByteArray" xml:space="preserve">
+    <value>O valor para o parâmetro '{0}' tem {1} bytes mas o tamanho máximo é {2} bytes</value>
+  </data>
+  <data name="DBOracleParameter_InvalidMaxSizeString" xml:space="preserve">
+    <value>O valor para o parâmetro '{0}' tem {1} caracteres mas o tamanho máximo é {2} caracteres</value>
+  </data>
+  <data name="DBOracleParameter_InvalidName" xml:space="preserve">
+    <value>O nome do parâmetro não pode ser nulo ou vazio</value>
+  </data>
+  <data name="DBOracleParameter_InvalidParameterDirectionAutoSize" xml:space="preserve">
+    <value>O parâmetro '{0}' deve ser do tipo de entrada (Direction.Input ou Direction.InputOutput) para usar o tamanho máximo automatico</value>
+  </data>
+  <data name="DBOracleParameter_ParameterDisposalError" xml:space="preserve">
+    <value>Erro ao liberar os recursos do parâmetro '{0}'</value>
+  </data>
+  <data name="DBOracleParameter_ValueDisposalError" xml:space="preserve">
+    <value>Erro ao liberar os recursos do valor do parâmetro '{0}'</value>
+  </data>
+  <data name="DBOracleParameter_InvalidParameterDirectionSetValue" xml:space="preserve">
+    <value>O valor do parâmetro '{0}' porque ele não é do tipo entrada (Direction.Input ou Direction.InputOutput)</value>
+  </data>
+  <data name="DBOracleCommand_NullParameter" xml:space="preserve">
+    <value>A lista de parâmetros do comando possui um elemento nulo!</value>
+  </data>
+</root>
