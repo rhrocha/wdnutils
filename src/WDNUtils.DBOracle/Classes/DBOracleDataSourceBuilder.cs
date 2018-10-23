@@ -31,6 +31,9 @@ namespace WDNUtils.DBOracle
 
         #region Attributes
 
+        /// <summary>
+        /// List of DESCRIPTION sections of this DESCRIPTION_LIST section
+        /// </summary>
         private readonly List<Description> _descriptions = new List<Description>();
 
         #endregion
@@ -79,6 +82,10 @@ namespace WDNUtils.DBOracle
 
         #region Create data source string
 
+        /// <summary>
+        /// Creates the data source string for this DESCRIPTION_LIST
+        /// </summary>
+        /// <returns>The data source string for this DESCRIPTION_LIST</returns>
         private string BuildStringValue()
         {
             var stringBuilder = new StringBuilder();
@@ -127,6 +134,9 @@ namespace WDNUtils.DBOracle
         {
             #region Attributes
 
+            /// <summary>
+            /// List of ADDRESS_LIST sections of this DESCRIPTION section
+            /// </summary>
             private readonly List<AddressList> _addressLists = new List<AddressList>();
 
             /// <summary>
@@ -177,6 +187,9 @@ namespace WDNUtils.DBOracle
 
             #region Constructor
 
+            /// <summary>
+            /// Creates a new DESCRIPTION section
+            /// </summary>
             internal Description()
             {
             }
@@ -202,6 +215,10 @@ namespace WDNUtils.DBOracle
 
             #region Create data source string
 
+            /// <summary>
+            /// Appends the contents of this DESCRIPTION section in the data source string
+            /// </summary>
+            /// <param name="stringBuilder">Data source string</param>
             internal void BuildStringValue(StringBuilder stringBuilder)
             {
                 stringBuilder.Append(@"(DESCRIPTION=");
@@ -265,12 +282,18 @@ namespace WDNUtils.DBOracle
         {
             #region Attributes
 
+            /// <summary>
+            /// List of ADDRESS sections of this ADDRESS_LIST
+            /// </summary>
             private readonly List<Address> _addresses = new List<Address>();
 
             #endregion
 
             #region Constructor
 
+            /// <summary>
+            /// Creates a new ADDRESS_LIST
+            /// </summary>
             internal AddressList()
             {
             }
@@ -315,6 +338,10 @@ namespace WDNUtils.DBOracle
 
             #region Create data source string
 
+            /// <summary>
+            /// Appends the contents of this ADDRESS_LIST section in the data source string
+            /// </summary>
+            /// <param name="stringBuilder">Data source string</param>
             internal void BuildStringValue(StringBuilder stringBuilder)
             {
                 bool hasAddressList = (_addresses.Count > 1) || (Failover.HasValue) || (LoadBalance.HasValue) || (SourceRoute.HasValue);
@@ -398,6 +425,9 @@ namespace WDNUtils.DBOracle
 
             #region Constructor
 
+            /// <summary>
+            /// Creates a new ADDRESS section
+            /// </summary>
             internal Address()
             {
             }
@@ -406,6 +436,10 @@ namespace WDNUtils.DBOracle
 
             #region Create data source string
 
+            /// <summary>
+            /// Appends the contents of this ADDRESS section in the data source string
+            /// </summary>
+            /// <param name="stringBuilder">Data source string</param>
             internal void BuildStringValue(StringBuilder stringBuilder)
             {
                 stringBuilder.Append(@"(ADDRESS=");
@@ -510,6 +544,9 @@ namespace WDNUtils.DBOracle
 
             #region Constructor
 
+            /// <summary>
+            /// Creates a new CONNECT_DATA section
+            /// </summary>
             internal ConnectData()
             {
             }
@@ -518,6 +555,10 @@ namespace WDNUtils.DBOracle
 
             #region Create data source string
 
+            /// <summary>
+            /// Appends the contents of this CONNECT_DATA section in the data source string
+            /// </summary>
+            /// <param name="stringBuilder">Data source string</param>
             internal void BuildStringValue(StringBuilder stringBuilder)
             {
                 stringBuilder.Append(@"(CONNECT_DATA=");
@@ -608,6 +649,9 @@ namespace WDNUtils.DBOracle
 
             #region Constructor
 
+            /// <summary>
+            /// Creates a new FAILOVER_MODE section
+            /// </summary>
             internal FailoverMode()
             {
             }
@@ -616,6 +660,10 @@ namespace WDNUtils.DBOracle
 
             #region Create data source string
 
+            /// <summary>
+            /// Appends the contents of this FAILOVER_MODE section in the data source string
+            /// </summary>
+            /// <param name="stringBuilder">Data source string</param>
             internal void BuildStringValue(StringBuilder stringBuilder)
             {
                 var buffer = new StringBuilder();

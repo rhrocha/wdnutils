@@ -70,6 +70,24 @@ namespace WDNUtils.DBOracle.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error closing DataReader.
+        /// </summary>
+        internal static string DBOracleCommand_CloseDataReader {
+            get {
+                return ResourceManager.GetString("DBOracleCommand_CloseDataReader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error removing the connection reference from the database command.
+        /// </summary>
+        internal static string DBOracleCommand_ConnectionClear_Error {
+            get {
+                return ResourceManager.GetString("DBOracleCommand_ConnectionClear_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error disposing DataAdapter.
         /// </summary>
         internal static string DBOracleCommand_DataAdapter_Disposal_Error {
@@ -84,6 +102,15 @@ namespace WDNUtils.DBOracle.Localization {
         internal static string DBOracleCommand_Disposal_Error {
             get {
                 return ResourceManager.GetString("DBOracleCommand_Disposal_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error disposing DataReader.
+        /// </summary>
+        internal static string DBOracleCommand_DisposeDataReader {
+            get {
+                return ResourceManager.GetString("DBOracleCommand_DisposeDataReader", resourceCulture);
             }
         }
         
@@ -124,20 +151,11 @@ namespace WDNUtils.DBOracle.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Returned DataSet does not contain at least one DataTable.
+        ///   Looks up a localized string similar to The database connection must not be null.
         /// </summary>
-        internal static string DBOracleCommand_GetDataTable_Error {
+        internal static string DBOracleCommand_NullConnection {
             get {
-                return ResourceManager.GetString("DBOracleCommand_GetDataTable_Error", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to This function cannot be performed on local database replica (offline mode).
-        /// </summary>
-        internal static string DBOracleCommand_LocalReplicaDenied {
-            get {
-                return ResourceManager.GetString("DBOracleCommand_LocalReplicaDenied", resourceCulture);
+                return ResourceManager.GetString("DBOracleCommand_NullConnection", resourceCulture);
             }
         }
         
@@ -187,20 +205,11 @@ namespace WDNUtils.DBOracle.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Database connection being closed without committing the transaction.
+        ///   Looks up a localized string similar to The database connection was closed without committing the transaction. The transaction was rolled back automatically..
         /// </summary>
         internal static string DBOracleConnection_ClosedWithActiveTransaction {
             get {
                 return ResourceManager.GetString("DBOracleConnection_ClosedWithActiveTransaction", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Error committing database transaction.
-        /// </summary>
-        internal static string DBOracleConnection_Commit_Error {
-            get {
-                return ResourceManager.GetString("DBOracleConnection_Commit_Error", resourceCulture);
             }
         }
         
@@ -210,6 +219,15 @@ namespace WDNUtils.DBOracle.Localization {
         internal static string DBOracleConnection_Constructor_Error {
             get {
                 return ResourceManager.GetString("DBOracleConnection_Constructor_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error creating the database savepoint {0}.
+        /// </summary>
+        internal static string DBOracleConnection_CreateSavepoint_Error {
+            get {
+                return ResourceManager.GetString("DBOracleConnection_CreateSavepoint_Error", resourceCulture);
             }
         }
         
@@ -232,29 +250,11 @@ namespace WDNUtils.DBOracle.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The database connection must not be null.
-        /// </summary>
-        internal static string DBOracleConnection_NullConnection {
-            get {
-                return ResourceManager.GetString("DBOracleConnection_NullConnection", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Error rolling back database transaction.
         /// </summary>
         internal static string DBOracleConnection_Rollback_Error {
             get {
                 return ResourceManager.GetString("DBOracleConnection_Rollback_Error", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Database connection timeout.
-        /// </summary>
-        internal static string DBOracleConnection_Timeout {
-            get {
-                return ResourceManager.GetString("DBOracleConnection_Timeout", resourceCulture);
             }
         }
         
@@ -268,56 +268,20 @@ namespace WDNUtils.DBOracle.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Error closing DataReader.
-        /// </summary>
-        internal static string DBOracleDataReaderAdapter_Close {
-            get {
-                return ResourceManager.GetString("DBOracleDataReaderAdapter_Close", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Error closing the Command of DataReader.
-        /// </summary>
-        internal static string DBOracleDataReaderAdapter_CommandClose {
-            get {
-                return ResourceManager.GetString("DBOracleDataReaderAdapter_CommandClose", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Error disposing DataReader.
-        /// </summary>
-        internal static string DBOracleDataReaderAdapter_Disposal {
-            get {
-                return ResourceManager.GetString("DBOracleDataReaderAdapter_Disposal", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Error running query.
-        /// </summary>
-        internal static string DBOracleDataReaderAdapter_Error {
-            get {
-                return ResourceManager.GetString("DBOracleDataReaderAdapter_Error", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to The database server refused the connection. Error: {0}..
         /// </summary>
-        internal static string DBOracleErrorHandler_DatabaseDown {
+        internal static string DBOracleException_DatabaseDown {
             get {
-                return ResourceManager.GetString("DBOracleErrorHandler_DatabaseDown", resourceCulture);
+                return ResourceManager.GetString("DBOracleException_DatabaseDown", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Cannot connect to the database, please check the network connection.{0}Error: {1}..
         /// </summary>
-        internal static string DBOracleErrorHandler_NetworkError {
+        internal static string DBOracleException_NetworkError {
             get {
-                return ResourceManager.GetString("DBOracleErrorHandler_NetworkError", resourceCulture);
+                return ResourceManager.GetString("DBOracleException_NetworkError", resourceCulture);
             }
         }
         
@@ -390,6 +354,51 @@ namespace WDNUtils.DBOracle.Localization {
         internal static string DBOracleParameter_ValueDisposalError {
             get {
                 return ResourceManager.GetString("DBOracleParameter_ValueDisposalError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot commit because the transaction was already finished.
+        /// </summary>
+        internal static string DBOracleTransaction_Commit_AlreadyFinished {
+            get {
+                return ResourceManager.GetString("DBOracleTransaction_Commit_AlreadyFinished", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error committing database transaction.
+        /// </summary>
+        internal static string DBOracleTransaction_Commit_Error {
+            get {
+                return ResourceManager.GetString("DBOracleTransaction_Commit_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot rollback the savepoint {0} because the transaction was already finished.
+        /// </summary>
+        internal static string DBOracleTransaction_RollbackSavepoint_AlreadyFinished {
+            get {
+                return ResourceManager.GetString("DBOracleTransaction_RollbackSavepoint_AlreadyFinished", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error rolling back to the database savepoint {0}.
+        /// </summary>
+        internal static string DBOracleTransaction_RollbackSavepoint_Error {
+            get {
+                return ResourceManager.GetString("DBOracleTransaction_RollbackSavepoint_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot rollback the transaction because it was already finished.
+        /// </summary>
+        internal static string DBOracleTransaction_RollbackTransaction_AlreadyFinished {
+            get {
+                return ResourceManager.GetString("DBOracleTransaction_RollbackTransaction_AlreadyFinished", resourceCulture);
             }
         }
     }

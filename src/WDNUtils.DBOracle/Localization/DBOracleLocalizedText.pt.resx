@@ -138,12 +138,6 @@
   <data name="DBOracleCommand_GetDataSet_DataRetrieveError" xml:space="preserve">
     <value>Erro ao carregar as linhas retornadas pela query</value>
   </data>
-  <data name="DBOracleCommand_GetDataTable_Error" xml:space="preserve">
-    <value>O DataSet retornado não contém ao menos um DataTable</value>
-  </data>
-  <data name="DBOracleCommand_LocalReplicaDenied" xml:space="preserve">
-    <value>Esta função não pode ser realizada na réplica local da base de dados (modo offline)</value>
-  </data>
   <data name="DBOracleCommand_ParameterCollectionClear_Error" xml:space="preserve">
     <value>Erro ao limpar a lista de parâmetros do comando</value>
   </data>
@@ -154,18 +148,18 @@
     <value>Erro ao iniciar a transação na base de dados</value>
   </data>
   <data name="DBOracleConnection_ClosedWithActiveTransaction" xml:space="preserve">
-    <value>Conexão com a base de dados sendo finalizada sem fazer commit da transação</value>
+    <value>A conexão com a base de dados foi fechada com uma transação pendente. Foi realizado o rollback da transação automaticamente.</value>
   </data>
   <data name="DBOracleConnection_Close_Error" xml:space="preserve">
     <value>Erro ao fechar a conexão com a base de dados</value>
   </data>
-  <data name="DBOracleConnection_Commit_Error" xml:space="preserve">
+  <data name="DBOracleTransaction_Commit_Error" xml:space="preserve">
     <value>Erro ao fazer commit na transação na base de dados</value>
   </data>
   <data name="DBOracleConnection_Constructor_Error" xml:space="preserve">
     <value>Não foi possível estabelecer a conexão com a base de dados</value>
   </data>
-  <data name="DBOracleErrorHandler_DatabaseDown" xml:space="preserve">
+  <data name="DBOracleException_DatabaseDown" xml:space="preserve">
     <value>O servidor de base de dados rejeitou a conexão. Erro: {0}.</value>
   </data>
   <data name="DBOracleConnection_Disposal_Error" xml:space="preserve">
@@ -174,29 +168,20 @@
   <data name="DBOracleConnection_EmptyConnectionString" xml:space="preserve">
     <value>A string de conexão não pode ser vazia</value>
   </data>
-  <data name="DBOracleErrorHandler_NetworkError" xml:space="preserve">
+  <data name="DBOracleException_NetworkError" xml:space="preserve">
     <value>Não foi possível acessar a base de dados, por favor verifique a conexão com a rede.{0}Erro: {1}.</value>
   </data>
-  <data name="DBOracleConnection_NullConnection" xml:space="preserve">
+  <data name="DBOracleCommand_NullConnection" xml:space="preserve">
     <value>A conexão com a base de dados não pode ser nula</value>
   </data>
   <data name="DBOracleConnection_Rollback_Error" xml:space="preserve">
     <value>Erro ao fazer rollback na transação na base de dados</value>
   </data>
-  <data name="DBOracleConnection_Timeout" xml:space="preserve">
-    <value>Tempo limite para conexão com a base de dados excedido</value>
-  </data>
-  <data name="DBOracleDataReaderAdapter_Close" xml:space="preserve">
+  <data name="DBOracleCommand_CloseDataReader" xml:space="preserve">
     <value>Erro ao fechar o DataReader</value>
   </data>
-  <data name="DBOracleDataReaderAdapter_CommandClose" xml:space="preserve">
-    <value>Erro ao fechar o Command do DataReader</value>
-  </data>
-  <data name="DBOracleDataReaderAdapter_Disposal" xml:space="preserve">
+  <data name="DBOracleCommand_DisposeDataReader" xml:space="preserve">
     <value>Erro ao liberar os recursos do DataReader</value>
-  </data>
-  <data name="DBOracleDataReaderAdapter_Error" xml:space="preserve">
-    <value>Erro ao executar a query</value>
   </data>
   <data name="DBOracleDataReader_ColumnNotFound" xml:space="preserve">
     <value>A coluna '{0}' não existe no conjunto de dados</value>
@@ -227,5 +212,23 @@
   </data>
   <data name="DBOracleCommand_NullParameter" xml:space="preserve">
     <value>A lista de parâmetros do comando possui um elemento nulo!</value>
+  </data>
+  <data name="DBOracleCommand_ConnectionClear_Error" xml:space="preserve">
+    <value>Erro ao remover a referência à conexão do comando da base de dados</value>
+  </data>
+  <data name="DBOracleTransaction_RollbackSavepoint_Error" xml:space="preserve">
+    <value>Erro ao fazer rollback para o savepoint {0} na base de dados</value>
+  </data>
+  <data name="DBOracleConnection_CreateSavepoint_Error" xml:space="preserve">
+    <value>Erro ao criar o savepoint {0} na base de dados</value>
+  </data>
+  <data name="DBOracleTransaction_Commit_AlreadyFinished" xml:space="preserve">
+    <value>Não foi possível fazer o commit porque a transação já está finalizada</value>
+  </data>
+  <data name="DBOracleTransaction_RollbackSavepoint_AlreadyFinished" xml:space="preserve">
+    <value>Não foi possível fazer o rollback do savepoint {0} porque a transação já está finalizada</value>
+  </data>
+  <data name="DBOracleTransaction_RollbackTransaction_AlreadyFinished" xml:space="preserve">
+    <value>Não foi possível fazer o rollback da transação porque ela já está finalizada</value>
   </data>
 </root>

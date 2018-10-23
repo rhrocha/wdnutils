@@ -138,12 +138,6 @@
   <data name="DBOracleCommand_GetDataSet_DataRetrieveError" xml:space="preserve">
     <value>Error retrieving data rows from query</value>
   </data>
-  <data name="DBOracleCommand_GetDataTable_Error" xml:space="preserve">
-    <value>Returned DataSet does not contain at least one DataTable</value>
-  </data>
-  <data name="DBOracleCommand_LocalReplicaDenied" xml:space="preserve">
-    <value>This function cannot be performed on local database replica (offline mode)</value>
-  </data>
   <data name="DBOracleCommand_ParameterCollectionClear_Error" xml:space="preserve">
     <value>Error cleaning the command parameters collection</value>
   </data>
@@ -154,18 +148,18 @@
     <value>Error starting database transaction</value>
   </data>
   <data name="DBOracleConnection_ClosedWithActiveTransaction" xml:space="preserve">
-    <value>Database connection being closed without committing the transaction</value>
+    <value>The database connection was closed without committing the transaction. The transaction was rolled back automatically.</value>
   </data>
   <data name="DBOracleConnection_Close_Error" xml:space="preserve">
     <value>Error closing database connection</value>
   </data>
-  <data name="DBOracleConnection_Commit_Error" xml:space="preserve">
+  <data name="DBOracleTransaction_Commit_Error" xml:space="preserve">
     <value>Error committing database transaction</value>
   </data>
   <data name="DBOracleConnection_Constructor_Error" xml:space="preserve">
     <value>Cannot stablish connection to the database</value>
   </data>
-  <data name="DBOracleErrorHandler_DatabaseDown" xml:space="preserve">
+  <data name="DBOracleException_DatabaseDown" xml:space="preserve">
     <value>The database server refused the connection. Error: {0}.</value>
   </data>
   <data name="DBOracleConnection_Disposal_Error" xml:space="preserve">
@@ -174,29 +168,20 @@
   <data name="DBOracleConnection_EmptyConnectionString" xml:space="preserve">
     <value>Connection string must not be empty</value>
   </data>
-  <data name="DBOracleErrorHandler_NetworkError" xml:space="preserve">
+  <data name="DBOracleException_NetworkError" xml:space="preserve">
     <value>Cannot connect to the database, please check the network connection.{0}Error: {1}.</value>
   </data>
-  <data name="DBOracleConnection_NullConnection" xml:space="preserve">
+  <data name="DBOracleCommand_NullConnection" xml:space="preserve">
     <value>The database connection must not be null</value>
   </data>
   <data name="DBOracleConnection_Rollback_Error" xml:space="preserve">
     <value>Error rolling back database transaction</value>
   </data>
-  <data name="DBOracleConnection_Timeout" xml:space="preserve">
-    <value>Database connection timeout</value>
-  </data>
-  <data name="DBOracleDataReaderAdapter_Close" xml:space="preserve">
+  <data name="DBOracleCommand_CloseDataReader" xml:space="preserve">
     <value>Error closing DataReader</value>
   </data>
-  <data name="DBOracleDataReaderAdapter_CommandClose" xml:space="preserve">
-    <value>Error closing the Command of DataReader</value>
-  </data>
-  <data name="DBOracleDataReaderAdapter_Disposal" xml:space="preserve">
+  <data name="DBOracleCommand_DisposeDataReader" xml:space="preserve">
     <value>Error disposing DataReader</value>
-  </data>
-  <data name="DBOracleDataReaderAdapter_Error" xml:space="preserve">
-    <value>Error running query</value>
   </data>
   <data name="DBOracleDataReader_ColumnNotFound" xml:space="preserve">
     <value>The column '{0}' does not exist in the data set!</value>
@@ -227,5 +212,23 @@
   </data>
   <data name="DBOracleCommand_NullParameter" xml:space="preserve">
     <value>The parameter list for the command has a null element!</value>
+  </data>
+  <data name="DBOracleCommand_ConnectionClear_Error" xml:space="preserve">
+    <value>Error removing the connection reference from the database command</value>
+  </data>
+  <data name="DBOracleTransaction_RollbackSavepoint_Error" xml:space="preserve">
+    <value>Error rolling back to the database savepoint {0}</value>
+  </data>
+  <data name="DBOracleConnection_CreateSavepoint_Error" xml:space="preserve">
+    <value>Error creating the database savepoint {0}</value>
+  </data>
+  <data name="DBOracleTransaction_Commit_AlreadyFinished" xml:space="preserve">
+    <value>Cannot commit because the transaction was already finished</value>
+  </data>
+  <data name="DBOracleTransaction_RollbackSavepoint_AlreadyFinished" xml:space="preserve">
+    <value>Cannot rollback the savepoint {0} because the transaction was already finished</value>
+  </data>
+  <data name="DBOracleTransaction_RollbackTransaction_AlreadyFinished" xml:space="preserve">
+    <value>Cannot rollback the transaction because it was already finished</value>
   </data>
 </root>
