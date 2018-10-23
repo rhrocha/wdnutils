@@ -11,13 +11,13 @@
     <Company>Ricardo H. Rocha</Company>
     <Description>WDNUtils DBOracle library</Description>
     <Copyright>Copyright © 2018 Ricardo H. Rocha</Copyright>
-    <AssemblyVersion>1.0.5.5</AssemblyVersion>
-    <FileVersion>1.0.5.5</FileVersion>
+    <AssemblyVersion>1.0.6.6</AssemblyVersion>
+    <FileVersion>1.0.6.6</FileVersion>
     <RepositoryType></RepositoryType>
     <PackageLicenseUrl>https://github.com/rhrocha/wdnutils/blob/master/LICENSE</PackageLicenseUrl>
     <PackageTags>WDN</PackageTags>
-    <PackageReleaseNotes>First public release</PackageReleaseNotes>
-    <Version>1.0.5-beta</Version>
+    <PackageReleaseNotes>Removed max size for CLOB and BLOB bind parameters.</PackageReleaseNotes>
+    <Version>1.0.6-beta</Version>
     <PackageProjectUrl>https://github.com/rhrocha/wdnutils/</PackageProjectUrl>
   </PropertyGroup>
 
