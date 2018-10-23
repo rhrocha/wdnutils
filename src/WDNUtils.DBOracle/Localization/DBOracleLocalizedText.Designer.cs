@@ -295,15 +295,6 @@ namespace WDNUtils.DBOracle.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The value for the parameter &apos;{0}&apos; has {1} bytes but the maximum size is {2} bytes.
-        /// </summary>
-        internal static string DBOracleParameter_InvalidMaxSizeByteArray {
-            get {
-                return ResourceManager.GetString("DBOracleParameter_InvalidMaxSizeByteArray", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to The value for the parameter &apos;{0}&apos; has {1} characters but the maximum size is {2} characters.
         /// </summary>
         internal static string DBOracleParameter_InvalidMaxSizeString {
@@ -318,15 +309,6 @@ namespace WDNUtils.DBOracle.Localization {
         internal static string DBOracleParameter_InvalidName {
             get {
                 return ResourceManager.GetString("DBOracleParameter_InvalidName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The parameter &apos;{0}&apos; must be an input type parameter (Direction.Input ou Direction.InputOutput) to use the automatic maximum size.
-        /// </summary>
-        internal static string DBOracleParameter_InvalidParameterDirectionAutoSize {
-            get {
-                return ResourceManager.GetString("DBOracleParameter_InvalidParameterDirectionAutoSize", resourceCulture);
             }
         }
         

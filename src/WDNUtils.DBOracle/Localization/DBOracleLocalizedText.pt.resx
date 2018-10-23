@@ -189,17 +189,11 @@
   <data name="DBOracleParameter_CastError" xml:space="preserve">
     <value>O parâmetro '{0}' é do tipo {1}, e não pode ser convertido para {2}</value>
   </data>
-  <data name="DBOracleParameter_InvalidMaxSizeByteArray" xml:space="preserve">
-    <value>O valor para o parâmetro '{0}' tem {1} bytes mas o tamanho máximo é {2} bytes</value>
-  </data>
   <data name="DBOracleParameter_InvalidMaxSizeString" xml:space="preserve">
     <value>O valor para o parâmetro '{0}' tem {1} caracteres mas o tamanho máximo é {2} caracteres</value>
   </data>
   <data name="DBOracleParameter_InvalidName" xml:space="preserve">
     <value>O nome do parâmetro não pode ser nulo ou vazio</value>
-  </data>
-  <data name="DBOracleParameter_InvalidParameterDirectionAutoSize" xml:space="preserve">
-    <value>O parâmetro '{0}' deve ser do tipo de entrada (Direction.Input ou Direction.InputOutput) para usar o tamanho máximo automatico</value>
   </data>
   <data name="DBOracleParameter_ParameterDisposalError" xml:space="preserve">
     <value>Erro ao liberar os recursos do parâmetro '{0}'</value>
@@ -208,7 +202,7 @@
     <value>Erro ao liberar os recursos do valor do parâmetro '{0}'</value>
   </data>
   <data name="DBOracleParameter_InvalidParameterDirectionSetValue" xml:space="preserve">
-    <value>O valor do parâmetro '{0}' porque ele não é do tipo entrada (Direction.Input ou Direction.InputOutput)</value>
+    <value>O valor do parâmetro '{0}' não pode ser alterado porque ele não é do tipo entrada (Direction.Input ou Direction.InputOutput)</value>
   </data>
   <data name="DBOracleCommand_NullParameter" xml:space="preserve">
     <value>A lista de parâmetros do comando possui um elemento nulo!</value>

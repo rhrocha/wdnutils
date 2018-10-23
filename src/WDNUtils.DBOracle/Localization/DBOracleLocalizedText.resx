@@ -189,17 +189,11 @@
   <data name="DBOracleParameter_CastError" xml:space="preserve">
     <value>The parameter '{0}' is a {1}, and cannot be converted to {2}</value>
   </data>
-  <data name="DBOracleParameter_InvalidMaxSizeByteArray" xml:space="preserve">
-    <value>The value for the parameter '{0}' has {1} bytes but the maximum size is {2} bytes</value>
-  </data>
   <data name="DBOracleParameter_InvalidMaxSizeString" xml:space="preserve">
     <value>The value for the parameter '{0}' has {1} characters but the maximum size is {2} characters</value>
   </data>
   <data name="DBOracleParameter_InvalidName" xml:space="preserve">
     <value>The parameter name cannot be null or empty</value>
-  </data>
-  <data name="DBOracleParameter_InvalidParameterDirectionAutoSize" xml:space="preserve">
-    <value>The parameter '{0}' must be an input type parameter (Direction.Input ou Direction.InputOutput) to use the automatic maximum size</value>
   </data>
   <data name="DBOracleParameter_ParameterDisposalError" xml:space="preserve">
     <value>Error disposing Oracle parameter {0}</value>
@@ -210,7 +204,7 @@
   <data name="DBOracleParameter_InvalidParameterDirectionSetValue" xml:space="preserve">
     <value>The value of the parameter '{0}' cannot be changed because it is not an input type parameter (Direction.Input ou Direction.InputOutput)</value>
   </data>
-  <data name="DBOracleCommand_NullParameter" xml:space="preserve">
+   <data name="DBOracleCommand_NullParameter" xml:space="preserve">
     <value>The parameter list for the command has a null element!</value>
   </data>
   <data name="DBOracleCommand_ConnectionClear_Error" xml:space="preserve">

@@ -156,11 +156,10 @@ namespace WDNUtils.DBOracle
         /// </summary>
         /// <param name="name">Parameter name</param>
         /// <param name="value">Parameter initial value (may be null)</param>
-        /// <param name="maxSize">Maximum length for the value, may be null for input or input/output parameters; if null, the value may be truncated by the server when storing into a smaller column</param>
         /// <param name="direction">Parameter type (input, output, input/output, or return value)</param>
-        protected DBOracleParameterClob ParamClob(string name, string value, int? maxSize, ParameterDirection direction = ParameterDirection.Input)
+        protected DBOracleParameterClob ParamClob(string name, string value, ParameterDirection direction = ParameterDirection.Input)
         {
-            return AddParameter(new DBOracleParameterClob(name: name, value: value, maxSize: maxSize, direction: direction));
+            return AddParameter(new DBOracleParameterClob(name: name, value: value, direction: direction));
         }
 
         /// <summary>
@@ -168,11 +167,10 @@ namespace WDNUtils.DBOracle
         /// </summary>
         /// <param name="name">Parameter name</param>
         /// <param name="value">Parameter initial value (may be null)</param>
-        /// <param name="maxSize">Maximum length for the value, may be null for input or input/output parameters; if null, the value may be truncated by the server when storing into a smaller column</param>
         /// <param name="direction">Parameter type (input, output, input/output, or return value)</param>
-        protected DBOracleParameterBlob ParamBlob(string name, byte[] value, int? maxSize, ParameterDirection direction = ParameterDirection.Input)
+        protected DBOracleParameterBlob ParamBlob(string name, byte[] value, ParameterDirection direction = ParameterDirection.Input)
         {
-            return AddParameter(new DBOracleParameterBlob(name: name, value: value, maxSize: maxSize, direction: direction));
+            return AddParameter(new DBOracleParameterBlob(name: name, value: value, direction: direction));
         }
 
         #endregion
