@@ -13,7 +13,8 @@ namespace WDNUtils.DBOracle
         /// Convert a OracleException instance into a ApplicationException with an user friendly exception if possible
         /// </summary>
         /// <param name="ex">Exception to be converted</param>
-        public static void ConvertOracleException(this Exception ex)
+        /// <param name="isConnecting">Indicates if the exception occurred when the database connection was being opened</param>
+        public static void ConvertOracleException(this Exception ex, bool isConnecting)
         {
             if (!(ex is OracleException oracleException))
                 return;
@@ -61,7 +62,7 @@ namespace WDNUtils.DBOracle
                     throw new ApplicationException(string.Format(DBOracleLocalizedText.DBOracleException_NetworkError, Environment.NewLine, string.Format(@"ORA-{0:00000} - {1}", oracleException.Number, oracleException.Message)), oracleException);
 
                 default:
-                    if ((oracleException.Number >= 12000) && (oracleException.Number < 13000))
+                    if ((isConnecting) && (oracleException.Number >= 12000) && (oracleException.Number < 13000))
                         throw new ApplicationException(string.Format(DBOracleLocalizedText.DBOracleException_DatabaseDown, Environment.NewLine, string.Format(@"ORA-{0:00000} - {1}", oracleException.Number, oracleException.Message)), oracleException);
                     break;
             }

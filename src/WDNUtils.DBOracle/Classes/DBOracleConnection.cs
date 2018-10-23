@@ -113,7 +113,7 @@ namespace WDNUtils.DBOracle
                     }
                     catch (Exception ex)
                     {
-                        ex.ConvertOracleException();
+                        ex.ConvertOracleException(isConnecting: true);
                         throw;
                     }
                 }
@@ -204,7 +204,7 @@ namespace WDNUtils.DBOracle
                     }
                     catch (Exception ex)
                     {
-                        ex.ConvertOracleException();
+                        ex.ConvertOracleException(isConnecting: false);
                         throw;
                     }
                 }

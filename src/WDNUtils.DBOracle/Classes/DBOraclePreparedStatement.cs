@@ -42,7 +42,7 @@ namespace WDNUtils.DBOracle
             }
             catch (Exception ex)
             {
-                ex.ConvertOracleException();
+                ex.ConvertOracleException(isConnecting: false);
                 throw;
             }
         }
