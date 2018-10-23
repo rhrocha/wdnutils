@@ -103,21 +103,21 @@ namespace WDNUtils.Common.Test
             void CheckTrim(string value, bool trimStart, bool trimEnd, params char[] trimChars)
             {
                 var v1 = value;
-                var v2 = value == null ? null : new StringBuilder(value);
+                var v2 = value is null ? null : new StringBuilder(value);
 
                 if ((trimStart) && (trimEnd))
                 {
-                    v1 = (v1 == null) ? null : (trimChars.Length > 1) ? v1.Trim(trimChars) : (trimChars.Length == 1) ? v1.Trim(trimChars[0]) : v1.Trim();
+                    v1 = (v1 is null) ? null : (trimChars.Length > 1) ? v1.Trim(trimChars) : (trimChars.Length == 1) ? v1.Trim(trimChars[0]) : v1.Trim();
                     v2 = (trimChars.Length > 1) ? v2.Trim(trimChars) : (trimChars.Length == 1) ? v2.Trim(trimChars[0]) : v2.Trim();
                 }
                 else if (trimStart)
                 {
-                    v1 = (v1 == null) ? null : (trimChars.Length > 1) ? v1.TrimStart(trimChars) : (trimChars.Length == 1) ? v1.TrimStart(trimChars[0]) : v1.TrimStart();
+                    v1 = (v1 is null) ? null : (trimChars.Length > 1) ? v1.TrimStart(trimChars) : (trimChars.Length == 1) ? v1.TrimStart(trimChars[0]) : v1.TrimStart();
                     v2 = (trimChars.Length > 1) ? v2.TrimStart(trimChars) : (trimChars.Length == 1) ? v2.TrimStart(trimChars[0]) : v2.TrimStart();
                 }
                 else if (trimEnd)
                 {
-                    v1 = (v1 == null) ? null : (trimChars.Length > 1) ? v1.TrimEnd(trimChars) : (trimChars.Length == 1) ? v1.TrimEnd(trimChars[0]) : v1.TrimEnd();
+                    v1 = (v1 is null) ? null : (trimChars.Length > 1) ? v1.TrimEnd(trimChars) : (trimChars.Length == 1) ? v1.TrimEnd(trimChars[0]) : v1.TrimEnd();
                     v2 = (trimChars.Length > 1) ? v2.TrimEnd(trimChars) : (trimChars.Length == 1) ? v2.TrimEnd(trimChars[0]) : v2.TrimEnd();
                 }
                 else
@@ -136,11 +136,11 @@ namespace WDNUtils.Common.Test
 
                 var base64 = input.ToBase64();
 
-                Assert.AreEqual((input == null) ? null : Convert.ToBase64String(input), base64);
+                Assert.AreEqual((input is null) ? null : Convert.ToBase64String(input), base64);
 
                 var output = base64.FromBase64();
 
-                Assert.IsTrue((input == null) ? (output == null) : Enumerable.SequenceEqual(input, output));
+                Assert.IsTrue((input is null) ? (output is null) : Enumerable.SequenceEqual(input, output));
             }
         }
     }

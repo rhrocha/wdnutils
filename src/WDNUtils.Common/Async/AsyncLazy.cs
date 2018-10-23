@@ -46,7 +46,7 @@ namespace WDNUtils.Common
         /// <summary>
         /// Gets a value indicating whether the <see cref="AsyncLazy{T}"/> has been initialized
         /// </summary>
-        public bool IsValueCreated => (_value != null) && (_value is Tuple<T>);
+        public bool IsValueCreated => (!(_value is null)) && (_value is Tuple<T>);
 
         /// <summary>
         /// Indicates if exceptions threw by the value factory should be captured to be thrown when GetValueAsync is called again, instead of calling the value factory again.

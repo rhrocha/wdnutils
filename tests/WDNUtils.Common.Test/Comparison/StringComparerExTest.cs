@@ -225,7 +225,7 @@ namespace WDNUtils.Common.Test
         {
             var message = TestCompareInternal(result: 0, v1: v1, v2: v2, comparisonType: comparisonType, nullIsLower: nullIsLower, isNull: isNull);
 
-            if (message != null)
+            if (!(message is null))
                 Assert.Fail(message);
         }
 
@@ -233,7 +233,7 @@ namespace WDNUtils.Common.Test
         {
             var message = TestCompareInternal(result: 1, v1: v1, v2: v2, comparisonType: comparisonType, nullIsLower: nullIsLower, isNull: isNull);
 
-            if (message != null)
+            if (!(message is null))
                 Assert.Fail(message);
         }
 
@@ -241,7 +241,7 @@ namespace WDNUtils.Common.Test
         {
             var message = TestCompareInternal(result: -1, v1: v1, v2: v2, comparisonType: comparisonType, nullIsLower: nullIsLower, isNull: isNull);
 
-            if (message != null)
+            if (!(message is null))
                 Assert.Fail(message);
         }
 
@@ -271,8 +271,8 @@ namespace WDNUtils.Common.Test
             {
                 if (!string.Equals(values[index], valueList[index], StringComparison.Ordinal))
                 {
-                    var v1 = (values[index] == null) ? "null" : $@"""{values[index]}""";
-                    var v2 = (valueList[index] == null) ? "null" : $@"""{valueList[index]}""";
+                    var v1 = (values[index] is null) ? "null" : $@"""{values[index]}""";
+                    var v2 = (valueList[index] is null) ? "null" : $@"""{valueList[index]}""";
 
                     Assert.Fail($@"{nameof(TestListSort)} {nameof(values)}[{index}]: {v1} != {v2} ");
                 }
@@ -295,16 +295,16 @@ namespace WDNUtils.Common.Test
             {
                 if (result != Math.Sign(StringComparerEx.Compare(v1: v1, v2: v2, comparisonType: comparisonType, nullIsLower: nullIsLowerValue, isNull: isNull)))
                 {
-                    v1 = (v1 == null) ? "null" : $@"""{v1}""";
-                    v2 = (v2 == null) ? "null" : $@"""{v2}""";
+                    v1 = (v1 is null) ? "null" : $@"""{v1}""";
+                    v2 = (v2 is null) ? "null" : $@"""{v2}""";
 
                     return $@"{nameof(StringComparerEx)}.{nameof(StringComparerEx.Compare)}({nameof(v1)}: {v1}, {nameof(v2)}: {v2}, {nameof(comparisonType)}: {Enum.GetName(typeof(StringComparisonEx), comparisonType)}, {nameof(nullIsLower)}: {(nullIsLowerValue ? "true" : "false")}) != {result}";
                 }
 
                 if (result != -Math.Sign(StringComparerEx.Compare(v1: v2, v2: v1, comparisonType: comparisonType, nullIsLower: nullIsLowerValue, isNull: isNull)))
                 {
-                    v1 = (v1 == null) ? "null" : $@"""{v1}""";
-                    v2 = (v2 == null) ? "null" : $@"""{v2}""";
+                    v1 = (v1 is null) ? "null" : $@"""{v1}""";
+                    v2 = (v2 is null) ? "null" : $@"""{v2}""";
 
                     return $@"{nameof(StringComparerEx)}.{nameof(StringComparerEx.Compare)}({nameof(v1)}: {v2}, {nameof(v2)}: {v1}, {nameof(comparisonType)}: {Enum.GetName(typeof(StringComparisonEx), comparisonType)}, {nameof(nullIsLower)}: {(nullIsLowerValue ? "true" : "false")}) != {result}";
                 }

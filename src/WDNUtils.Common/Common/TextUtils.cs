@@ -77,7 +77,7 @@ namespace WDNUtils.Common
             // The string is null, or the extraction starts at beginning
             // of the string, so just return the whole string
 
-            if ((value == null) || (start == 0))
+            if ((value is null) || (start == 0))
                 return value;
 
             // The start offset is bigger than the last character of the string
@@ -106,7 +106,7 @@ namespace WDNUtils.Common
             // The string is null, or the extraction starts at beginning of the string and the desired
             // length is equal or bigger than the string length, so just return the whole string
 
-            if ((value == null) || ((start == 0) && (length >= value.Length)))
+            if ((value is null) || ((start == 0) && (length >= value.Length)))
                 return value;
 
             // Desired length is less or equal to zero, or start offset is bigger than
@@ -377,7 +377,7 @@ namespace WDNUtils.Common
         /// <returns>An array of 8-bit unsigned integers that is equivalent to value</returns>
         public static byte[] FromBase64(this string value)
         {
-            return (value == null) ? null : Convert.FromBase64String(value);
+            return (value is null) ? null : Convert.FromBase64String(value);
         }
 
         /// <summary>
@@ -387,7 +387,7 @@ namespace WDNUtils.Common
         /// <returns>The string representation, in base 64, of the contents of value</returns>
         public static string ToBase64(this byte[] value)
         {
-            return (value == null) ? null : Convert.ToBase64String(value);
+            return (value is null) ? null : Convert.ToBase64String(value);
         }
 
         #endregion

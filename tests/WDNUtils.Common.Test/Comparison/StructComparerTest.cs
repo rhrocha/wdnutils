@@ -53,7 +53,7 @@ namespace WDNUtils.Common.Test
                 // Value comparison
                 TestBigger<T>(v1: value, v2: zero, nullIsLower: false, isNull: null);
 
-                if (negative != null)
+                if (!(negative is null))
                 {
                     // Null sort order
                     TestBigger<T>(v1: negative(value), v2: null, nullIsLower: true, isNull: null);
@@ -66,7 +66,7 @@ namespace WDNUtils.Common.Test
 
             var testList =
                 Enumerable.Repeat<T?>(null, 2)
-                .Concat((negative == null) ? Enumerable.Empty<T?>() : valueList.Reverse().Select(value => (T?)negative(value)))
+                .Concat((negative is null) ? Enumerable.Empty<T?>() : valueList.Reverse().Select(value => (T?)negative(value)))
                 .Concat(Enumerable.Repeat<T?>(zero, 2))
                 .Concat(valueList.Select(value => (T?)value))
                 .ToList();
@@ -74,7 +74,7 @@ namespace WDNUtils.Common.Test
             TestListSort(nullIsLower: true, values: testList);
 
             testList =
-                ((negative == null) ? Enumerable.Empty<T?>() : valueList.Reverse().Select(value => (T?)negative(value)))
+                ((negative is null) ? Enumerable.Empty<T?>() : valueList.Reverse().Select(value => (T?)negative(value)))
                 .Concat(Enumerable.Repeat<T?>(zero, 2))
                 .Concat(valueList.Select(value => (T?)value))
                 .Concat(Enumerable.Repeat<T?>(null, 2))
@@ -89,7 +89,7 @@ namespace WDNUtils.Common.Test
         {
             var message = TestCompareInternal(result: 0, v1: v1, v2: v2, nullIsLower: nullIsLower, isNull: isNull);
 
-            if (message != null)
+            if (!(message is null))
                 Assert.Fail(message);
         }
 
@@ -97,7 +97,7 @@ namespace WDNUtils.Common.Test
         {
             var message = TestCompareInternal(result: 1, v1: v1, v2: v2, nullIsLower: nullIsLower, isNull: isNull);
 
-            if (message != null)
+            if (!(message is null))
                 Assert.Fail(message);
         }
 
@@ -105,7 +105,7 @@ namespace WDNUtils.Common.Test
         {
             var message = TestCompareInternal(result: -1, v1: v1, v2: v2, nullIsLower: nullIsLower, isNull: isNull);
 
-            if (message != null)
+            if (!(message is null))
                 Assert.Fail(message);
         }
 
@@ -135,8 +135,8 @@ namespace WDNUtils.Common.Test
             {
                 if ((values[index].HasValue != valueList[index].HasValue) || ((values[index].HasValue) && (values[index].Value.CompareTo(valueList[index].Value) != 0)))
                 {
-                    var v1 = (values[index] == null) ? "null" : $@"""{values[index]}""";
-                    var v2 = (valueList[index] == null) ? "null" : $@"""{valueList[index]}""";
+                    var v1 = (values[index] is null) ? "null" : $@"""{values[index]}""";
+                    var v2 = (valueList[index] is null) ? "null" : $@"""{valueList[index]}""";
 
                     Assert.Fail($@"{nameof(TestListSort)} {nameof(values)}[{index}]: {v1} != {v2} ");
                 }
@@ -159,16 +159,16 @@ namespace WDNUtils.Common.Test
             {
                 if (result != Math.Sign(StructComparer.Compare(v1: v1, v2: v2, nullIsLower: nullIsLowerValue, isNull: isNull)))
                 {
-                    var v1str = (v1 == null) ? "null" : $@"""{v1}""";
-                    var v2str = (v2 == null) ? "null" : $@"""{v2}""";
+                    var v1str = (v1 is null) ? "null" : $@"""{v1}""";
+                    var v2str = (v2 is null) ? "null" : $@"""{v2}""";
 
                     return $@"{nameof(StructComparer)}.{nameof(StructComparer.Compare)}<{typeof(T).GetType().Name}>({nameof(v1)}: {v1str}, {nameof(v2)}: {v2str}, {nameof(nullIsLower)}: {(nullIsLowerValue ? "true" : "false")}) != {result}";
                 }
 
                 if (result != -Math.Sign(StructComparer.Compare(v1: v2, v2: v1, nullIsLower: nullIsLowerValue, isNull: isNull)))
                 {
-                    var v1str = (v1 == null) ? "null" : $@"""{v1}""";
-                    var v2str = (v2 == null) ? "null" : $@"""{v2}""";
+                    var v1str = (v1 is null) ? "null" : $@"""{v1}""";
+                    var v2str = (v2 is null) ? "null" : $@"""{v2}""";
 
                     return $@"{nameof(StructComparer)}.{nameof(StructComparer.Compare)}<{typeof(T).GetType().Name}>({nameof(v1)}: {v2str}, {nameof(v2)}: {v1str}, {nameof(nullIsLower)}: {(nullIsLowerValue ? "true" : "false")}) != {result}";
                 }

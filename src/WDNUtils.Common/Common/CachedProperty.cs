@@ -168,14 +168,14 @@ namespace WDNUtils.Common
         {
             var references = _references;
 
-            if (references == null)
+            if (references is null)
                 return;
 
             lock (_lock)
             {
                 references = _references;
 
-                if (references == null)
+                if (references is null)
                     return;
 
                 try
