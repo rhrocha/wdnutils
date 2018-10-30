@@ -29,6 +29,15 @@ IF EXIST ".\WDNUtils.Common.Test\obj" DEL /A /F /S /Q ".\WDNUtils.Common.Test\ob
 IF EXIST ".\WDNUtils.Common.Test\obj" RMDIR /S /Q ".\WDNUtils.Common.Test\obj"
 
 REM ========================================================================
+ECHO ### Clean up WDNUtils.DBOracle.Test
+
+IF EXIST ".\WDNUtils.DBOracle.Test\WDNUtils.DBOracle.Test.csproj.user" DEL /A /F /Q ".\WDNUtils.DBOracle.Test\WDNUtils.DBOracle.Test.csproj.user"
+IF EXIST ".\WDNUtils.DBOracle.Test\bin" DEL /A /F /S /Q ".\WDNUtils.DBOracle.Test\bin"
+IF EXIST ".\WDNUtils.DBOracle.Test\bin" RMDIR /S /Q ".\WDNUtils.DBOracle.Test\bin"
+IF EXIST ".\WDNUtils.DBOracle.Test\obj" DEL /A /F /S /Q ".\WDNUtils.DBOracle.Test\obj"
+IF EXIST ".\WDNUtils.DBOracle.Test\obj" RMDIR /S /Q ".\WDNUtils.DBOracle.Test\obj"
+
+REM ========================================================================
 ECHO ### Clean up vistual studio generated files
 
 IF EXIST ".\.vs\" DEL /A /F /S /Q ".\.vs"
