@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace WDNUtils.DBOracle.Test.Classes
+namespace WDNUtils.DBOracle.Test
 {
     [TestClass]
     public class DBOracleConnectionStringsTest
