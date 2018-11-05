@@ -5,32 +5,26 @@
     <ApplicationIcon />
     <OutputType>Library</OutputType>
     <StartupObject />
-    <Product>WDNUtils Common</Product>
+    <Product>WDNUtils DBSqlServer</Product>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Ricardo H. Rocha</Authors>
     <Company>Ricardo H. Rocha</Company>
-    <Description>WDNUtils Common library</Description>
-    <Copyright>Copyright Â© 2018 Ricardo H. Rocha</Copyright>
+    <Description>WDNUtils DBSqlServer library</Description>
+    <Copyright>Copyright © 2018 Ricardo H. Rocha</Copyright>
     <AssemblyVersion>1.0.6.6</AssemblyVersion>
     <FileVersion>1.0.6.6</FileVersion>
     <RepositoryType></RepositoryType>
     <PackageLicenseUrl>https://github.com/rhrocha/wdnutils/blob/master/LICENSE</PackageLicenseUrl>
     <PackageTags>WDN</PackageTags>
-    <PackageReleaseNotes>No changes; validated with other WDNUtils packages in the release v1.0.6-beta.</PackageReleaseNotes>
+    <PackageReleaseNotes>First release.</PackageReleaseNotes>
     <Version>1.0.6-beta</Version>
     <PackageProjectUrl>https://github.com/rhrocha/wdnutils/</PackageProjectUrl>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
-  </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="log4net" Version="2.0.8" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.5.1" />
+    <PackageReference Include="WDNUtils.Common" Version="1.0.5-beta" />
   </ItemGroup>
 
 </Project>

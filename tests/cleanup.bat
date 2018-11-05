@@ -20,6 +20,15 @@ IF EXIST "..\src\WDNUtils.DBOracle\obj" DEL /A /F /S /Q "..\src\WDNUtils.DBOracl
 IF EXIST "..\src\WDNUtils.DBOracle\obj" RMDIR /S /Q "..\src\WDNUtils.DBOracle\obj"
 
 REM ========================================================================
+ECHO ### Clean up WDNUtils.DBSqlServer
+
+IF EXIST "..\src\WDNUtils.DBSqlServer\WDNUtils.DBSqlServer.csproj.user" DEL /A /F /Q "..\src\WDNUtils.DBSqlServer\WDNUtils.DBSqlServer.csproj.user"
+IF EXIST "..\src\WDNUtils.DBSqlServer\bin" DEL /A /F /S /Q "..\src\WDNUtils.DBSqlServer\bin"
+IF EXIST "..\src\WDNUtils.DBSqlServer\bin" RMDIR /S /Q "..\src\WDNUtils.DBSqlServer\bin"
+IF EXIST "..\src\WDNUtils.DBSqlServer\obj" DEL /A /F /S /Q "..\src\WDNUtils.DBSqlServer\obj"
+IF EXIST "..\src\WDNUtils.DBSqlServer\obj" RMDIR /S /Q "..\src\WDNUtils.DBSqlServer\obj"
+
+REM ========================================================================
 ECHO ### Clean up WDNUtils.Common.Test
 
 IF EXIST ".\WDNUtils.Common.Test\WDNUtils.Common.Test.csproj.user" DEL /A /F /Q ".\WDNUtils.Common.Test\WDNUtils.Common.Test.csproj.user"
@@ -36,6 +45,15 @@ IF EXIST ".\WDNUtils.DBOracle.Test\bin" DEL /A /F /S /Q ".\WDNUtils.DBOracle.Tes
 IF EXIST ".\WDNUtils.DBOracle.Test\bin" RMDIR /S /Q ".\WDNUtils.DBOracle.Test\bin"
 IF EXIST ".\WDNUtils.DBOracle.Test\obj" DEL /A /F /S /Q ".\WDNUtils.DBOracle.Test\obj"
 IF EXIST ".\WDNUtils.DBOracle.Test\obj" RMDIR /S /Q ".\WDNUtils.DBOracle.Test\obj"
+
+REM ========================================================================
+ECHO ### Clean up WDNUtils.DBSqlServer.Test
+
+IF EXIST ".\WDNUtils.DBSqlServer.Test\WDNUtils.DBSqlServer.Test.csproj.user" DEL /A /F /Q ".\WDNUtils.DBSqlServer.Test\WDNUtils.DBSqlServer.Test.csproj.user"
+IF EXIST ".\WDNUtils.DBSqlServer.Test\bin" DEL /A /F /S /Q ".\WDNUtils.DBSqlServer.Test\bin"
+IF EXIST ".\WDNUtils.DBSqlServer.Test\bin" RMDIR /S /Q ".\WDNUtils.DBSqlServer.Test\bin"
+IF EXIST ".\WDNUtils.DBSqlServer.Test\obj" DEL /A /F /S /Q ".\WDNUtils.DBSqlServer.Test\obj"
+IF EXIST ".\WDNUtils.DBSqlServer.Test\obj" RMDIR /S /Q ".\WDNUtils.DBSqlServer.Test\obj"
 
 REM ========================================================================
 ECHO ### Clean up vistual studio generated files
