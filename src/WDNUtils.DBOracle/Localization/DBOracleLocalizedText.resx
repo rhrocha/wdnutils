@@ -196,10 +196,10 @@
     <value>The parameter name cannot be null or empty</value>
   </data>
   <data name="DBOracleParameter_ParameterDisposalError" xml:space="preserve">
-    <value>Error disposing Oracle parameter {0}</value>
+    <value>Error disposing the bind parameter {0}</value>
   </data>
   <data name="DBOracleParameter_ValueDisposalError" xml:space="preserve">
-    <value>Error disposing the value of the Oracle parameter {0}</value>
+    <value>Error disposing the value of the bind parameter {0}</value>
   </data>
   <data name="DBOracleParameter_InvalidParameterDirectionSetValue" xml:space="preserve">
     <value>The value of the parameter '{0}' cannot be changed because it is not an input type parameter (Direction.Input ou Direction.InputOutput)</value>
