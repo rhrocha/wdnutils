@@ -76,6 +76,7 @@ namespace WDNUtils.DBSqlServer
 
         /// <summary>
         /// Gets or sets a Boolean value that enables multiple active result sets (MARS)
+        /// </summary>
         public bool MultipleActiveResultSets { get => _builder.MultipleActiveResultSets; set => _builder.MultipleActiveResultSets = value; }
 
         /// <summary>
