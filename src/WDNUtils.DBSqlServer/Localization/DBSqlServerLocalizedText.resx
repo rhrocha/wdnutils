@@ -1,0 +1,209 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+	<!-- 
+		Microsoft ResX Schema
+
+		Version 1.3
+
+		The primary goals of this format is to allow a simple XML format 
+		that is mostly human readable. The generation and parsing of the 
+		various data types are done through the TypeConverter classes 
+		associated with the data types.
+
+		Example:
+
+		... ado.net/XML headers & schema ...
+		<resheader name="resmimetype">text/microsoft-resx</resheader>
+		<resheader name="version">1.3</resheader>
+		<resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+		<resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+		<data name="Name1">this is my long string</data>
+		<data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+		<data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+			[base64 mime encoded serialized .NET Framework object]
+		</data>
+		<data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+			[base64 mime encoded string representing a byte array form of the .NET Framework object]
+		</data>
+
+		There are any number of "resheader" rows that contain simple 
+		name/value pairs.
+
+		Each data row contains a name, and value. The row also contains a 
+		type or mimetype. Type corresponds to a .NET class that support 
+		text/value conversion through the TypeConverter architecture. 
+		Classes that don't support this are serialized and stored with the 
+		mimetype set.
+
+		The mimetype is used for serialized objects, and tells the 
+		ResXResourceReader how to depersist the object. This is currently not 
+		extensible. For a given mimetype the value must be set accordingly:
+
+		Note - application/x-microsoft.net.object.binary.base64 is the format 
+		that the ResXResourceWriter will generate, however the reader can 
+		read any of the formats listed below.
+
+		mimetype: application/x-microsoft.net.object.binary.base64
+		value   : The object must be serialized with 
+			: System.Serialization.Formatters.Binary.BinaryFormatter
+			: and then encoded with base64 encoding.
+
+		mimetype: application/x-microsoft.net.object.soap.base64
+		value   : The object must be serialized with 
+			: System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+			: and then encoded with base64 encoding.
+
+		mimetype: application/x-microsoft.net.object.bytearray.base64
+		value   : The object must be serialized into a byte array 
+			: using a System.ComponentModel.TypeConverter
+			: and then encoded with base64 encoding.
+	-->
+	
+	<xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+		<xsd:element name="root" msdata:IsDataSet="true">
+			<xsd:complexType>
+				<xsd:choice maxOccurs="unbounded">
+					<xsd:element name="data">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+								<xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
+							<xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+							<xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="resheader">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" use="required" />
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:choice>
+			</xsd:complexType>
+		</xsd:element>
+	</xsd:schema>
+	<resheader name="resmimetype">
+		<value>text/microsoft-resx</value>
+	</resheader>
+	<resheader name="version">
+		<value>1.3</value>
+	</resheader>
+	<resheader name="reader">
+		<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<resheader name="writer">
+		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<data name="DBSqlServerCommand_BindError" xml:space="preserve">
+		<value>Error binding parameter {0}</value>
+	</data>
+	<data name="DBSqlServerCommand_DataAdapter_Disposal_Error" xml:space="preserve">
+		<value>Error disposing DataAdapter</value>
+	</data>
+	<data name="DBSqlServerCommand_Disposal_Error" xml:space="preserve">
+		<value>Error disposing database command</value>
+	</data>
+	<data name="DBSqlServerCommand_Error" xml:space="preserve">
+		<value>Error creating database command object</value>
+	</data>
+	<data name="DBSqlServerCommand_ExecuteNonQuery_Error" xml:space="preserve">
+		<value>Error running non-query statement</value>
+	</data>
+	<data name="DBSqlServerCommand_GetDataSet_DataAdapterError" xml:space="preserve">
+		<value>Error creating DataAdapter</value>
+	</data>
+	<data name="DBSqlServerCommand_GetDataSet_DataRetrieveError" xml:space="preserve">
+		<value>Error retrieving data rows from query</value>
+	</data>
+	<data name="DBSqlServerCommand_ParameterCollectionClear_Error" xml:space="preserve">
+		<value>Error cleaning the command parameters collection</value>
+	</data>
+	<data name="DBSqlServerConnection_BeginTransaction_Closed" xml:space="preserve">
+		<value>The database connection is closed</value>
+	</data>
+	<data name="DBSqlServerConnection_BeginTransaction_Error" xml:space="preserve">
+		<value>Error starting database transaction</value>
+	</data>
+	<data name="DBSqlServerConnection_ClosedWithActiveTransaction" xml:space="preserve">
+		<value>The database connection was closed without committing the transaction. The transaction was rolled back automatically.</value>
+	</data>
+	<data name="DBSqlServerConnection_Close_Error" xml:space="preserve">
+		<value>Error closing database connection</value>
+	</data>
+	<data name="DBSqlServerTransaction_Commit_Error" xml:space="preserve">
+		<value>Error committing database transaction</value>
+	</data>
+	<data name="DBSqlServerConnection_Constructor_Error" xml:space="preserve">
+		<value>Cannot stablish connection to the database</value>
+	</data>
+	<data name="DBSqlServerException_DatabaseDown" xml:space="preserve">
+		<value>The database server refused the connection. Error: {0}.</value>
+	</data>
+	<data name="DBSqlServerConnection_Disposal_Error" xml:space="preserve">
+		<value>Error disposing database connection resources</value>
+	</data>
+	<data name="DBSqlServerConnection_EmptyConnectionString" xml:space="preserve">
+		<value>Connection string must not be empty</value>
+	</data>
+	<data name="DBSqlServerException_NetworkError" xml:space="preserve">
+		<value>Cannot connect to the database, please check the network connection.{0}Error: {1}.</value>
+	</data>
+	<data name="DBSqlServerCommand_NullConnection" xml:space="preserve">
+		<value>The database connection must not be null</value>
+	</data>
+	<data name="DBSqlServerConnection_Rollback_Error" xml:space="preserve">
+		<value>Error rolling back database transaction</value>
+	</data>
+	<data name="DBSqlServerCommand_CloseDataReader" xml:space="preserve">
+		<value>Error closing DataReader</value>
+	</data>
+	<data name="DBSqlServerCommand_DisposeDataReader" xml:space="preserve">
+		<value>Error disposing DataReader</value>
+	</data>
+	<data name="DBSqlServerDataReader_ColumnNotFound" xml:space="preserve">
+		<value>The column '{0}' does not exist in the data set!</value>
+	</data>
+	<data name="DBSqlServerParameter_CastError" xml:space="preserve">
+		<value>The parameter '{0}' is a {1}, and cannot be converted to {2}</value>
+	</data>
+	<data name="DBSqlServerParameter_InvalidMaxSizeString" xml:space="preserve">
+		<value>The value for the parameter '{0}' has {1} characters but the maximum size is {2} characters</value>
+	</data>
+	<data name="DBSqlServerParameter_InvalidName" xml:space="preserve">
+		<value>The parameter name cannot be null or empty</value>
+	</data>
+	<data name="DBSqlServerParameter_ParameterDisposalError" xml:space="preserve">
+		<value>Error disposing the bind parameter {0}</value>
+	</data>
+	<data name="DBSqlServerParameter_ValueDisposalError" xml:space="preserve">
+		<value>Error disposing the value of the bind parameter {0}</value>
+	</data>
+	<data name="DBSqlServerParameter_InvalidParameterDirectionSetValue" xml:space="preserve">
+		<value>The value of the parameter '{0}' cannot be changed because it is not an input type parameter (Direction.Input ou Direction.InputOutput)</value>
+	</data>
+	 <data name="DBSqlServerCommand_NullParameter" xml:space="preserve">
+		<value>The parameter list for the command has a null element!</value>
+	</data>
+	<data name="DBSqlServerCommand_ConnectionClear_Error" xml:space="preserve">
+		<value>Error removing the connection reference from the database command</value>
+	</data>
+	<data name="DBSqlServerTransaction_RollbackSavepoint_Error" xml:space="preserve">
+		<value>Error rolling back to the database savepoint {0}</value>
+	</data>
+	<data name="DBSqlServerConnection_CreateSavepoint_Error" xml:space="preserve">
+		<value>Error creating the database savepoint {0}</value>
+	</data>
+	<data name="DBSqlServerTransaction_Commit_AlreadyFinished" xml:space="preserve">
+		<value>Cannot commit because the transaction was already finished</value>
+	</data>
+	<data name="DBSqlServerTransaction_RollbackSavepoint_AlreadyFinished" xml:space="preserve">
+		<value>Cannot rollback the savepoint {0} because the transaction was already finished</value>
+	</data>
+	<data name="DBSqlServerTransaction_RollbackTransaction_AlreadyFinished" xml:space="preserve">
+		<value>Cannot rollback the transaction because it was already finished</value>
+	</data>
+</root>
