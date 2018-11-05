@@ -43,7 +43,7 @@
       <LastGenOutput>DBOracleLocalizedText.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-  
+
   <ItemGroup>
     <PackageReference Include="log4net" Version="2.0.8" />
     <PackageReference Include="WDNUtils.Common" Version="1.0.5-beta" />
