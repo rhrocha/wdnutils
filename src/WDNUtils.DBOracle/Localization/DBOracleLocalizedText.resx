@@ -204,7 +204,7 @@
   <data name="DBOracleParameter_InvalidParameterDirectionSetValue" xml:space="preserve">
     <value>The value of the parameter '{0}' cannot be changed because it is not an input type parameter (Direction.Input ou Direction.InputOutput)</value>
   </data>
-   <data name="DBOracleCommand_NullParameter" xml:space="preserve">
+  <data name="DBOracleCommand_NullParameter" xml:space="preserve">
     <value>The parameter list for the command has a null element!</value>
   </data>
   <data name="DBOracleCommand_ConnectionClear_Error" xml:space="preserve">

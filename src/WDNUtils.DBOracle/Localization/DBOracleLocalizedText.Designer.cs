@@ -322,7 +322,7 @@ namespace WDNUtils.DBOracle.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Error disposing Oracle parameter {0}.
+        ///   Looks up a localized string similar to Error disposing the bind parameter {0}.
         /// </summary>
         internal static string DBOracleParameter_ParameterDisposalError {
             get {
@@ -331,7 +331,7 @@ namespace WDNUtils.DBOracle.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Error disposing the value of the Oracle parameter {0}.
+        ///   Looks up a localized string similar to Error disposing the value of the bind parameter {0}.
         /// </summary>
         internal static string DBOracleParameter_ValueDisposalError {
             get {
