@@ -67,38 +67,7 @@ namespace WDNUtils.DBOracle
             }
             catch (Exception)
             {
-                try
-                {
-                    (Parameter?.Value as IDisposable)?.Dispose();
-                }
-                catch (Exception ex)
-                {
-                    try
-                    {
-                        Log.Error(string.Format(DBOracleLocalizedText.DBOracleParameter_ValueDisposalError, parameterName), ex);
-                    }
-                    catch (Exception)
-                    {
-                        // Nothing to do
-                    }
-                }
-
-                try
-                {
-                    Parameter?.Dispose();
-                }
-                catch (Exception ex)
-                {
-                    try
-                    {
-                        Log.Error(string.Format(DBOracleLocalizedText.DBOracleParameter_ParameterDisposalError, parameterName), ex);
-                    }
-                    catch (Exception)
-                    {
-                        // Nothing to do
-                    }
-                }
-
+                Close();
                 throw;
             }
         }
@@ -136,21 +105,7 @@ namespace WDNUtils.DBOracle
             if ((Parameter.Direction != ParameterDirection.Input) && (Parameter.Direction != ParameterDirection.InputOutput))
                 throw new InvalidOperationException(string.Format(DBOracleLocalizedText.DBOracleParameter_InvalidParameterDirectionSetValue, Parameter.ParameterName));
 
-            try
-            {
-                (Parameter?.Value as IDisposable)?.Dispose();
-            }
-            catch (Exception ex)
-            {
-                try
-                {
-                    Log.Error(string.Format(DBOracleLocalizedText.DBOracleParameter_ValueDisposalError, Parameter.ParameterName), ex);
-                }
-                catch (Exception)
-                {
-                    // Nothing to do
-                }
-            }
+            DisposeParameterValue();
 
             Parameter.Value = value ?? DBNull.Value;
         }
@@ -160,28 +115,54 @@ namespace WDNUtils.DBOracle
         #region Release database resources
 
         /// <summary>
-        /// Disposes the bind parameter, and its current value if necessary
+        /// Disposes and clean the bind parameter value
         /// </summary>
-        private void Close()
+        private void DisposeParameterValue()
         {
-            if (Parameter is null)
+            var parameter = Parameter;
+
+            if (parameter is null)
                 return;
 
             try
             {
-                (Parameter?.Value as IDisposable)?.Dispose();
+                (parameter.Value as IDisposable)?.Dispose();
             }
             catch (Exception ex)
             {
                 try
                 {
-                    Log.Error(string.Format(DBOracleLocalizedText.DBOracleParameter_ValueDisposalError, Parameter.ParameterName), ex);
+                    Log.Error(string.Format(DBOracleLocalizedText.DBOracleParameter_ValueDisposalError, parameter.ParameterName), ex);
                 }
                 catch (Exception)
                 {
                     // Nothing to do
                 }
             }
+
+            try
+            {
+                parameter.Value = null;
+            }
+            catch (Exception ex)
+            {
+                try
+                {
+                    Log.Error(string.Format(DBOracleLocalizedText.DBOracleParameter_ValueCleanupError, parameter.ParameterName), ex);
+                }
+                catch (Exception)
+                {
+                    // Nothing to do
+                }
+            }
+        }
+
+        /// <summary>
+        /// Disposes the bind parameter, and its current value if necessary
+        /// </summary>
+        private void Close()
+        {
+            DisposeParameterValue();
 
             try
             {

@@ -331,6 +331,15 @@ namespace WDNUtils.DBOracle.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error cleaning the value of the bind parameter {0}.
+        /// </summary>
+        internal static string DBOracleParameter_ValueCleanupError {
+            get {
+                return ResourceManager.GetString("DBOracleParameter_ValueCleanupError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error disposing the value of the bind parameter {0}.
         /// </summary>
         internal static string DBOracleParameter_ValueDisposalError {

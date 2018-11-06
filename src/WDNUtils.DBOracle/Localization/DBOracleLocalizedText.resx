@@ -198,6 +198,9 @@
   <data name="DBOracleParameter_ParameterDisposalError" xml:space="preserve">
     <value>Error disposing the bind parameter {0}</value>
   </data>
+  <data name="DBOracleParameter_ValueCleanupError" xml:space="preserve">
+    <value>Error cleaning the value of the bind parameter {0}</value>
+  </data>
   <data name="DBOracleParameter_ValueDisposalError" xml:space="preserve">
     <value>Error disposing the value of the bind parameter {0}</value>
   </data>
