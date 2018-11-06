@@ -47,7 +47,7 @@ namespace WDNUtils.DBOracle
         {
             OracleDataReader = null;
 
-            ColumnIndex.Clear();  // This method fills the internal array with zeros to help the gc
+            ColumnIndex?.Clear();  // This method fills the internal array with zeros to help the gc
             ColumnIndex = null;
         }
 
