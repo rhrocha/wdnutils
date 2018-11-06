@@ -331,6 +331,15 @@ namespace WDNUtils.DBSqlServer.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error cleaning the value of the bind parameter {0}.
+        /// </summary>
+        internal static string DBSqlServerParameter_ValueCleanupError {
+            get {
+                return ResourceManager.GetString("DBSqlServerParameter_ValueCleanupError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error disposing the value of the bind parameter {0}.
         /// </summary>
         internal static string DBSqlServerParameter_ValueDisposalError {
