@@ -26,7 +26,7 @@ namespace WDNUtils.DBSqlServer
         /// <summary>
         /// Gets or sets the user ID to be used when connecting to SQL Server
         /// </summary>
-        public string UserID { get => _builder.UserID; set { if (value == null) { RemoveProperties(@"User ID", @"user", @"uid"); } else { _builder.UserID = value; } } }
+        public string UserID { get => _builder.UserID; set { if (value is null) { RemoveProperties(@"User ID", @"user", @"uid"); } else { _builder.UserID = value; } } }
 
         /// <summary>
         /// Gets or sets a string value that indicates the type system the application expects
@@ -46,7 +46,7 @@ namespace WDNUtils.DBSqlServer
             get => string.Equals(_builder.TransactionBinding, @"Explicit Unbind", StringComparison.OrdinalIgnoreCase) ? true :
                 string.Equals(_builder.TransactionBinding, @"Implicit Unbind", StringComparison.OrdinalIgnoreCase) ? (bool?)false :
                 null;
-            set { if (value == null) { RemoveProperties(@"Transaction Binding"); } else { _builder.TransactionBinding = value.Value ? @"Explicit Unbind" : @"Implicit Unbind"; } }
+            set { if (value is null) { RemoveProperties(@"Transaction Binding"); } else { _builder.TransactionBinding = value.Value ? @"Explicit Unbind" : @"Implicit Unbind"; } }
         }
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace WDNUtils.DBSqlServer
         /// <summary>
         /// Gets or sets a value that indicates whether to redirect the connection from the default SQL Server Express instance to a runtime-initiated instance running under the account of the caller
         /// </summary>
-        public bool? UserInstance { get => _builder.UserInstance; set { if (value == null) { RemoveProperties(@"User Instance"); } else { _builder.UserInstance = value.Value; } } }
+        public bool? UserInstance { get => _builder.UserInstance; set { if (value is null) { RemoveProperties(@"User Instance"); } else { _builder.UserInstance = value.Value; } } }
 
         /// <summary>
         /// Gets or sets a Boolean value that indicates if security-sensitive information, such as the password, is not returned as part of the connection if the connection is open or has ever been in an open state
@@ -112,7 +112,7 @@ namespace WDNUtils.DBSqlServer
         /// <summary>
         /// Gets or sets the name of the database associated with the connection
         /// </summary>
-        public string InitialCatalog { get => _builder.InitialCatalog; set { if (value == null) { RemoveProperties(@"Initial Catalog", @"database"); } else { _builder.InitialCatalog = value; } } }
+        public string InitialCatalog { get => _builder.InitialCatalog; set { if (value is null) { RemoveProperties(@"Initial Catalog", @"database"); } else { _builder.InitialCatalog = value; } } }
 
         /// <summary>
         /// Gets or sets a Boolean value that indicates whether the application workload type will be read-only or read/write (default is false, for read/write workload)
@@ -122,7 +122,7 @@ namespace WDNUtils.DBSqlServer
         /// <summary>
         /// Gets or sets the name of the application associated with the connection string
         /// </summary>
-        public string ApplicationName { get => _builder.ApplicationName; set { if (value == null) { RemoveProperties(@"Application Name", @"app"); } else { _builder.ApplicationName = value; } } }
+        public string ApplicationName { get => _builder.ApplicationName; set { if (value is null) { RemoveProperties(@"Application Name", @"app"); } else { _builder.ApplicationName = value; } } }
 
         /// <summary>
         /// Gets or sets the number of reconnections attempted after identifying that there was an idle connection failure
@@ -137,17 +137,17 @@ namespace WDNUtils.DBSqlServer
         /// <summary>
         /// Gets or sets a string that contains the name of the primary data file (includes the full path name of an attachable database)
         /// </summary>
-        public string AttachDBFilename { get => _builder.AttachDBFilename; set { if (value == null) { RemoveProperties(@"AttachDBFilename", @"extended properties", @"initial file name"); } else { _builder.AttachDBFilename = value; } } }
+        public string AttachDBFilename { get => _builder.AttachDBFilename; set { if (value is null) { RemoveProperties(@"AttachDBFilename", @"extended properties", @"initial file name"); } else { _builder.AttachDBFilename = value; } } }
 
         /// <summary>
         /// Gets or sets the SQL Server Language record name
         /// </summary>
-        public string CurrentLanguage { get => _builder.CurrentLanguage; set { if (value == null) { RemoveProperties(@"Current Language", @"language"); } else { _builder.CurrentLanguage = value; } } }
+        public string CurrentLanguage { get => _builder.CurrentLanguage; set { if (value is null) { RemoveProperties(@"Current Language", @"language"); } else { _builder.CurrentLanguage = value; } } }
 
         /// <summary>
         /// Gets or sets the name or network address of the instance of SQL Server to connect to
         /// </summary>
-        public string DataSource { get => _builder.DataSource; set { if (value == null) { RemoveProperties(@"Data Source", @"server", @"address", @"addr", @"network address"); } else { _builder.DataSource = value; } } }
+        public string DataSource { get => _builder.DataSource; set { if (value is null) { RemoveProperties(@"Data Source", @"server", @"address", @"addr", @"network address"); } else { _builder.DataSource = value; } } }
 
         /// <summary>
         /// Gets or sets a Boolean value that indicates whether SQL Server uses SSL encryption for all data sent between the client and server if the server has a certificate installed
@@ -162,7 +162,7 @@ namespace WDNUtils.DBSqlServer
         /// <summary>
         /// Gets or sets the name or address of the partner server to connect to if the primary server is down
         /// </summary>
-        public string FailoverPartner { get => _builder.FailoverPartner; set { if (value == null) { RemoveProperties(@"Failover Partner"); } else { _builder.FailoverPartner = value; } } }
+        public string FailoverPartner { get => _builder.FailoverPartner; set { if (value is null) { RemoveProperties(@"Failover Partner"); } else { _builder.FailoverPartner = value; } } }
 
         /// <summary>
         /// Gets or sets the length of time (in seconds) to wait for a connection to the server before terminating the attempt and generating an error
@@ -172,7 +172,7 @@ namespace WDNUtils.DBSqlServer
         /// <summary>
         /// Gets or sets the name of the workstation connecting to SQL Server
         /// </summary>
-        public string WorkstationID { get => _builder.WorkstationID; set { if (value == null) { RemoveProperties(@"Workstation ID", @"wsid"); } else { _builder.WorkstationID = value; } } }
+        public string WorkstationID { get => _builder.WorkstationID; set { if (value is null) { RemoveProperties(@"Workstation ID", @"wsid"); } else { _builder.WorkstationID = value; } } }
 
         #endregion
 
