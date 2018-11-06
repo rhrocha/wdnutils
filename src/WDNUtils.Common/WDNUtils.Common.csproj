@@ -11,13 +11,13 @@
     <Company>Ricardo H. Rocha</Company>
     <Description>WDNUtils Common library</Description>
     <Copyright>Copyright © 2018 Ricardo H. Rocha</Copyright>
-    <AssemblyVersion>1.0.6.6</AssemblyVersion>
-    <FileVersion>1.0.6.6</FileVersion>
+    <AssemblyVersion>1.0.7.7</AssemblyVersion>
+    <FileVersion>1.0.7.7</FileVersion>
     <RepositoryType></RepositoryType>
     <PackageLicenseUrl>https://github.com/rhrocha/wdnutils/blob/master/LICENSE</PackageLicenseUrl>
     <PackageTags>WDN</PackageTags>
-    <PackageReleaseNotes>No changes; validated with other WDNUtils packages in the release v1.0.6-beta.</PackageReleaseNotes>
-    <Version>1.0.6-beta</Version>
+    <PackageReleaseNotes>No changes; validated with other WDNUtils packages in the release v1.0.7-beta.</PackageReleaseNotes>
+    <Version>1.0.7-beta</Version>
     <PackageProjectUrl>https://github.com/rhrocha/wdnutils/</PackageProjectUrl>
   </PropertyGroup>
 
