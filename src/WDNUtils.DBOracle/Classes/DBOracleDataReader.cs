@@ -1,6 +1,8 @@
 ﻿using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Numerics;
 using WDNUtils.DBOracle.Localization;
 
 namespace WDNUtils.DBOracle
@@ -89,6 +91,31 @@ namespace WDNUtils.DBOracle
         #endregion
 
         #region Get values
+
+        /// <summary>
+        /// Returns the value of a BigInteger column
+        /// </summary>
+        /// <param name="index">Column index</param>
+        /// <param name="nullValue">Value to be returned if the column value is null (default is NULL)</param>
+        /// <returns>The value of the specified column</returns>
+        public BigInteger? GetBigInteger(int index, BigInteger? nullValue = null)
+        {
+            if (OracleDataReader.IsDBNull(index))
+                return nullValue;
+
+            var valueString = OracleDataReader.GetOracleDecimal(index).ToString();
+
+            return string.IsNullOrWhiteSpace(valueString) ? (BigInteger?)null : BigInteger.Parse(valueString, NumberFormatInfo.InvariantInfo);
+        }
+
+        /// <summary>
+        /// Returns the value of a BigInteger column
+        /// </summary>
+        /// <param name="columnName">Column name</param>
+        /// <param name="nullValue">Value to be returned if the column value is null (default is NULL)</param>
+        /// <returns>The value of the specified column</returns>
+        public BigInteger? GetBigInteger(string columnName, BigInteger? nullValue = null)
+            => GetBigInteger(GetColumnIndex(columnName: columnName), nullValue: nullValue);
 
         /// <summary>
         /// Returns the value of a decimal column
