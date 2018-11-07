@@ -199,7 +199,7 @@
     <value>Erro ao liberar os recursos do parâmetro '{0}'</value>
   </data>
   <data name="DBOracleParameter_ValueCleanupError" xml:space="preserve">
-    <value>Erro ao remover o valor do parâmetro '{0}'</value>
+    <value>Erro ao limpar o valor do parâmetro '{0}'</value>
   </data>
   <data name="DBOracleParameter_ValueDisposalError" xml:space="preserve">
     <value>Erro ao liberar os recursos do valor do parâmetro '{0}'</value>
