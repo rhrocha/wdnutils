@@ -31,28 +31,23 @@ namespace WDNUtils.DBOracle
             {
                 var value = GetValue();
 
-                if (value is null)
+                switch (value)
                 {
-                    return null;
+                    case null:
+                        return null;
+                    case OracleBinary oracleBinary:
+                        return oracleBinary.Value;
+                    case OracleBlob oracleBlob:
+                        return oracleBlob.Value;
+                    case byte[] byteArray:
+                        return byteArray;
+                    default:
+                        throw new InvalidOperationException(string.Format(
+                            DBOracleLocalizedText.DBOracleParameter_CastError,
+                            Parameter.ParameterName,
+                            value.GetType().FullName,
+                            typeof(byte[]).GetType().FullName));
                 }
-                else if (value is OracleBinary oracleBinary)
-                {
-                    return oracleBinary.Value;
-                }
-                else if (value is OracleBlob oracleBlob)
-                {
-                    return oracleBlob.Value;
-                }
-                else if (value is byte[] byteArray)
-                {
-                    return byteArray;
-                }
-
-                throw new InvalidOperationException(string.Format(
-                    DBOracleLocalizedText.DBOracleParameter_CastError,
-                    Parameter.ParameterName,
-                    value.GetType().FullName,
-                    typeof(byte[]).GetType().FullName));
             }
 
             set

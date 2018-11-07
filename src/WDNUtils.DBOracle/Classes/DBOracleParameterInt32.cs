@@ -31,48 +31,45 @@ namespace WDNUtils.DBOracle
             {
                 var value = GetValue();
 
-                if (value is null)
+                switch (value)
                 {
-                    return null;
-                }
-                else if (value is OracleDecimal oracleDecimal)
-                {
-                    return checked((int)Math.Round(oracleDecimal.Value));
-                }
-
-                switch (Type.GetTypeCode(value.GetType()))
-                {
-                    case TypeCode.UInt64:
-                        return checked((int)((ulong)value));
-                    case TypeCode.Int64:
-                        return checked((int)((long)value));
-                    case TypeCode.UInt32:
-                        return checked((int)((uint)value));
-                    case TypeCode.Int32:
-                        return (int)value;
-                    case TypeCode.UInt16:
-                        return checked((int)((ushort)value));
-                    case TypeCode.Int16:
-                        return checked((int)((short)value));
-                    case TypeCode.Byte:
-                        return checked((int)((byte)value));
-                    case TypeCode.SByte:
-                        return checked((int)((sbyte)value));
-                    case TypeCode.Decimal:
-                        return checked((int)Math.Round((decimal)value));
-                    case TypeCode.Single:
-                        return checked((int)Math.Round((float)value));
-                    case TypeCode.Double:
-                        return checked((int)Math.Round((double)value));
+                    case null:
+                        return null;
+                    case OracleDecimal oracleDecimal:
+                        return checked((int)Math.Round(oracleDecimal.Value));
                     default:
-                        break;
+                        switch (Type.GetTypeCode(value.GetType()))
+                        {
+                            case TypeCode.UInt64:
+                                return checked((int)((ulong)value));
+                            case TypeCode.Int64:
+                                return checked((int)((long)value));
+                            case TypeCode.UInt32:
+                                return checked((int)((uint)value));
+                            case TypeCode.Int32:
+                                return (int)value;
+                            case TypeCode.UInt16:
+                                return checked((int)((ushort)value));
+                            case TypeCode.Int16:
+                                return checked((int)((short)value));
+                            case TypeCode.Byte:
+                                return checked((int)((byte)value));
+                            case TypeCode.SByte:
+                                return checked((int)((sbyte)value));
+                            case TypeCode.Decimal:
+                                return checked((int)Math.Round((decimal)value));
+                            case TypeCode.Single:
+                                return checked((int)Math.Round((float)value));
+                            case TypeCode.Double:
+                                return checked((int)Math.Round((double)value));
+                            default:
+                                throw new InvalidOperationException(string.Format(
+                                    DBOracleLocalizedText.DBOracleParameter_CastError,
+                                    Parameter.ParameterName,
+                                    value.GetType().FullName,
+                                    typeof(int).GetType().FullName));
+                        }
                 }
-
-                throw new InvalidOperationException(string.Format(
-                    DBOracleLocalizedText.DBOracleParameter_CastError,
-                    Parameter.ParameterName,
-                    value.GetType().FullName,
-                    typeof(int).GetType().FullName));
             }
 
             set

@@ -31,20 +31,19 @@ namespace WDNUtils.DBOracle
             {
                 var value = GetValue();
 
-                if (value is null)
+                switch (value)
                 {
-                    return null;
+                    case null:
+                        return null;
+                    case OracleIntervalYM oracleIntervalYM:
+                        return oracleIntervalYM.Value;
+                    default:
+                        throw new InvalidOperationException(string.Format(
+                            DBOracleLocalizedText.DBOracleParameter_CastError,
+                            Parameter.ParameterName,
+                            value.GetType().FullName,
+                            typeof(OracleIntervalYM).GetType().FullName));
                 }
-                else if (value is OracleIntervalYM oracleIntervalYM)
-                {
-                    return oracleIntervalYM.Value;
-                }
-
-                throw new InvalidOperationException(string.Format(
-                    DBOracleLocalizedText.DBOracleParameter_CastError,
-                    Parameter.ParameterName,
-                    value.GetType().FullName,
-                    typeof(OracleIntervalYM).GetType().FullName));
             }
 
             set

@@ -33,52 +33,48 @@ namespace WDNUtils.DBOracle
             {
                 var value = GetValue();
 
-                if (value is null)
+                switch (value)
                 {
-                    return null;
-                }
-                else if (value is OracleDecimal oracleDecimal)
-                {
-                    var valueString = oracleDecimal.ToString();
-
-                    return string.IsNullOrWhiteSpace(valueString) ? (BigInteger?)null : BigInteger.Parse(valueString, NumberFormatInfo.InvariantInfo);
-                }
-
-                switch (Type.GetTypeCode(value.GetType()))
-                {
-                    case TypeCode.UInt64:
-                        return new BigInteger((ulong)value);
-                    case TypeCode.Int64:
-                        return new BigInteger((long)value);
-                    case TypeCode.UInt32:
-                        return new BigInteger((uint)value);
-                    case TypeCode.Int32:
-                        return new BigInteger((int)value);
-                    case TypeCode.UInt16:
-                        return new BigInteger((ushort)value);
-                    case TypeCode.Int16:
-                        return new BigInteger((short)value);
-                    case TypeCode.Byte:
-                        return new BigInteger((byte)value);
-                    case TypeCode.SByte:
-                        return new BigInteger((sbyte)value);
-                    case TypeCode.Decimal:
-                        return new BigInteger((decimal)value);
-                    case TypeCode.Single:
-                        return new BigInteger((float)value);
-                    case TypeCode.Double:
-                        return new BigInteger((double)value);
-                    case TypeCode.String:
-                        return BigInteger.Parse((string)value, NumberFormatInfo.InvariantInfo);
+                    case null:
+                        return null;
+                    case OracleDecimal oracleDecimal:
+                        var valueString = oracleDecimal.ToString();
+                        return string.IsNullOrWhiteSpace(valueString) ? (BigInteger?)null : BigInteger.Parse(valueString, NumberFormatInfo.InvariantInfo);
                     default:
-                        break;
+                        switch (Type.GetTypeCode(value.GetType()))
+                        {
+                            case TypeCode.UInt64:
+                                return new BigInteger((ulong)value);
+                            case TypeCode.Int64:
+                                return new BigInteger((long)value);
+                            case TypeCode.UInt32:
+                                return new BigInteger((uint)value);
+                            case TypeCode.Int32:
+                                return new BigInteger((int)value);
+                            case TypeCode.UInt16:
+                                return new BigInteger((ushort)value);
+                            case TypeCode.Int16:
+                                return new BigInteger((short)value);
+                            case TypeCode.Byte:
+                                return new BigInteger((byte)value);
+                            case TypeCode.SByte:
+                                return new BigInteger((sbyte)value);
+                            case TypeCode.Decimal:
+                                return new BigInteger((decimal)value);
+                            case TypeCode.Single:
+                                return new BigInteger((float)value);
+                            case TypeCode.Double:
+                                return new BigInteger((double)value);
+                            case TypeCode.String:
+                                return BigInteger.Parse((string)value, NumberFormatInfo.InvariantInfo);
+                            default:
+                                throw new InvalidOperationException(string.Format(
+                                    DBOracleLocalizedText.DBOracleParameter_CastError,
+                                    Parameter.ParameterName,
+                                    value.GetType().FullName,
+                                    typeof(BigInteger).GetType().FullName));
+                        }
                 }
-
-                throw new InvalidOperationException(string.Format(
-                    DBOracleLocalizedText.DBOracleParameter_CastError,
-                    Parameter.ParameterName,
-                    value.GetType().FullName,
-                    typeof(BigInteger).GetType().FullName));
             }
 
             set

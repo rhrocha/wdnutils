@@ -31,24 +31,21 @@ namespace WDNUtils.DBOracle
             {
                 var value = GetValue();
 
-                if (value is null)
+                switch (value)
                 {
-                    return null;
+                    case null:
+                        return null;
+                    case OracleIntervalDS oracleIntervalDS:
+                        return oracleIntervalDS.Value;
+                    case TimeSpan timeSpan:
+                        return timeSpan;
+                    default:
+                        throw new InvalidOperationException(string.Format(
+                            DBOracleLocalizedText.DBOracleParameter_CastError,
+                            Parameter.ParameterName,
+                            value.GetType().FullName,
+                            typeof(TimeSpan).GetType().FullName));
                 }
-                else if (value is OracleIntervalDS oracleIntervalDS)
-                {
-                    return oracleIntervalDS.Value;
-                }
-                else if (value is TimeSpan timeSpan)
-                {
-                    return timeSpan;
-                }
-
-                throw new InvalidOperationException(string.Format(
-                    DBOracleLocalizedText.DBOracleParameter_CastError,
-                    Parameter.ParameterName,
-                    value.GetType().FullName,
-                    typeof(TimeSpan).GetType().FullName));
             }
 
             set

@@ -34,32 +34,29 @@ namespace WDNUtils.DBOracle
             {
                 var value = GetValue();
 
-                if (value is null)
+                switch (value)
                 {
-                    return null;
+                    case null:
+                        return null;
+                    case OracleString oracleString:
+                        return oracleString.Value;
+                    case OracleClob oracleClob:
+                        return oracleClob.Value;
+                    default:
+                        switch (Type.GetTypeCode(value.GetType()))
+                        {
+                            case TypeCode.String:
+                                return (string)value;
+                            case TypeCode.Char:
+                                return ((char)value).ToString();
+                            default:
+                                throw new InvalidOperationException(string.Format(
+                                    DBOracleLocalizedText.DBOracleParameter_CastError,
+                                    Parameter.ParameterName,
+                                    value.GetType().FullName,
+                                    typeof(string).GetType().FullName));
+                        }
                 }
-                else if (value is OracleString oracleString)
-                {
-                    return oracleString.Value;
-                }
-                else if (value is OracleClob oracleClob)
-                {
-                    return oracleClob.Value;
-                }
-
-                switch (Type.GetTypeCode(value.GetType()))
-                {
-                    case TypeCode.String:
-                        return (string)value;
-                    case TypeCode.Char:
-                        return ((char)value).ToString();
-                }
-
-                throw new InvalidOperationException(string.Format(
-                    DBOracleLocalizedText.DBOracleParameter_CastError,
-                    Parameter.ParameterName,
-                    value.GetType().FullName,
-                    typeof(string).GetType().FullName));
             }
 
             set

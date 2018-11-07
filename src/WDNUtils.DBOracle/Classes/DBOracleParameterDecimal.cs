@@ -31,48 +31,45 @@ namespace WDNUtils.DBOracle
             {
                 var value = GetValue();
 
-                if (value is null)
+                switch (value)
                 {
-                    return null;
-                }
-                else if (value is OracleDecimal oracleDecimal)
-                {
-                    return oracleDecimal.Value;
-                }
-
-                switch (Type.GetTypeCode(value.GetType()))
-                {
-                    case TypeCode.UInt64:
-                        return checked((decimal)((ulong)value));
-                    case TypeCode.Int64:
-                        return checked((decimal)((long)value));
-                    case TypeCode.UInt32:
-                        return checked((decimal)((uint)value));
-                    case TypeCode.Int32:
-                        return checked((decimal)((int)value));
-                    case TypeCode.UInt16:
-                        return checked((decimal)((ushort)value));
-                    case TypeCode.Int16:
-                        return checked((decimal)((short)value));
-                    case TypeCode.Byte:
-                        return checked((decimal)((byte)value));
-                    case TypeCode.SByte:
-                        return checked((decimal)((sbyte)value));
-                    case TypeCode.Decimal:
-                        return (decimal)value;
-                    case TypeCode.Single:
-                        return checked((decimal)((float)value));
-                    case TypeCode.Double:
-                        return checked((decimal)((double)value));
+                    case null:
+                        return null;
+                    case OracleDecimal oracleDecimal:
+                        return oracleDecimal.Value;
                     default:
-                        break;
+                        switch (Type.GetTypeCode(value.GetType()))
+                        {
+                            case TypeCode.UInt64:
+                                return checked((decimal)((ulong)value));
+                            case TypeCode.Int64:
+                                return checked((decimal)((long)value));
+                            case TypeCode.UInt32:
+                                return checked((decimal)((uint)value));
+                            case TypeCode.Int32:
+                                return checked((decimal)((int)value));
+                            case TypeCode.UInt16:
+                                return checked((decimal)((ushort)value));
+                            case TypeCode.Int16:
+                                return checked((decimal)((short)value));
+                            case TypeCode.Byte:
+                                return checked((decimal)((byte)value));
+                            case TypeCode.SByte:
+                                return checked((decimal)((sbyte)value));
+                            case TypeCode.Decimal:
+                                return (decimal)value;
+                            case TypeCode.Single:
+                                return checked((decimal)((float)value));
+                            case TypeCode.Double:
+                                return checked((decimal)((double)value));
+                            default:
+                                throw new InvalidOperationException(string.Format(
+                                    DBOracleLocalizedText.DBOracleParameter_CastError,
+                                    Parameter.ParameterName,
+                                    value.GetType().FullName,
+                                    typeof(decimal).GetType().FullName));
+                        }
                 }
-
-                throw new InvalidOperationException(string.Format(
-                    DBOracleLocalizedText.DBOracleParameter_CastError,
-                    Parameter.ParameterName,
-                    value.GetType().FullName,
-                    typeof(decimal).GetType().FullName));
             }
 
             set

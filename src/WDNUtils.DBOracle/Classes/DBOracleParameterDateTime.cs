@@ -31,36 +31,27 @@ namespace WDNUtils.DBOracle
             {
                 var value = GetValue();
 
-                if (value is null)
+                switch (value)
                 {
-                    return null;
+                    case null:
+                        return null;
+                    case OracleDate oracleDate:
+                        return oracleDate.Value;
+                    case OracleTimeStamp oracleTimeStamp:
+                        return oracleTimeStamp.Value;
+                    case OracleTimeStampLTZ oracleTimeStampLTZ:
+                        return oracleTimeStampLTZ.Value;
+                    case OracleTimeStampTZ oracleTimeStampTZ:
+                        return oracleTimeStampTZ.Value;
+                    case DateTime dateTime:
+                        return dateTime;
+                    default:
+                        throw new InvalidOperationException(string.Format(
+                            DBOracleLocalizedText.DBOracleParameter_CastError,
+                            Parameter.ParameterName,
+                            value.GetType().FullName,
+                            typeof(DateTime).GetType().FullName));
                 }
-                else if (value is OracleDate oracleDate)
-                {
-                    return oracleDate.Value;
-                }
-                else if (value is OracleTimeStamp oracleTimeStamp)
-                {
-                    return oracleTimeStamp.Value;
-                }
-                else if (value is OracleTimeStampLTZ oracleTimeStampLTZ)
-                {
-                    return oracleTimeStampLTZ.Value;
-                }
-                else if (value is OracleTimeStampTZ oracleTimeStampTZ)
-                {
-                    return oracleTimeStampTZ.Value;
-                }
-                else if (value is DateTime dateTime)
-                {
-                    return dateTime;
-                }
-
-                throw new InvalidOperationException(string.Format(
-                    DBOracleLocalizedText.DBOracleParameter_CastError,
-                    Parameter.ParameterName,
-                    value.GetType().FullName,
-                    typeof(DateTime).GetType().FullName));
             }
 
             set
