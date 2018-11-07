@@ -10,7 +10,7 @@ using WDNUtils.DBSqlServer.Localization;
 namespace WDNUtils.DBSqlServer
 {
     /// <summary>
-    /// SqlServer parameter base class
+    /// SQL Server parameter base class
     /// </summary>
     public abstract class DBSqlServerParameter : IDisposable
     {
@@ -24,7 +24,7 @@ namespace WDNUtils.DBSqlServer
         #region Properties
 
         /// <summary>
-        /// SqlServer bind parameter
+        /// SQL Server bind parameter
         /// </summary>
         internal SqlParameter Parameter { get; set; }
 
@@ -42,7 +42,7 @@ namespace WDNUtils.DBSqlServer
         /// </summary>
         /// <param name="parameterName">Parameter name</param>
         /// <param name="sqlValue">Parameter initial value</param>
-        /// <param name="type">SqlServer bind parameter type</param>
+        /// <param name="type">SQL Server bind parameter type</param>
         /// <param name="maxSize">Maximum length for the value (if applicable), may be null for input or input/output parameters; if null, the value may be truncated by the server when storing into a smaller column</param>
         /// <param name="direction">Parameter type (input, output, input/output, or return value)</param>
         internal DBSqlServerParameter(string parameterName, INullable sqlValue, SqlDbType type, ParameterDirection direction, int? maxSize = null)

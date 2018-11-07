@@ -141,7 +141,7 @@ namespace WDNUtils.DBSqlServer
         }
 
         /// <summary>
-        /// Creates a large string bind parameter
+        /// Creates an unicode string bind parameter
         /// </summary>
         /// <param name="name">Parameter name</param>
         /// <param name="value">Parameter initial value (may be null)</param>

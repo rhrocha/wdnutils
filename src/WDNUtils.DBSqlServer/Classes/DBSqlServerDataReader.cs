@@ -20,7 +20,7 @@ namespace WDNUtils.DBSqlServer
         private Dictionary<string, int> ColumnIndex { get; set; }
 
         /// <summary>
-        /// SqlServer data reader
+        /// SQL Server data reader
         /// </summary>
         private SqlDataReader SqlDataReader { get; set; }
 

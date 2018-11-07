@@ -190,7 +190,7 @@ namespace WDNUtils.DBSqlServer
                     {
                         if (Transaction is null)
                         {
-                            // SqlServer supports only 'READ COMMITTED' and 'SERIALIZABLE' isolation levels
+                            // SQL Server supports only 'READ COMMITTED' and 'SERIALIZABLE' isolation levels
                             Transaction = (serializableIsolationLevel)
                                 ? SqlServerConnection.BeginTransaction(IsolationLevel.Serializable)
                                 : SqlServerConnection.BeginTransaction(IsolationLevel.ReadCommitted);
