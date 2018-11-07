@@ -1,0 +1,44 @@
+﻿#############################################################################
+Create instance, database and user for WDNUtils.DBSqlServer unit tests:
+#############################################################################
+
+sqllocaldb create "wdnutils" -s
+
+sqlcmd -S (localdb)\wdnutils
+USE master;
+GO
+SELECT physical_name FROM master.sys.master_files WHERE database_id = 1 AND file_id = 1
+GO
+CREATE DATABASE wdnutils
+ON ( NAME = 'wdnutils_dat', FILENAME = '<path>\wdnutils_dat.mdf', SIZE = 16MB, MAXSIZE = 512MB, FILEGROWTH = 16MB )
+LOG ON ( NAME = 'wdnutils_log', FILENAME = '<path>\wdnutils_log.ldf', SIZE = 16MB, MAXSIZE = 64MB, FILEGROWTH = 16MB )
+GO
+USE wdnutils;
+GO
+CREATE LOGIN wdnutils WITH PASSWORD = 'WDN_Utils#123';
+GO
+CREATE USER wdnutils FOR LOGIN wdnutils WITH DEFAULT_SCHEMA = wdnutils;
+GO
+GRANT ALL PRIVILEGES TO wdnutils;
+GO
+
+sqlcmd -S (localdb)\wdnutils -U wdnutils -P WDN_Utils#123
+
+#############################################################################
+Drop instance, database and user for WDNUtils.DBSqlServer unit tests:
+#############################################################################
+
+sqlcmd -S (localdb)\wdnutils
+USE wdnutils;
+GO
+DROP USER wdnutils;
+GO
+DROP LOGIN wdnutils;
+GO
+DROP DATABASE wdnutils;
+GO
+
+sqllocaldb stop "wdnutils"
+sqllocaldb delete "wdnutils"
+
+Delete wdnutils_dat.mdf and wdnutils_log.ldf
