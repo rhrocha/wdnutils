@@ -1,0 +1,59 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net461</TargetFramework>
+    <ApplicationIcon />
+    <OutputType>Library</OutputType>
+    <StartupObject />
+    <Product>WDNUtils Win32</Product>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>Ricardo H. Rocha</Authors>
+    <Company>Ricardo H. Rocha</Company>
+    <Description>WDNUtils Win32 library</Description>
+    <Copyright>Copyright © 2018 Ricardo H. Rocha</Copyright>
+    <AssemblyVersion>1.0.7.7</AssemblyVersion>
+    <FileVersion>1.0.7.7</FileVersion>
+    <RepositoryType></RepositoryType>
+    <PackageLicenseUrl>https://github.com/rhrocha/wdnutils/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageTags>WDN</PackageTags>
+    <PackageReleaseNotes>Initial release.</PackageReleaseNotes>
+    <Version>1.0.7-beta</Version>
+    <PackageProjectUrl>https://github.com/rhrocha/wdnutils/</PackageProjectUrl>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Update="Localization\Win32LocalizedText.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Win32LocalizedText.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Localization\Win32LocalizedText.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Win32LocalizedText.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="log4net" Version="2.0.8" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <ProjectReference Include="..\..\src\WDNUtils.Common\WDNUtils.Common.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <PackageReference Include="WDNUtils.Common" Version="1.0.6-beta" />
+  </ItemGroup>
+
+</Project>

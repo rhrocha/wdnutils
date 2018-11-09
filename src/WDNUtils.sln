@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WDNUtils.DBOracle", "WDNUti
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WDNUtils.DBSqlServer", "WDNUtils.DBSqlServer\WDNUtils.DBSqlServer.csproj", "{2C8CB851-09CF-4749-9754-4DD906F9A21C}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WDNUtils.Win32", "WDNUtils.Win32\WDNUtils.Win32.csproj", "{63282FD6-34FD-496F-8B35-454EE9126084}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{2C8CB851-09CF-4749-9754-4DD906F9A21C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2C8CB851-09CF-4749-9754-4DD906F9A21C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2C8CB851-09CF-4749-9754-4DD906F9A21C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63282FD6-34FD-496F-8B35-454EE9126084}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63282FD6-34FD-496F-8B35-454EE9126084}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63282FD6-34FD-496F-8B35-454EE9126084}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63282FD6-34FD-496F-8B35-454EE9126084}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

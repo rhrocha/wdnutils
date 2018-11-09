@@ -29,6 +29,15 @@ IF EXIST ".\WDNUtils.DBSqlServer\obj" DEL /A /F /S /Q ".\WDNUtils.DBSqlServer\ob
 IF EXIST ".\WDNUtils.DBSqlServer\obj" RMDIR /S /Q ".\WDNUtils.DBSqlServer\obj"
 
 REM ========================================================================
+ECHO ### Clean up WDNUtils.Win32
+
+IF EXIST ".\WDNUtils.Win32\WDNUtils.Win32.csproj.user" DEL /A /F /Q ".\WDNUtils.Win32\WDNUtils.Win32.csproj.user"
+IF EXIST ".\WDNUtils.Win32\bin" DEL /A /F /S /Q ".\WDNUtils.Win32\bin"
+IF EXIST ".\WDNUtils.Win32\bin" RMDIR /S /Q ".\WDNUtils.Win32\bin"
+IF EXIST ".\WDNUtils.Win32\obj" DEL /A /F /S /Q ".\WDNUtils.Win32\obj"
+IF EXIST ".\WDNUtils.Win32\obj" RMDIR /S /Q ".\WDNUtils.Win32\obj"
+
+REM ========================================================================
 ECHO ### Clean up vistual studio generated files
 
 IF EXIST ".\.vs\" DEL /A /F /S /Q ".\.vs"

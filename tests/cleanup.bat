@@ -29,6 +29,15 @@ IF EXIST "..\src\WDNUtils.DBSqlServer\obj" DEL /A /F /S /Q "..\src\WDNUtils.DBSq
 IF EXIST "..\src\WDNUtils.DBSqlServer\obj" RMDIR /S /Q "..\src\WDNUtils.DBSqlServer\obj"
 
 REM ========================================================================
+ECHO ### Clean up WDNUtils.Win32
+
+IF EXIST "..\src\WDNUtils.Win32\WDNUtils.Win32.csproj.user" DEL /A /F /Q "..\src\WDNUtils.Win32\WDNUtils.Win32.csproj.user"
+IF EXIST "..\src\WDNUtils.Win32\bin" DEL /A /F /S /Q "..\src\WDNUtils.Win32\bin"
+IF EXIST "..\src\WDNUtils.Win32\bin" RMDIR /S /Q "..\src\WDNUtils.Win32\bin"
+IF EXIST "..\src\WDNUtils.Win32\obj" DEL /A /F /S /Q "..\src\WDNUtils.Win32\obj"
+IF EXIST "..\src\WDNUtils.Win32\obj" RMDIR /S /Q "..\src\WDNUtils.Win32\obj"
+
+REM ========================================================================
 ECHO ### Clean up WDNUtils.Common.Test
 
 IF EXIST ".\WDNUtils.Common.Test\WDNUtils.Common.Test.csproj.user" DEL /A /F /Q ".\WDNUtils.Common.Test\WDNUtils.Common.Test.csproj.user"
@@ -54,6 +63,15 @@ IF EXIST ".\WDNUtils.DBSqlServer.Test\bin" DEL /A /F /S /Q ".\WDNUtils.DBSqlServ
 IF EXIST ".\WDNUtils.DBSqlServer.Test\bin" RMDIR /S /Q ".\WDNUtils.DBSqlServer.Test\bin"
 IF EXIST ".\WDNUtils.DBSqlServer.Test\obj" DEL /A /F /S /Q ".\WDNUtils.DBSqlServer.Test\obj"
 IF EXIST ".\WDNUtils.DBSqlServer.Test\obj" RMDIR /S /Q ".\WDNUtils.DBSqlServer.Test\obj"
+
+REM ========================================================================
+ECHO ### Clean up WDNUtils.Win32.Test
+
+IF EXIST ".\WDNUtils.Win32.Test\WDNUtils.Win32.Test.csproj.user" DEL /A /F /Q ".\WDNUtils.Win32.Test\WDNUtils.Win32.Test.csproj.user"
+IF EXIST ".\WDNUtils.Win32.Test\bin" DEL /A /F /S /Q ".\WDNUtils.Win32.Test\bin"
+IF EXIST ".\WDNUtils.Win32.Test\bin" RMDIR /S /Q ".\WDNUtils.Win32.Test\bin"
+IF EXIST ".\WDNUtils.Win32.Test\obj" DEL /A /F /S /Q ".\WDNUtils.Win32.Test\obj"
+IF EXIST ".\WDNUtils.Win32.Test\obj" RMDIR /S /Q ".\WDNUtils.Win32.Test\obj"
 
 REM ========================================================================
 ECHO ### Clean up vistual studio generated files
