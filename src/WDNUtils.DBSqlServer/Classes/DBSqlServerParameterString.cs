@@ -18,7 +18,7 @@ namespace WDNUtils.DBSqlServer
         /// <param name="maxSize">Maximum length for the value; if null, the value may be truncated by the server when storing into a smaller column</param>
         /// <param name="direction">Parameter type (input, output, input/output, or return value)</param>
         internal DBSqlServerParameterString(string name, string value, int? maxSize, ParameterDirection direction)
-            : base(parameterName: name, sqlValue: (value is null) ? SqlString.Null : new SqlString(value), type: SqlDbType.VarChar, maxSize: maxSize, direction: direction)
+            : base(parameterName: name, sqlValue: (value is null) ? SqlString.Null : new SqlString(value), type: SqlDbType.NVarChar, maxSize: maxSize, direction: direction)
         {
             if (value?.Length > maxSize)
                 throw new ArgumentOutOfRangeException(nameof(value), string.Format(DBSqlServerLocalizedText.DBSqlServerParameter_InvalidMaxSizeString, name, value.Length, maxSize));

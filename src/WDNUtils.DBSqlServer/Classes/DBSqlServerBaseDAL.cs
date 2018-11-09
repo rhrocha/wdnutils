@@ -141,18 +141,6 @@ namespace WDNUtils.DBSqlServer
         }
 
         /// <summary>
-        /// Creates an unicode string bind parameter
-        /// </summary>
-        /// <param name="name">Parameter name</param>
-        /// <param name="value">Parameter initial value (may be null)</param>
-        /// <param name="maxSize">Maximum length for the value, may be null for input or input/output parameters; if null, the value may be truncated by the server when storing into a smaller column</param>
-        /// <param name="direction">Parameter type (input, output, input/output, or return value)</param>
-        protected DBSqlServerParameterNVarChar ParamNVarChar(string name, string value, int? maxSize, ParameterDirection direction = ParameterDirection.Input)
-        {
-            return AddParameter(new DBSqlServerParameterNVarChar(name: name, value: value, maxSize: maxSize, direction: direction));
-        }
-
-        /// <summary>
         /// Creates a byte array bind parameter
         /// </summary>
         /// <param name="name">Parameter name</param>
