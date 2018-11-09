@@ -117,4 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ConsoleUtils_BringToFront_GetConsoleWindow" xml:space="preserve">
+    <value>Não foi possível obter o handler da janela do console</value>
+  </data>
+  <data name="ConsoleUtils_BringToFront_LogError" xml:space="preserve">
+    <value>Erro ao mover a janela do console para frente</value>
+  </data>
+  <data name="ConsoleUtils_BringToFront_SetForegroundWindow" xml:space="preserve">
+    <value>Não foi possível mover a janela do console para frente</value>
+  </data>
+  <data name="ConsoleUtils_DisableClosing_DeleteMenu" xml:space="preserve">
+    <value>Não foi possível alterar o menu da janela do console</value>
+  </data>
+  <data name="ConsoleUtils_DisableClosing_GetConsoleWindow" xml:space="preserve">
+    <value>Não foi possível obter o handler da janela do console</value>
+  </data>
+  <data name="ConsoleUtils_DisableClosing_GetSystemMenu" xml:space="preserve">
+    <value>Não foi possível obter o handler do menu da janela do console</value>
+  </data>
+  <data name="ConsoleUtils_DisableClosing_LogError" xml:space="preserve">
+    <value>Erro ao alterar o menu da janela do console</value>
+  </data>
 </root>

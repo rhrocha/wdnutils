@@ -59,5 +59,68 @@ namespace WDNUtils.Win32.Localization {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot get the console window handler.
+        /// </summary>
+        internal static string ConsoleUtils_BringToFront_GetConsoleWindow {
+            get {
+                return ResourceManager.GetString("ConsoleUtils_BringToFront_GetConsoleWindow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error bringing the console window to front.
+        /// </summary>
+        internal static string ConsoleUtils_BringToFront_LogError {
+            get {
+                return ResourceManager.GetString("ConsoleUtils_BringToFront_LogError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot bring the console window to front.
+        /// </summary>
+        internal static string ConsoleUtils_BringToFront_SetForegroundWindow {
+            get {
+                return ResourceManager.GetString("ConsoleUtils_BringToFront_SetForegroundWindow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot change the console window menu.
+        /// </summary>
+        internal static string ConsoleUtils_DisableClosing_DeleteMenu {
+            get {
+                return ResourceManager.GetString("ConsoleUtils_DisableClosing_DeleteMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot get the console window handler.
+        /// </summary>
+        internal static string ConsoleUtils_DisableClosing_GetConsoleWindow {
+            get {
+                return ResourceManager.GetString("ConsoleUtils_DisableClosing_GetConsoleWindow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot get the console window menu handler.
+        /// </summary>
+        internal static string ConsoleUtils_DisableClosing_GetSystemMenu {
+            get {
+                return ResourceManager.GetString("ConsoleUtils_DisableClosing_GetSystemMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error changing the console window menu.
+        /// </summary>
+        internal static string ConsoleUtils_DisableClosing_LogError {
+            get {
+                return ResourceManager.GetString("ConsoleUtils_DisableClosing_LogError", resourceCulture);
+            }
+        }
     }
 }
