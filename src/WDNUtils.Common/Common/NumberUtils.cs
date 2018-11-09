@@ -397,5 +397,273 @@ namespace WDNUtils.Common
         }
 
         #endregion
+
+        #region Bit operations
+
+        /// <summary>
+        /// Check if the specified bits are set in the value
+        /// </summary>
+        /// <param name="value">Value to be checked</param>
+        /// <param name="bitmask">Bits to be checked</param>
+        /// <returns>True if the specified bits are set in the value</returns>
+        public static bool HasBits(this ulong value, ulong bitmask)
+        {
+            return (value & bitmask) == bitmask;
+        }
+
+        /// <summary>
+        /// Set one or more bits to 1
+        /// </summary>
+        /// <param name="value">Value to be modified</param>
+        /// <param name="bitmask">Bits to be set to 1</param>
+        /// <returns>Modified value</returns>
+        public static ulong SetBits(this ulong value, ulong bitmask)
+        {
+            return value | bitmask;
+        }
+
+        /// <summary>
+        /// Clear one or more bits
+        /// </summary>
+        /// <param name="value">Value to be modified</param>
+        /// <param name="bitmask">Bits to be cleared</param>
+        /// <returns>Modified value</returns>
+        public static ulong ClearBits(this ulong value, ulong bitmask)
+        {
+            return (value | bitmask) ^ bitmask;
+        }
+
+        /// <summary>
+        /// Check if the specified bits are set in the value
+        /// </summary>
+        /// <param name="value">Value to be checked</param>
+        /// <param name="bitmask">Bits to be checked</param>
+        /// <returns>True if the specified bits are set in the value</returns>
+        public static bool HasBits(this long value, long bitmask)
+        {
+            return (value & bitmask) == bitmask;
+        }
+
+        /// <summary>
+        /// Set one or more bits to 1
+        /// </summary>
+        /// <param name="value">Value to be modified</param>
+        /// <param name="bitmask">Bits to be set to 1</param>
+        /// <returns>Modified value</returns>
+        public static long SetBits(this long value, long bitmask)
+        {
+            return value | bitmask;
+        }
+
+        /// <summary>
+        /// Clear one or more bits
+        /// </summary>
+        /// <param name="value">Value to be modified</param>
+        /// <param name="bitmask">Bits to be cleared</param>
+        /// <returns>Modified value</returns>
+        public static long ClearBits(this long value, long bitmask)
+        {
+            return (value | bitmask) ^ bitmask;
+        }
+
+        /// <summary>
+        /// Check if the specified bits are set in the value
+        /// </summary>
+        /// <param name="value">Value to be checked</param>
+        /// <param name="bitmask">Bits to be checked</param>
+        /// <returns>True if the specified bits are set in the value</returns>
+        public static bool HasBits(this uint value, uint bitmask)
+        {
+            return (value & bitmask) == bitmask;
+        }
+
+        /// <summary>
+        /// Set one or more bits to 1
+        /// </summary>
+        /// <param name="value">Value to be modified</param>
+        /// <param name="bitmask">Bits to be set to 1</param>
+        /// <returns>Modified value</returns>
+        public static uint SetBits(this uint value, uint bitmask)
+        {
+            return value | bitmask;
+        }
+
+        /// <summary>
+        /// Clear one or more bits
+        /// </summary>
+        /// <param name="value">Value to be modified</param>
+        /// <param name="bitmask">Bits to be cleared</param>
+        /// <returns>Modified value</returns>
+        public static uint ClearBits(this uint value, uint bitmask)
+        {
+            return (value | bitmask) ^ bitmask;
+        }
+
+        /// <summary>
+        /// Check if the specified bits are set in the value
+        /// </summary>
+        /// <param name="value">Value to be checked</param>
+        /// <param name="bitmask">Bits to be checked</param>
+        /// <returns>True if the specified bits are set in the value</returns>
+        public static bool HasBits(this int value, int bitmask)
+        {
+            return (value & bitmask) == bitmask;
+        }
+
+        /// <summary>
+        /// Set one or more bits to 1
+        /// </summary>
+        /// <param name="value">Value to be modified</param>
+        /// <param name="bitmask">Bits to be set to 1</param>
+        /// <returns>Modified value</returns>
+        public static int SetBits(this int value, int bitmask)
+        {
+            return value | bitmask;
+        }
+
+        /// <summary>
+        /// Clear one or more bits
+        /// </summary>
+        /// <param name="value">Value to be modified</param>
+        /// <param name="bitmask">Bits to be cleared</param>
+        /// <returns>Modified value</returns>
+        public static int ClearBits(this int value, int bitmask)
+        {
+            return (value | bitmask) ^ bitmask;
+        }
+
+        /// <summary>
+        /// Check if the specified bits are set in the value
+        /// </summary>
+        /// <param name="value">Value to be checked</param>
+        /// <param name="bitmask">Bits to be checked</param>
+        /// <returns>True if the specified bits are set in the value</returns>
+        public static bool HasBits(this ushort value, ushort bitmask)
+        {
+            return (value & bitmask) == bitmask;
+        }
+
+        /// <summary>
+        /// Set one or more bits to 1
+        /// </summary>
+        /// <param name="value">Value to be modified</param>
+        /// <param name="bitmask">Bits to be set to 1</param>
+        /// <returns>Modified value</returns>
+        public static ushort SetBits(this ushort value, ushort bitmask)
+        {
+            return (ushort)(value | bitmask);
+        }
+
+        /// <summary>
+        /// Clear one or more bits
+        /// </summary>
+        /// <param name="value">Value to be modified</param>
+        /// <param name="bitmask">Bits to be cleared</param>
+        /// <returns>Modified value</returns>
+        public static ushort ClearBits(this ushort value, ushort bitmask)
+        {
+            return (ushort)((value | bitmask) ^ bitmask);
+        }
+
+        /// <summary>
+        /// Check if the specified bits are set in the value
+        /// </summary>
+        /// <param name="value">Value to be checked</param>
+        /// <param name="bitmask">Bits to be checked</param>
+        /// <returns>True if the specified bits are set in the value</returns>
+        public static bool HasBits(this short value, short bitmask)
+        {
+            return (value & bitmask) == bitmask;
+        }
+
+        /// <summary>
+        /// Set one or more bits to 1
+        /// </summary>
+        /// <param name="value">Value to be modified</param>
+        /// <param name="bitmask">Bits to be set to 1</param>
+        /// <returns>Modified value</returns>
+        public static short SetBits(this short value, short bitmask)
+        {
+            return (short)(value | bitmask);
+        }
+
+        /// <summary>
+        /// Clear one or more bits
+        /// </summary>
+        /// <param name="value">Value to be modified</param>
+        /// <param name="bitmask">Bits to be cleared</param>
+        /// <returns>Modified value</returns>
+        public static short ClearBits(this short value, short bitmask)
+        {
+            return (short)((value | bitmask) ^ bitmask);
+        }
+
+        /// <summary>
+        /// Check if the specified bits are set in the value
+        /// </summary>
+        /// <param name="value">Value to be checked</param>
+        /// <param name="bitmask">Bits to be checked</param>
+        /// <returns>True if the specified bits are set in the value</returns>
+        public static bool HasBits(this byte value, byte bitmask)
+        {
+            return (value & bitmask) == bitmask;
+        }
+
+        /// <summary>
+        /// Set one or more bits to 1
+        /// </summary>
+        /// <param name="value">Value to be modified</param>
+        /// <param name="bitmask">Bits to be set to 1</param>
+        /// <returns>Modified value</returns>
+        public static byte SetBits(this byte value, byte bitmask)
+        {
+            return (byte)(value | bitmask);
+        }
+
+        /// <summary>
+        /// Clear one or more bits
+        /// </summary>
+        /// <param name="value">Value to be modified</param>
+        /// <param name="bitmask">Bits to be cleared</param>
+        /// <returns>Modified value</returns>
+        public static byte ClearBits(this byte value, byte bitmask)
+        {
+            return (byte)((value | bitmask) ^ bitmask);
+        }
+
+        /// <summary>
+        /// Check if the specified bits are set in the value
+        /// </summary>
+        /// <param name="value">Value to be checked</param>
+        /// <param name="bitmask">Bits to be checked</param>
+        /// <returns>True if the specified bits are set in the value</returns>
+        public static bool HasBits(this sbyte value, sbyte bitmask)
+        {
+            return (value & bitmask) == bitmask;
+        }
+
+        /// <summary>
+        /// Set one or more bits to 1
+        /// </summary>
+        /// <param name="value">Value to be modified</param>
+        /// <param name="bitmask">Bits to be set to 1</param>
+        /// <returns>Modified value</returns>
+        public static sbyte SetBits(this sbyte value, sbyte bitmask)
+        {
+            return (sbyte)(value | bitmask);
+        }
+
+        /// <summary>
+        /// Clear one or more bits
+        /// </summary>
+        /// <param name="value">Value to be modified</param>
+        /// <param name="bitmask">Bits to be cleared</param>
+        /// <returns>Modified value</returns>
+        public static sbyte ClearBits(this sbyte value, sbyte bitmask)
+        {
+            return (sbyte)((value | bitmask) ^ bitmask);
+        }
+
+        #endregion
     }
 }
