@@ -328,5 +328,177 @@ namespace WDNUtils.Common.Test
             Assert.IsFalse(NumberUtils.TryParseHex(@"12345678901234567", out result));
             Assert.IsFalse(NumberUtils.TryParseHex(@"12345678901234567", 0, 17, out result));
         }
+
+        [TestMethod]
+        public void TestNumberUtilsBitOperations()
+        {
+            Assert.AreEqual(true, byte.MinValue.HasBits(byte.MinValue));
+            Assert.AreEqual(true, byte.MaxValue.HasBits(byte.MaxValue));
+            Assert.AreEqual(true, sbyte.MinValue.HasBits(sbyte.MinValue));
+            Assert.AreEqual(true, sbyte.MaxValue.HasBits(sbyte.MaxValue));
+            Assert.AreEqual(true, ushort.MinValue.HasBits(ushort.MinValue));
+            Assert.AreEqual(true, ushort.MaxValue.HasBits(ushort.MaxValue));
+            Assert.AreEqual(true, short.MinValue.HasBits(short.MinValue));
+            Assert.AreEqual(true, short.MaxValue.HasBits(short.MaxValue));
+            Assert.AreEqual(true, uint.MinValue.HasBits(uint.MinValue));
+            Assert.AreEqual(true, uint.MaxValue.HasBits(uint.MaxValue));
+            Assert.AreEqual(true, int.MinValue.HasBits(int.MinValue));
+            Assert.AreEqual(true, int.MaxValue.HasBits(int.MaxValue));
+            Assert.AreEqual(true, ulong.MinValue.HasBits(ulong.MinValue));
+            Assert.AreEqual(true, ulong.MaxValue.HasBits(ulong.MaxValue));
+            Assert.AreEqual(true, long.MinValue.HasBits(long.MinValue));
+            Assert.AreEqual(true, long.MaxValue.HasBits(long.MaxValue));
+
+            Assert.AreEqual((byte)0, byte.MinValue.ClearBits(byte.MinValue));
+            Assert.AreEqual((byte)0, byte.MaxValue.ClearBits(byte.MaxValue));
+            Assert.AreEqual((sbyte)0, sbyte.MinValue.ClearBits(sbyte.MinValue));
+            Assert.AreEqual((sbyte)0, sbyte.MaxValue.ClearBits(sbyte.MaxValue));
+            Assert.AreEqual((ushort)0, ushort.MinValue.ClearBits(ushort.MinValue));
+            Assert.AreEqual((ushort)0, ushort.MaxValue.ClearBits(ushort.MaxValue));
+            Assert.AreEqual((short)0, short.MinValue.ClearBits(short.MinValue));
+            Assert.AreEqual((short)0, short.MaxValue.ClearBits(short.MaxValue));
+            Assert.AreEqual((uint)0, uint.MinValue.ClearBits(uint.MinValue));
+            Assert.AreEqual((uint)0, uint.MaxValue.ClearBits(uint.MaxValue));
+            Assert.AreEqual((int)0, int.MinValue.ClearBits(int.MinValue));
+            Assert.AreEqual((int)0, int.MaxValue.ClearBits(int.MaxValue));
+            Assert.AreEqual((ulong)0, ulong.MinValue.ClearBits(ulong.MinValue));
+            Assert.AreEqual((ulong)0, ulong.MaxValue.ClearBits(ulong.MaxValue));
+            Assert.AreEqual((long)0, long.MinValue.ClearBits(long.MinValue));
+            Assert.AreEqual((long)0, long.MaxValue.ClearBits(long.MaxValue));
+
+            Assert.AreEqual(byte.MinValue, ((byte)0).SetBits(byte.MinValue));
+            Assert.AreEqual(byte.MaxValue, ((byte)0).SetBits(byte.MaxValue));
+            Assert.AreEqual(sbyte.MinValue, ((sbyte)0).SetBits(sbyte.MinValue));
+            Assert.AreEqual(sbyte.MaxValue, ((sbyte)0).SetBits(sbyte.MaxValue));
+            Assert.AreEqual(ushort.MinValue, ((ushort)0).SetBits(ushort.MinValue));
+            Assert.AreEqual(ushort.MaxValue, ((ushort)0).SetBits(ushort.MaxValue));
+            Assert.AreEqual(short.MinValue, ((short)0).SetBits(short.MinValue));
+            Assert.AreEqual(short.MaxValue, ((short)0).SetBits(short.MaxValue));
+            Assert.AreEqual(uint.MinValue, ((uint)0).SetBits(uint.MinValue));
+            Assert.AreEqual(uint.MaxValue, ((uint)0).SetBits(uint.MaxValue));
+            Assert.AreEqual(int.MinValue, ((int)0).SetBits(int.MinValue));
+            Assert.AreEqual(int.MaxValue, ((int)0).SetBits(int.MaxValue));
+            Assert.AreEqual(ulong.MinValue, ((ulong)0).SetBits(ulong.MinValue));
+            Assert.AreEqual(ulong.MaxValue, ((ulong)0).SetBits(ulong.MaxValue));
+            Assert.AreEqual(long.MinValue, ((long)0).SetBits(long.MinValue));
+            Assert.AreEqual(long.MaxValue, ((long)0).SetBits(long.MaxValue));
+
+            for (int index = sbyte.MinValue; index <= sbyte.MaxValue; index++)
+            {
+                sbyte value = (sbyte)index;
+
+                TestHasBits(value, value, true);
+                TestSetBits(0, value, value);
+                TestClearBits(value, value, 0);
+            }
+
+            TestHasBits(0b0000000, 0b0000000, true);
+            TestHasBits(0b0000000, 0b0101010, false);
+            TestHasBits(0b0000000, 0b1010101, false);
+            TestHasBits(0b0000000, 0b1111111, false);
+
+            TestHasBits(0b0101010, 0b0000000, true);
+            TestHasBits(0b0101010, 0b0101010, true);
+            TestHasBits(0b0101010, 0b1010101, false);
+            TestHasBits(0b0101010, 0b1111111, false);
+
+            TestHasBits(0b1010101, 0b0000000, true);
+            TestHasBits(0b1010101, 0b0101010, false);
+            TestHasBits(0b1010101, 0b1010101, true);
+            TestHasBits(0b1010101, 0b1111111, false);
+
+            TestHasBits(0b1111111, 0b0000000, true);
+            TestHasBits(0b1111111, 0b0101010, true);
+            TestHasBits(0b1111111, 0b1010101, true);
+            TestHasBits(0b1111111, 0b1111111, true);
+
+            TestSetBits(0b0000000, 0b0000000, 0b0000000);
+            TestSetBits(0b0000000, 0b0101010, 0b0101010);
+            TestSetBits(0b0000000, 0b1010101, 0b1010101);
+            TestSetBits(0b0000000, 0b1111111, 0b1111111);
+
+            TestSetBits(0b0101010, 0b0000000, 0b0101010);
+            TestSetBits(0b0101010, 0b0101010, 0b0101010);
+            TestSetBits(0b0101010, 0b1010101, 0b1111111);
+            TestSetBits(0b0101010, 0b1111111, 0b1111111);
+
+            TestSetBits(0b1010101, 0b0000000, 0b1010101);
+            TestSetBits(0b1010101, 0b0101010, 0b1111111);
+            TestSetBits(0b1010101, 0b1010101, 0b1010101);
+            TestSetBits(0b1010101, 0b1111111, 0b1111111);
+
+            TestSetBits(0b1111111, 0b0000000, 0b1111111);
+            TestSetBits(0b1111111, 0b1010101, 0b1111111);
+            TestSetBits(0b1111111, 0b0101010, 0b1111111);
+            TestSetBits(0b1111111, 0b1111111, 0b1111111);
+
+            TestClearBits(0b0000000, 0b0000000, 0b0000000);
+            TestClearBits(0b0000000, 0b0101010, 0b0000000);
+            TestClearBits(0b0000000, 0b1010101, 0b0000000);
+            TestClearBits(0b0000000, 0b1111111, 0b0000000);
+
+            TestClearBits(0b0101010, 0b0000000, 0b0101010);
+            TestClearBits(0b0101010, 0b0101010, 0b0000000);
+            TestClearBits(0b0101010, 0b1010101, 0b0101010);
+            TestClearBits(0b0101010, 0b1111111, 0b0000000);
+
+            TestClearBits(0b1010101, 0b0000000, 0b1010101);
+            TestClearBits(0b1010101, 0b0101010, 0b1010101);
+            TestClearBits(0b1010101, 0b1010101, 0b0000000);
+            TestClearBits(0b1010101, 0b1111111, 0b0000000);
+
+            TestClearBits(0b1111111, 0b0000000, 0b1111111);
+            TestClearBits(0b1111111, 0b0101010, 0b1010101);
+            TestClearBits(0b1111111, 0b1010101, 0b0101010);
+            TestClearBits(0b1111111, 0b1111111, 0b0000000);
+
+            void TestHasBits(sbyte value, sbyte bitMask, bool result)
+            {
+                if ((value >= 0) && (bitMask >= 0))
+                {
+                    Assert.AreEqual(result, checked((byte)value).HasBits((byte)bitMask));
+                    Assert.AreEqual(result, checked((ushort)value).HasBits((ushort)bitMask));
+                    Assert.AreEqual(result, checked((uint)value).HasBits((uint)bitMask));
+                    Assert.AreEqual(result, checked((ulong)value).HasBits((ulong)bitMask));
+                }
+
+                Assert.AreEqual(result, checked((sbyte)value).HasBits((sbyte)bitMask));
+                Assert.AreEqual(result, checked((short)value).HasBits((short)bitMask));
+                Assert.AreEqual(result, checked((int)value).HasBits((int)bitMask));
+                Assert.AreEqual(result, checked((long)value).HasBits((long)bitMask));
+            }
+
+            void TestSetBits(sbyte value, sbyte bitMask, decimal result)
+            {
+                if ((value >= 0) && (bitMask >= 0))
+                {
+                    Assert.AreEqual(result, checked((byte)value).SetBits((byte)bitMask));
+                    Assert.AreEqual(result, checked((ushort)value).SetBits((ushort)bitMask));
+                    Assert.AreEqual(result, checked((uint)value).SetBits((uint)bitMask));
+                    Assert.AreEqual(result, checked((ulong)value).SetBits((ulong)bitMask));
+                }
+
+                Assert.AreEqual(result, checked((sbyte)value).SetBits((sbyte)bitMask));
+                Assert.AreEqual(result, checked((short)value).SetBits((short)bitMask));
+                Assert.AreEqual(result, checked((int)value).SetBits((int)bitMask));
+                Assert.AreEqual(result, checked((long)value).SetBits((long)bitMask));
+            }
+
+            void TestClearBits(sbyte value, sbyte bitMask, decimal result)
+            {
+                if ((value >= 0) && (bitMask >= 0))
+                {
+                    Assert.AreEqual(result, checked((byte)value).ClearBits((byte)bitMask));
+                    Assert.AreEqual(result, checked((ushort)value).ClearBits((ushort)bitMask));
+                    Assert.AreEqual(result, checked((uint)value).ClearBits((uint)bitMask));
+                    Assert.AreEqual(result, checked((ulong)value).ClearBits((ulong)bitMask));
+                }
+
+                Assert.AreEqual(result, checked((sbyte)value).ClearBits((sbyte)bitMask));
+                Assert.AreEqual(result, checked((short)value).ClearBits((short)bitMask));
+                Assert.AreEqual(result, checked((int)value).ClearBits((int)bitMask));
+                Assert.AreEqual(result, checked((long)value).ClearBits((long)bitMask));
+            }
+        }
     }
 }
