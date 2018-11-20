@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Reflection;
+using System.Threading.Tasks;
 using WDNUtils.Common;
 using WDNUtils.DBSqlServer.Localization;
 
@@ -139,6 +140,32 @@ namespace WDNUtils.DBSqlServer
             }
         }
 
+        /// <summary>
+        /// Executes the command
+        /// </summary>
+        /// <returns>Number of affected rows</returns>
+        internal async Task<int> ExecuteAsync()
+        {
+            try
+            {
+                return await Command.ExecuteNonQueryAsync().ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                try
+                {
+                    Log.Debug(DBSqlServerLocalizedText.DBSqlServerCommand_ExecuteNonQuery_Error, ex);
+                }
+                catch (Exception)
+                {
+                    // Nothing to do
+                }
+
+                ex.ConvertSqlServerException(isConnecting: false);
+                throw;
+            }
+        }
+
         #endregion
 
         #region Create prepared statement
@@ -202,6 +229,87 @@ namespace WDNUtils.DBSqlServer
                         rowList = new List<T>();
 
                         while (sqlDataReader.Read())
+                        {
+                            rowList.Add(dataFiller(dataReader));
+                        }
+
+                        return rowList;
+                    }
+                    finally
+                    {
+                        rowList?.Clear(); // This method fills the internal array with zeros to help the gc
+
+                        dataReader?.Cleanup();
+
+                        try
+                        {
+                            sqlDataReader?.Close();
+                        }
+                        catch (Exception ex)
+                        {
+                            try
+                            {
+                                Log.Error(DBSqlServerLocalizedText.DBSqlServerCommand_CloseDataReader, ex);
+                            }
+                            catch (Exception)
+                            {
+                                // Nothing to do
+                            }
+                        }
+
+                        try
+                        {
+                            sqlDataReader?.Dispose();
+                        }
+                        catch (Exception ex)
+                        {
+                            try
+                            {
+                                Log.Error(DBSqlServerLocalizedText.DBSqlServerCommand_DisposeDataReader, ex);
+                            }
+                            catch (Exception)
+                            {
+                                // Nothing to do
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.ConvertSqlServerException(isConnecting: false);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates and runs a command to execute a command text that returns multiple rows
+        /// </summary>
+        /// <typeparam name="T">Return type</typeparam>
+        /// <param name="connection">Database connection</param>
+        /// <param name="dataFiller">Function to convert the returned rows into the return type object</param>
+        /// <param name="commandText">Command text</param>
+        /// <param name="isStoredProcedure">Indicates if the command text is a stored procedure name</param>
+        /// <param name="parameters">Bind parameters</param>
+        /// <returns>List of objects of the return type</returns>
+        internal async static Task<List<T>> RetrieveDataListAsync<T>(DBSqlServerConnection connection, Func<DBSqlServerDataReader, T> dataFiller, string commandText, bool isStoredProcedure, params DBSqlServerParameter[] parameters)
+        {
+            try
+            {
+                using (var command = new DBSqlServerCommand(connection: connection, commandText: commandText, isStoredProcedure: isStoredProcedure, parameters: parameters))
+                {
+                    var sqlDataReader = await command.Command.ExecuteReaderAsync().ConfigureAwait(false);
+
+                    DBSqlServerDataReader dataReader = null;
+                    List<T> rowList = null;
+
+                    try
+                    {
+                        dataReader = new DBSqlServerDataReader(sqlDataReader);
+
+                        rowList = new List<T>();
+
+                        while (await sqlDataReader.ReadAsync().ConfigureAwait(false))
                         {
                             rowList.Add(dataFiller(dataReader));
                         }
@@ -333,6 +441,80 @@ namespace WDNUtils.DBSqlServer
             }
         }
 
+        /// <summary>
+        /// Creates and runs a command to execute a query command text that returns a single row
+        /// </summary>
+        /// <typeparam name="T">Return type</typeparam>
+        /// <param name="connection">Database connection</param>
+        /// <param name="dataFiller">Function to convert the returned row into the return type object</param>
+        /// <param name="commandText">Command text</param>
+        /// <param name="isStoredProcedure">Indicates if the command text is a stored procedure name</param>
+        /// <param name="nullValue">Value to be returned if the query command text does not return any row</param>
+        /// <param name="parameters">Bind parameters</param>
+        /// <returns>Command text result, or nullValue if none</returns>
+        internal async static Task<T> RetrieveDataItemAsync<T>(DBSqlServerConnection connection, Func<DBSqlServerDataReader, T> dataFiller, string commandText, bool isStoredProcedure, T nullValue = default(T), params DBSqlServerParameter[] parameters)
+        {
+            try
+            {
+                using (var command = new DBSqlServerCommand(connection: connection, commandText: commandText, isStoredProcedure: isStoredProcedure, parameters: parameters))
+                {
+                    var sqlDataReader = await command.Command.ExecuteReaderAsync(behavior: CommandBehavior.SingleRow).ConfigureAwait(false);
+
+                    DBSqlServerDataReader dataReader = null;
+
+                    try
+                    {
+                        dataReader = new DBSqlServerDataReader(sqlDataReader);
+
+                        return (await sqlDataReader.ReadAsync().ConfigureAwait(false))
+                            ? dataFiller(dataReader)
+                            : nullValue;
+                    }
+                    finally
+                    {
+                        dataReader?.Cleanup();
+
+                        try
+                        {
+                            sqlDataReader?.Close();
+                        }
+                        catch (Exception ex)
+                        {
+                            try
+                            {
+                                Log.Error(DBSqlServerLocalizedText.DBSqlServerCommand_CloseDataReader, ex);
+                            }
+                            catch (Exception)
+                            {
+                                // Nothing to do
+                            }
+                        }
+
+                        try
+                        {
+                            sqlDataReader?.Dispose();
+                        }
+                        catch (Exception ex)
+                        {
+                            try
+                            {
+                                Log.Error(DBSqlServerLocalizedText.DBSqlServerCommand_DisposeDataReader, ex);
+                            }
+                            catch (Exception)
+                            {
+                                // Nothing to do
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.ConvertSqlServerException(isConnecting: false);
+                throw;
+            }
+        }
+
         #endregion
 
         #region Execute non-query command
@@ -352,6 +534,30 @@ namespace WDNUtils.DBSqlServer
                 using (var command = new DBSqlServerCommand(connection: connection, commandText: commandText, isStoredProcedure: isStoredProcedure, parameters: parameters))
                 {
                     return command.Command.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.ConvertSqlServerException(isConnecting: false);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates and runs a command to execute a command text
+        /// </summary>
+        /// <param name="connection">Database connection</param>
+        /// <param name="commandText">Command text</param>
+        /// <param name="isStoredProcedure">Indicates if the command text is a stored procedure name</param>
+        /// <param name="parameters">Bind parameters</param>
+        /// <returns>Number of affected rows</returns>
+        internal async static Task<int> ExecuteNonQueryAsync(DBSqlServerConnection connection, string commandText, bool isStoredProcedure, params DBSqlServerParameter[] parameters)
+        {
+            try
+            {
+                using (var command = new DBSqlServerCommand(connection: connection, commandText: commandText, isStoredProcedure: isStoredProcedure, parameters: parameters))
+                {
+                    return await command.Command.ExecuteNonQueryAsync().ConfigureAwait(false);
                 }
             }
             catch (Exception ex)

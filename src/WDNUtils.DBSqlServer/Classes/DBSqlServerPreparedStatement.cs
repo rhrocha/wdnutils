@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace WDNUtils.DBSqlServer
 {
@@ -58,6 +59,16 @@ namespace WDNUtils.DBSqlServer
         public int Execute()
         {
             return Command.Execute();
+        }
+
+
+        /// <summary>
+        /// Executes the prepared statement
+        /// </summary>
+        /// <returns>Number of affected rows</returns>
+        public async Task<int> ExecuteAsync()
+        {
+            return await Command.ExecuteAsync().ConfigureAwait(false);
         }
 
         #endregion

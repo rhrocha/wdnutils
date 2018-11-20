@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Numerics;
+using System.Threading.Tasks;
 
 namespace WDNUtils.DBSqlServer
 {
@@ -182,6 +183,19 @@ namespace WDNUtils.DBSqlServer
         }
 
         /// <summary>
+        /// Creates and runs a command to execute a query command text that returns multiple rows
+        /// </summary>
+        /// <typeparam name="T">Return type</typeparam>
+        /// <param name="dataFiller">Function to convert the returned rows into the return type object</param>
+        /// <param name="commandText">Command text</param>
+        /// <param name="parameters">Bind parameters</param>
+        /// <returns>List of objects of the return type</returns>
+        protected async Task<List<T>> RetrieveDataListAsync<T>(Func<DBSqlServerDataReader, T> dataFiller, string commandText, params DBSqlServerParameter[] parameters)
+        {
+            return await DBSqlServerCommand.RetrieveDataListAsync(connection: Connection, dataFiller: dataFiller, commandText: commandText, isStoredProcedure: false, parameters: parameters).ConfigureAwait(false);
+        }
+
+        /// <summary>
         /// Creates and runs a command to execute a stored procedure that returns multiple rows
         /// </summary>
         /// <typeparam name="T">Return type</typeparam>
@@ -192,6 +206,19 @@ namespace WDNUtils.DBSqlServer
         protected List<T> RetrieveDataListSP<T>(Func<DBSqlServerDataReader, T> dataFiller, string commandText, params DBSqlServerParameter[] parameters)
         {
             return DBSqlServerCommand.RetrieveDataList(connection: Connection, dataFiller: dataFiller, commandText: commandText, isStoredProcedure: true, parameters: parameters);
+        }
+
+        /// <summary>
+        /// Creates and runs a command to execute a stored procedure that returns multiple rows
+        /// </summary>
+        /// <typeparam name="T">Return type</typeparam>
+        /// <param name="dataFiller">Function to convert the returned rows into the return type object</param>
+        /// <param name="commandText">Stored procedure name</param>
+        /// <param name="parameters">Bind parameters</param>
+        /// <returns>List of objects of the return type</returns>
+        protected async Task<List<T>> RetrieveDataListSPAsync<T>(Func<DBSqlServerDataReader, T> dataFiller, string commandText, params DBSqlServerParameter[] parameters)
+        {
+            return await DBSqlServerCommand.RetrieveDataListAsync(connection: Connection, dataFiller: dataFiller, commandText: commandText, isStoredProcedure: true, parameters: parameters).ConfigureAwait(false);
         }
 
         #endregion
@@ -213,6 +240,20 @@ namespace WDNUtils.DBSqlServer
         }
 
         /// <summary>
+        /// Creates and runs a command to execute a query command text that returns a single row
+        /// </summary>
+        /// <typeparam name="T">Return type</typeparam>
+        /// <param name="dataFiller">Function to convert the returned row into the return type object</param>
+        /// <param name="commandText">Command text</param>
+        /// <param name="nullValue">Value to be returned if the query command text does not return any row</param>
+        /// <param name="parameters">Bind parameters</param>
+        /// <returns>Query result, or nullValue if none</returns>
+        protected async Task<T> RetrieveDataItemAsync<T>(Func<DBSqlServerDataReader, T> dataFiller, string commandText, T nullValue = default(T), params DBSqlServerParameter[] parameters)
+        {
+            return await DBSqlServerCommand.RetrieveDataItemAsync(connection: Connection, dataFiller: dataFiller, commandText: commandText, isStoredProcedure: false, nullValue: nullValue, parameters: parameters).ConfigureAwait(false);
+        }
+
+        /// <summary>
         /// Creates and runs a command to execute a stored procedure that returns a single row
         /// </summary>
         /// <typeparam name="T">Return type</typeparam>
@@ -224,6 +265,20 @@ namespace WDNUtils.DBSqlServer
         protected T RetrieveDataItemSP<T>(Func<DBSqlServerDataReader, T> dataFiller, string commandText, T nullValue = default(T), params DBSqlServerParameter[] parameters)
         {
             return DBSqlServerCommand.RetrieveDataItem(connection: Connection, dataFiller: dataFiller, commandText: commandText, isStoredProcedure: true, nullValue: nullValue, parameters: parameters);
+        }
+
+        /// <summary>
+        /// Creates and runs a command to execute a stored procedure that returns a single row
+        /// </summary>
+        /// <typeparam name="T">Return type</typeparam>
+        /// <param name="dataFiller">Function to convert the returned row into the return type object</param>
+        /// <param name="commandText">Stored procedure name</param>
+        /// <param name="nullValue">Value to be returned if the stored procedure does not return any row</param>
+        /// <param name="parameters">Bind parameters</param>
+        /// <returns>Stored procedure result, or nullValue if none</returns>
+        protected async Task<T> RetrieveDataItemSPAsync<T>(Func<DBSqlServerDataReader, T> dataFiller, string commandText, T nullValue = default(T), params DBSqlServerParameter[] parameters)
+        {
+            return await DBSqlServerCommand.RetrieveDataItemAsync(connection: Connection, dataFiller: dataFiller, commandText: commandText, isStoredProcedure: true, nullValue: nullValue, parameters: parameters).ConfigureAwait(false);
         }
 
         #endregion
@@ -242,6 +297,17 @@ namespace WDNUtils.DBSqlServer
         }
 
         /// <summary>
+        /// Creates and runs a command to execute a command text
+        /// </summary>
+        /// <param name="commandText">Command text</param>
+        /// <param name="parameters">Bind parameters</param>
+        /// <returns>Number of affected rows</returns>
+        protected async Task<int> ExecuteAsync(string commandText, params DBSqlServerParameter[] parameters)
+        {
+            return await DBSqlServerCommand.ExecuteNonQueryAsync(connection: Connection, commandText: commandText, isStoredProcedure: false, parameters: parameters).ConfigureAwait(false);
+        }
+
+        /// <summary>
         /// Creates and runs a command to execute a stored procedure
         /// </summary>
         /// <param name="commandText">Stored procedure name</param>
@@ -250,6 +316,17 @@ namespace WDNUtils.DBSqlServer
         protected int ExecuteSP(string commandText, params DBSqlServerParameter[] parameters)
         {
             return DBSqlServerCommand.ExecuteNonQuery(connection: Connection, commandText: commandText, isStoredProcedure: true, parameters: parameters);
+        }
+
+        /// <summary>
+        /// Creates and runs a command to execute a stored procedure
+        /// </summary>
+        /// <param name="commandText">Stored procedure name</param>
+        /// <param name="parameters">Bind parameters</param>
+        /// <returns>Number of affected rows</returns>
+        protected async Task<int> ExecuteSPAsync(string commandText, params DBSqlServerParameter[] parameters)
+        {
+            return await DBSqlServerCommand.ExecuteNonQueryAsync(connection: Connection, commandText: commandText, isStoredProcedure: true, parameters: parameters).ConfigureAwait(false);
         }
 
         #endregion
