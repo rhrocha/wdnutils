@@ -46,7 +46,7 @@
 
   <ItemGroup>
     <PackageReference Include="log4net" Version="2.0.8" />
-    <PackageReference Include="WDNUtils.Common" Version="1.0.6-beta" />
+    <PackageReference Include="WDNUtils.Common" Version="1.0.7-beta" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)'=='netcoreapp2.0'">
