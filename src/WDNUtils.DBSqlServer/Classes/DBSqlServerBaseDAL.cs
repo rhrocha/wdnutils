@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Numerics;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace WDNUtils.DBSqlServer
@@ -365,7 +366,7 @@ namespace WDNUtils.DBSqlServer
         /// <param name="commandText">Command text</param>
         /// <param name="parameters">Bind parameters</param>
         /// <returns>DataTable with the query results</returns>
-        public DataTable RetrieveDataTable(string commandText, params DBSqlServerParameter[] parameters)
+        protected DataTable RetrieveDataTable(string commandText, params DBSqlServerParameter[] parameters)
         {
             return DBSqlServerCommand.GetDataTable(connection: Connection, commandText: commandText, isStoredProcedure: false, parameters: parameters);
         }
@@ -376,7 +377,7 @@ namespace WDNUtils.DBSqlServer
         /// <param name="commandText">Stored procedure name</param>
         /// <param name="parameters">Bind parameters</param>
         /// <returns>DataTable with the query results</returns>
-        public DataTable RetrieveDataTableSP(string commandText, params DBSqlServerParameter[] parameters)
+        protected DataTable RetrieveDataTableSP(string commandText, params DBSqlServerParameter[] parameters)
         {
             return DBSqlServerCommand.GetDataTable(connection: Connection, commandText: commandText, isStoredProcedure: true, parameters: parameters);
         }
@@ -428,6 +429,21 @@ namespace WDNUtils.DBSqlServer
                 preparedStatement?.Dispose();
                 throw;
             }
+        }
+
+        #endregion
+
+        #region Trim spaces and line breaks from command text
+
+        /// <summary>
+        /// Trim spaces and line breaks from command text
+        /// </summary>
+        /// <param name="commandText">Command text</param>
+        /// <returns>Trimmed command text</returns>
+        protected static string TrimCommandText(string commandText)
+        {
+            return (commandText is null) ? null :
+                Regex.Replace(commandText.Trim(' ', '\r', '\n'), @" *[\r\n]+ *", @" ");
         }
 
         #endregion
