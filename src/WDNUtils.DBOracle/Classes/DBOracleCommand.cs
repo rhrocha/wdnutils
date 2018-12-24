@@ -209,10 +209,13 @@ namespace WDNUtils.DBOracle
 
                         return rowList;
                     }
-                    finally
+                    catch (Exception)
                     {
                         rowList?.Clear(); // This method fills the internal array with zeros to help the gc
-
+                        throw;
+                    }
+                    finally
+                    {
                         dataReader?.Cleanup();
 
                         try
