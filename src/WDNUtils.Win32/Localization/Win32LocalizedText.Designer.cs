@@ -122,5 +122,23 @@ namespace WDNUtils.Win32.Localization {
                 return ResourceManager.GetString("ConsoleUtils_DisableClosing_LogError", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you want to discard the changes?.
+        /// </summary>
+        internal static string IFormDataStatus_Dialog_Body {
+            get {
+                return ResourceManager.GetString("IFormDataStatus_Dialog_Body", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warning.
+        /// </summary>
+        internal static string IFormDataStatus_Dialog_Title {
+            get {
+                return ResourceManager.GetString("IFormDataStatus_Dialog_Title", resourceCulture);
+            }
+        }
     }
 }
