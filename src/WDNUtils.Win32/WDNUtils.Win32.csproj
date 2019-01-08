@@ -16,7 +16,7 @@
     <RepositoryType></RepositoryType>
     <PackageLicenseUrl>https://github.com/rhrocha/wdnutils/blob/master/LICENSE</PackageLicenseUrl>
     <PackageTags>WDN</PackageTags>
-    <PackageReleaseNotes>No changes.</PackageReleaseNotes>
+    <PackageReleaseNotes>Added form locker implementation for WinForms.</PackageReleaseNotes>
     <Version>1.0.8-beta</Version>
     <PackageProjectUrl>https://github.com/rhrocha/wdnutils/</PackageProjectUrl>
   </PropertyGroup>
@@ -47,6 +47,10 @@
   <ItemGroup>
     <PackageReference Include="log4net" Version="2.0.8" />
     <PackageReference Include="WDNUtils.Common" Version="1.0.7-beta" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="System.Windows.Forms" />
   </ItemGroup>
 
 </Project>
