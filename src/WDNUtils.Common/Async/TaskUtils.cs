@@ -385,6 +385,134 @@ namespace WDNUtils.Common
         }
 
         /// <summary>
+        /// Run an action after a specified due time, without awaiting for its completion
+        /// </summary>
+        /// <param name="func">Action to run</param>
+        /// <param name="notifyCompletion">Listener to notify the action was finished (it wont be triggered if the action throws an exception)</param>
+        /// <param name="dueTime">Delay before running the action</param>
+        /// <param name="notifyException">Exception handler for 'func' and 'notifyCompletion' (if null, the exception will be displayed in the debug output)</param>
+        public static void FireAndForget(Action func, Func<Task> notifyCompletion, TimeSpan dueTime = default(TimeSpan), Action<Exception> notifyException = null)
+        {
+            Task.Run(async () =>
+            {
+                if (dueTime > TimeSpan.Zero)
+                {
+                    await Task.Delay(dueTime).ConfigureAwait(false);
+                }
+
+                try
+                {
+                    func();
+
+                    if (!(notifyCompletion is null))
+                    {
+                        await notifyCompletion().ConfigureAwait(false);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    (notifyException ?? DebugDisplayException).Invoke(ex);
+                }
+            });
+        }
+
+        /// <summary>
+        /// Run an async action after a specified due time, without awaiting for its completion
+        /// </summary>
+        /// <param name="func">Action to run</param>
+        /// <param name="notifyCompletion">Listener to notify the action was finished (it wont be triggered if the action throws an exception)</param>
+        /// <param name="dueTime">Delay before running the action</param>
+        /// <param name="notifyException">Exception handler for 'func' and 'notifyCompletion' (if null, the exception will be displayed in the debug output)</param>
+        public static void FireAndForgetAsync(Func<Task> func, Func<Task> notifyCompletion, TimeSpan dueTime = default(TimeSpan), Action<Exception> notifyException = null)
+        {
+            Task.Run(async () =>
+            {
+                if (dueTime > TimeSpan.Zero)
+                {
+                    await Task.Delay(dueTime).ConfigureAwait(false);
+                }
+
+                try
+                {
+                    await func().ConfigureAwait(false);
+
+                    if (!(notifyCompletion is null))
+                    {
+                        await notifyCompletion().ConfigureAwait(false);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    (notifyException ?? DebugDisplayException).Invoke(ex);
+                }
+            });
+        }
+
+        /// <summary>
+        /// Run a function after a specified due time, without awaiting for its completion
+        /// </summary>
+        /// <param name="func">Function to run</param>
+        /// <param name="notifyCompletion">Listener to receive the value returned by the function (it wont be triggered if the function throws an exception)</param>
+        /// <param name="dueTime">Delay before running the function</param>
+        /// <param name="notifyException">Exception handler for 'func' and 'notifyCompletion' (if null, the exception will be displayed in the debug output)</param>
+        public static void FireAndForget<T>(Func<T> func, Func<T, Task> notifyCompletion, TimeSpan dueTime = default(TimeSpan), Action<Exception> notifyException = null)
+        {
+            Task.Run(async () =>
+            {
+                if (dueTime > TimeSpan.Zero)
+                {
+                    await Task.Delay(dueTime).ConfigureAwait(false);
+                }
+
+                try
+                {
+                    var value = func();
+
+                    if (!(notifyCompletion is null))
+                    {
+                        await notifyCompletion(value).ConfigureAwait(false);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    (notifyException ?? DebugDisplayException).Invoke(ex);
+                }
+            });
+        }
+
+        /// <summary>
+        /// Run an async function after a specified due time, without awaiting for its completion
+        /// </summary>
+        /// <param name="func">Function to run</param>
+        /// <param name="notifyCompletion">Listener to receive the value returned by the function (it wont be triggered if the function throws an exception)</param>
+        /// <param name="dueTime">Delay before running the function</param>
+        /// <param name="notifyException">Exception handler for 'func' and 'notifyCompletion' (if null, the exception will be displayed in the debug output)</param>
+        public static void FireAndForgetAsync<T>(Func<Task<T>> func, Func<T, Task> notifyCompletion, TimeSpan dueTime = default(TimeSpan), Action<Exception> notifyException = null)
+        {
+            Task.Run(async () =>
+            {
+                if (dueTime > TimeSpan.Zero)
+                {
+                    await Task.Delay(dueTime).ConfigureAwait(false);
+                }
+
+                try
+                {
+                    var value = await func().ConfigureAwait(false);
+
+                    if (!(notifyCompletion is null))
+                    {
+                        await notifyCompletion(value).ConfigureAwait(false);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    (notifyException ?? DebugDisplayException).Invoke(ex);
+                }
+            });
+        }
+
+        /// <summary>
         /// Displays exception information in the debug output
         /// </summary>
         /// <param name="ex">Exception to be displayed</param>

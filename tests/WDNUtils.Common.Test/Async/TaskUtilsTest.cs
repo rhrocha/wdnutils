@@ -100,78 +100,26 @@ namespace WDNUtils.Common.Test
         [TestMethod]
         public async Task TestTaskUtilsFireAndForget()
         {
-            // Cannot run all tests in parallel in debug mode, the large number of tasks will break the elapsed time checks
-            if (Debugger.IsAttached)
+            var taskList = new List<Task>();
+
+            for (int index = 0; index < (2 << 6); index++)
             {
-                await TestFireAndForgetAction(asynchronous: false, notify: false, delay: false, exception: false);
-                await TestFireAndForgetAction(asynchronous: false, notify: false, delay: false, exception: true);
-                await TestFireAndForgetAction(asynchronous: false, notify: false, delay: true, exception: false);
-                await TestFireAndForgetAction(asynchronous: false, notify: false, delay: true, exception: true);
-                await TestFireAndForgetAction(asynchronous: false, notify: true, delay: false, exception: false);
-                await TestFireAndForgetAction(asynchronous: false, notify: true, delay: false, exception: true);
-                await TestFireAndForgetAction(asynchronous: false, notify: true, delay: true, exception: false);
-                await TestFireAndForgetAction(asynchronous: false, notify: true, delay: true, exception: true);
-                await TestFireAndForgetAction(asynchronous: true, notify: false, delay: false, exception: false);
-                await TestFireAndForgetAction(asynchronous: true, notify: false, delay: false, exception: true);
-                await TestFireAndForgetAction(asynchronous: true, notify: false, delay: true, exception: false);
-                await TestFireAndForgetAction(asynchronous: true, notify: false, delay: true, exception: true);
-                await TestFireAndForgetAction(asynchronous: true, notify: true, delay: false, exception: false);
-                await TestFireAndForgetAction(asynchronous: true, notify: true, delay: false, exception: true);
-                await TestFireAndForgetAction(asynchronous: true, notify: true, delay: true, exception: false);
-                await TestFireAndForgetAction(asynchronous: true, notify: true, delay: true, exception: true);
-                await TestFireAndForgetFunction(asynchronous: false, notify: false, delay: false, exception: false);
-                await TestFireAndForgetFunction(asynchronous: false, notify: false, delay: false, exception: true);
-                await TestFireAndForgetFunction(asynchronous: false, notify: false, delay: true, exception: false);
-                await TestFireAndForgetFunction(asynchronous: false, notify: false, delay: true, exception: true);
-                await TestFireAndForgetFunction(asynchronous: false, notify: true, delay: false, exception: false);
-                await TestFireAndForgetFunction(asynchronous: false, notify: true, delay: false, exception: true);
-                await TestFireAndForgetFunction(asynchronous: false, notify: true, delay: true, exception: false);
-                await TestFireAndForgetFunction(asynchronous: false, notify: true, delay: true, exception: true);
-                await TestFireAndForgetFunction(asynchronous: true, notify: false, delay: false, exception: false);
-                await TestFireAndForgetFunction(asynchronous: true, notify: false, delay: false, exception: true);
-                await TestFireAndForgetFunction(asynchronous: true, notify: false, delay: true, exception: false);
-                await TestFireAndForgetFunction(asynchronous: true, notify: false, delay: true, exception: true);
-                await TestFireAndForgetFunction(asynchronous: true, notify: true, delay: false, exception: false);
-                await TestFireAndForgetFunction(asynchronous: true, notify: true, delay: false, exception: true);
-                await TestFireAndForgetFunction(asynchronous: true, notify: true, delay: true, exception: false);
-                await TestFireAndForgetFunction(asynchronous: true, notify: true, delay: true, exception: true);
+                taskList.Add(TestFireAndForget(
+                    function: (index >> 5) % 2 == 0,
+                    asynchronous: (index >> 4) % 2 == 0,
+                    notify: (index >> 3) % 2 == 0,
+                    notifyAsync: (index >> 2) % 2 == 0,
+                    delay: (index >> 1) % 2 == 0,
+                    exception: index % 2 == 0));
+
+                // Cannot run all tests in parallel in debug mode, the large number of tasks will break the elapsed time checks
+                if (Debugger.IsAttached)
+                {
+                    await Task.WhenAll(taskList[taskList.Count - 1]);
+                }
             }
-            else
-            {
-                await Task.WhenAll(
-                    TestFireAndForgetAction(asynchronous: false, notify: false, delay: false, exception: false),
-                    TestFireAndForgetAction(asynchronous: false, notify: false, delay: false, exception: true),
-                    TestFireAndForgetAction(asynchronous: false, notify: false, delay: true, exception: false),
-                    TestFireAndForgetAction(asynchronous: false, notify: false, delay: true, exception: true),
-                    TestFireAndForgetAction(asynchronous: false, notify: true, delay: false, exception: false),
-                    TestFireAndForgetAction(asynchronous: false, notify: true, delay: false, exception: true),
-                    TestFireAndForgetAction(asynchronous: false, notify: true, delay: true, exception: false),
-                    TestFireAndForgetAction(asynchronous: false, notify: true, delay: true, exception: true),
-                    TestFireAndForgetAction(asynchronous: true, notify: false, delay: false, exception: false),
-                    TestFireAndForgetAction(asynchronous: true, notify: false, delay: false, exception: true),
-                    TestFireAndForgetAction(asynchronous: true, notify: false, delay: true, exception: false),
-                    TestFireAndForgetAction(asynchronous: true, notify: false, delay: true, exception: true),
-                    TestFireAndForgetAction(asynchronous: true, notify: true, delay: false, exception: false),
-                    TestFireAndForgetAction(asynchronous: true, notify: true, delay: false, exception: true),
-                    TestFireAndForgetAction(asynchronous: true, notify: true, delay: true, exception: false),
-                    TestFireAndForgetAction(asynchronous: true, notify: true, delay: true, exception: true),
-                    TestFireAndForgetFunction(asynchronous: false, notify: false, delay: false, exception: false),
-                    TestFireAndForgetFunction(asynchronous: false, notify: false, delay: false, exception: true),
-                    TestFireAndForgetFunction(asynchronous: false, notify: false, delay: true, exception: false),
-                    TestFireAndForgetFunction(asynchronous: false, notify: false, delay: true, exception: true),
-                    TestFireAndForgetFunction(asynchronous: false, notify: true, delay: false, exception: false),
-                    TestFireAndForgetFunction(asynchronous: false, notify: true, delay: false, exception: true),
-                    TestFireAndForgetFunction(asynchronous: false, notify: true, delay: true, exception: false),
-                    TestFireAndForgetFunction(asynchronous: false, notify: true, delay: true, exception: true),
-                    TestFireAndForgetFunction(asynchronous: true, notify: false, delay: false, exception: false),
-                    TestFireAndForgetFunction(asynchronous: true, notify: false, delay: false, exception: true),
-                    TestFireAndForgetFunction(asynchronous: true, notify: false, delay: true, exception: false),
-                    TestFireAndForgetFunction(asynchronous: true, notify: false, delay: true, exception: true),
-                    TestFireAndForgetFunction(asynchronous: true, notify: true, delay: false, exception: false),
-                    TestFireAndForgetFunction(asynchronous: true, notify: true, delay: false, exception: true),
-                    TestFireAndForgetFunction(asynchronous: true, notify: true, delay: true, exception: false),
-                    TestFireAndForgetFunction(asynchronous: true, notify: true, delay: true, exception: true));
-            }
+
+            await Task.WhenAll(taskList);
         }
 
         #region Internal methods
@@ -667,68 +615,98 @@ namespace WDNUtils.Common.Test
 
         #region FireAndForget
 
-        private async static Task TestFireAndForgetAction(bool asynchronous, bool notify, bool delay, bool exception)
+        private async static Task TestFireAndForget(bool function, bool asynchronous, bool notify, bool notifyAsync, bool delay, bool exception)
         {
-            var taskCompletionSource = new TaskCompletionSource<int>();
+            var taskCompletionSource = new TaskCompletionSource<bool>();
 
-            if (asynchronous)
+            if (function)
             {
-                TaskUtils.FireAndForgetAsync(
-                    func: () => { if (exception) throw new ApplicationException(); if (!notify) taskCompletionSource.SetResult(0); return Task.Delay(0); },
-                    notifyCompletion: (notify)
-                        ? (() => taskCompletionSource.SetResult(1))
-                        : (Action)null,
-                    dueTime: (!delay) ? TimeSpan.Zero : (exception) ? TimeSpan4 : TimeSpan2,
-                    notifyException: (ex) => { Assert.AreEqual(typeof(ApplicationException), ex.GetType()); taskCompletionSource.SetResult(2); });
+                if (notifyAsync)
+                {
+                    if (asynchronous)
+                    {
+                        TaskUtils.FireAndForgetAsync(
+                            func: () => { Debug.WriteLine($"{DateTime.Now.Millisecond} Function started!"); if (exception) throw new ApplicationException(); if (!notify) taskCompletionSource.SetResult(false); return Task.FromResult(false); },
+                            notifyCompletion: (notify) ? ((value) => { Debug.WriteLine($"{DateTime.Now.Millisecond} Completion started!"); taskCompletionSource.SetResult(value); return Task.Delay(0); }) : (Func<bool, Task>)null,
+                            dueTime: (!delay) ? TimeSpan.Zero : (exception) ? TimeSpan4 : TimeSpan2,
+                            notifyException: (ex) => { Debug.WriteLine($"{DateTime.Now.Millisecond} Exception started!"); Assert.AreEqual(typeof(ApplicationException), ex.GetType()); taskCompletionSource.SetResult(true); });
+                    }
+                    else
+                    {
+                        TaskUtils.FireAndForget(
+                            func: () => { if (exception) throw new ApplicationException(); if (!notify) taskCompletionSource.SetResult(false); return false; },
+                            notifyCompletion: (notify) ? ((value) => { taskCompletionSource.SetResult(value); return Task.Delay(0); }) : (Func<bool, Task>)null,
+                            dueTime: (!delay) ? TimeSpan.Zero : (exception) ? TimeSpan4 : TimeSpan2,
+                            notifyException: (ex) => { Assert.AreEqual(typeof(ApplicationException), ex.GetType()); taskCompletionSource.SetResult(true); });
+                    }
+                }
+                else
+                {
+                    if (asynchronous)
+                    {
+                        TaskUtils.FireAndForgetAsync(
+                            func: () => { if (exception) throw new ApplicationException(); if (!notify) taskCompletionSource.SetResult(false); return Task.FromResult(false); },
+                            notifyCompletion: (notify) ? ((value) => taskCompletionSource.SetResult(value)) : (Action<bool>)null,
+                            dueTime: (!delay) ? TimeSpan.Zero : (exception) ? TimeSpan4 : TimeSpan2,
+                            notifyException: (ex) => { Assert.AreEqual(typeof(ApplicationException), ex.GetType()); taskCompletionSource.SetResult(true); });
+                    }
+                    else
+                    {
+                        TaskUtils.FireAndForget(
+                            func: () => { if (exception) throw new ApplicationException(); if (!notify) taskCompletionSource.SetResult(false); return false; },
+                            notifyCompletion: (notify) ? ((value) => taskCompletionSource.SetResult(value)) : (Action<bool>)null,
+                            dueTime: (!delay) ? TimeSpan.Zero : (exception) ? TimeSpan4 : TimeSpan2,
+                            notifyException: (ex) => { Assert.AreEqual(typeof(ApplicationException), ex.GetType()); taskCompletionSource.SetResult(true); });
+                    }
+                }
             }
             else
             {
-                TaskUtils.FireAndForget(
-                    func: () => { if (exception) throw new ApplicationException(); if (!notify) taskCompletionSource.SetResult(0); },
-                    notifyCompletion: (notify)
-                        ? (() => taskCompletionSource.SetResult(1))
-                        : (Action)null,
-                    dueTime: (!delay) ? TimeSpan.Zero : (exception) ? TimeSpan4 : TimeSpan2,
-                    notifyException: (ex) => { Assert.AreEqual(typeof(ApplicationException), ex.GetType()); taskCompletionSource.SetResult(2); });
+                if (notifyAsync)
+                {
+                    if (asynchronous)
+                    {
+                        TaskUtils.FireAndForgetAsync(
+                            func: () => { if (exception) throw new ApplicationException(); if (!notify) taskCompletionSource.SetResult(false); return Task.Delay(0); },
+                            notifyCompletion: (notify) ? (() => { taskCompletionSource.SetResult(false); return Task.Delay(0); }) : (Func<Task>)null,
+                            dueTime: (!delay) ? TimeSpan.Zero : (exception) ? TimeSpan4 : TimeSpan2,
+                            notifyException: (ex) => { Assert.AreEqual(typeof(ApplicationException), ex.GetType()); taskCompletionSource.SetResult(true); });
+                    }
+                    else
+                    {
+                        TaskUtils.FireAndForget(
+                            func: () => { if (exception) throw new ApplicationException(); if (!notify) taskCompletionSource.SetResult(false); },
+                            notifyCompletion: (notify) ? (() => { taskCompletionSource.SetResult(false); return Task.Delay(0); }) : (Func<Task>)null,
+                            dueTime: (!delay) ? TimeSpan.Zero : (exception) ? TimeSpan4 : TimeSpan2,
+                            notifyException: (ex) => { Assert.AreEqual(typeof(ApplicationException), ex.GetType()); taskCompletionSource.SetResult(true); });
+                    }
+                }
+                else
+                {
+                    if (asynchronous)
+                    {
+                        TaskUtils.FireAndForgetAsync(
+                            func: () => { if (exception) throw new ApplicationException(); if (!notify) taskCompletionSource.SetResult(false); return Task.Delay(0); },
+                            notifyCompletion: (notify) ? (() => taskCompletionSource.SetResult(false)) : (Action)null,
+                            dueTime: (!delay) ? TimeSpan.Zero : (exception) ? TimeSpan4 : TimeSpan2,
+                            notifyException: (ex) => { Assert.AreEqual(typeof(ApplicationException), ex.GetType()); taskCompletionSource.SetResult(true); });
+                    }
+                    else
+                    {
+                        TaskUtils.FireAndForget(
+                            func: () => { if (exception) throw new ApplicationException(); if (!notify) taskCompletionSource.SetResult(false); },
+                            notifyCompletion: (notify) ? (() => taskCompletionSource.SetResult(false)) : (Action)null,
+                            dueTime: (!delay) ? TimeSpan.Zero : (exception) ? TimeSpan4 : TimeSpan2,
+                            notifyException: (ex) => { Assert.AreEqual(typeof(ApplicationException), ex.GetType()); taskCompletionSource.SetResult(true); });
+                    }
+                }
             }
 
             await Task.Delay(exception ? TimeSpan2 : TimeSpan1);
 
             Assert.AreNotEqual(delay, taskCompletionSource.Task.IsCompleted);
 
-            Assert.AreEqual((exception) ? 2 : (notify) ? 1 : 0, await taskCompletionSource.Task);
-        }
-
-        private async static Task TestFireAndForgetFunction(bool asynchronous, bool notify, bool delay, bool exception)
-        {
-            var taskCompletionSource = new TaskCompletionSource<int>();
-
-            if (asynchronous)
-            {
-                TaskUtils.FireAndForgetAsync(
-                    func: () => { if (exception) throw new ApplicationException(); if (!notify) taskCompletionSource.SetResult(0); return Task.FromResult(1); },
-                    notifyCompletion: (notify)
-                        ? ((value) => taskCompletionSource.SetResult(value))
-                        : (Action<int>)null,
-                    dueTime: (!delay) ? TimeSpan.Zero : (exception) ? TimeSpan4 : TimeSpan2,
-                    notifyException: (ex) => { Assert.AreEqual(typeof(ApplicationException), ex.GetType()); taskCompletionSource.SetResult(2); });
-            }
-            else
-            {
-                TaskUtils.FireAndForget(
-                    func: () => { if (exception) throw new ApplicationException(); if (!notify) taskCompletionSource.SetResult(0); return 1; },
-                    notifyCompletion: (notify)
-                        ? ((value) => taskCompletionSource.SetResult(value))
-                        : (Action<int>)null,
-                    dueTime: (!delay) ? TimeSpan.Zero : (exception) ? TimeSpan4 : TimeSpan2,
-                    notifyException: (ex) => { Assert.AreEqual(typeof(ApplicationException), ex.GetType()); taskCompletionSource.SetResult(2); });
-            }
-
-            await Task.Delay(exception ? TimeSpan2 : TimeSpan1);
-
-            Assert.AreNotEqual(delay, taskCompletionSource.Task.IsCompleted);
-
-            Assert.AreEqual((exception) ? 2 : (notify) ? 1 : 0, await taskCompletionSource.Task);
+            Assert.AreEqual(exception, await taskCompletionSource.Task);
         }
 
         #endregion
