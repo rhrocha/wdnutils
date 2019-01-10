@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace WDNUtils.Common.Comparison
+namespace WDNUtils.Common
 {
     /// <summary>
     /// Defines methods to support the comparison of nullable structs for equality
