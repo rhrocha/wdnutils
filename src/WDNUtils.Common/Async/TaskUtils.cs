@@ -18,9 +18,10 @@ namespace WDNUtils.Common
         /// <param name="func">Task to be awaited for</param>
         /// <param name="timeout">Timeout for the task await</param>
         /// <param name="notifyTimeout">Action to be called if the task did not finish before the timeout</param>
-        /// <param name="continueOnCapturedContext">True to attempt to run the value factory task in the captured context; default is false, to prevent deadlocks.
-        /// Should be true only if the value factory uses resources that does not support cross-thread operations (like UI components).</param>
+        /// <param name="continueOnCapturedContext">True to attempt to run the notifyTimeout task in the captured context; default is false, to prevent deadlocks.
+        /// Should be true only if the notifyTimeout uses resources that does not support cross-thread operations (like UI components).</param>
         /// <returns>Nothing (awaitable task)</returns>
+        /// <exception cref="TimeoutException">The task did not finish before the timeout, and notifyTimeout is null</exception>
         public async static Task WaitTimeout(Func<Task> func, TimeSpan timeout, Action<Task> notifyTimeout = null, bool continueOnCapturedContext = false)
         {
             var task = func();
@@ -45,9 +46,10 @@ namespace WDNUtils.Common
         /// <param name="func">Task to be awaited for</param>
         /// <param name="timeout">Timeout for the task await</param>
         /// <param name="notifyTimeout">Action to be called if the task did not finish before the timeout</param>
-        /// <param name="continueOnCapturedContext">True to attempt to run the value factory task in the captured context; default is false, to prevent deadlocks.
-        /// Should be true only if the value factory uses resources that does not support cross-thread operations (like UI components).</param>
+        /// <param name="continueOnCapturedContext">True to attempt to run the notifyTimeout task in the captured context; default is false, to prevent deadlocks.
+        /// Should be true only if the notifyTimeout uses resources that does not support cross-thread operations (like UI components).</param>
         /// <returns>Nothing (awaitable task)</returns>
+        /// <exception cref="TimeoutException">The task did not finish before the timeout, and notifyTimeout is null</exception>
         public async static Task WaitTimeout(Func<Task> func, TimeSpan timeout, Func<Task, Task> notifyTimeout, bool continueOnCapturedContext = false)
         {
             var task = func();
@@ -72,10 +74,11 @@ namespace WDNUtils.Common
         /// <param name="func">Task to be awaited for</param>
         /// <param name="timeout">Timeout for the task await</param>
         /// <param name="notifyTimeout">Action to be called if the task did not finish before the timeout</param>
-        /// <param name="continueOnCapturedContext">True to attempt to run the value factory task in the captured context; default is false, to prevent deadlocks.
-        /// Should be true only if the value factory uses resources that does not support cross-thread operations (like UI components).</param>
+        /// <param name="continueOnCapturedContext">True to attempt to run the notifyTimeout task in the captured context; default is false, to prevent deadlocks.
+        /// Should be true only if the notifyTimeout uses resources that does not support cross-thread operations (like UI components).</param>
         /// <returns>Result of the awaited task (awaitable task)</returns>
-        public async static Task<T> WaitTimeout<T>(Func<Task<T>> func, TimeSpan timeout, Func<Task, T> notifyTimeout = null, bool continueOnCapturedContext = false)
+        /// <exception cref="TimeoutException">The task did not finish before the timeout, and notifyTimeout is null</exception>
+        public async static Task<T> WaitTimeout<T>(Func<Task<T>> func, TimeSpan timeout, Func<Task<T>, T> notifyTimeout = null, bool continueOnCapturedContext = false)
         {
             var task = func();
 
@@ -96,10 +99,11 @@ namespace WDNUtils.Common
         /// <param name="func">Task to be awaited for</param>
         /// <param name="timeout">Timeout for the task await</param>
         /// <param name="notifyTimeout">Action to be called if the task did not finish before the timeout</param>
-        /// <param name="continueOnCapturedContext">True to attempt to run the value factory task in the captured context; default is false, to prevent deadlocks.
-        /// Should be true only if the value factory uses resources that does not support cross-thread operations (like UI components).</param>
+        /// <param name="continueOnCapturedContext">True to attempt to run the notifyTimeout task in the captured context; default is false, to prevent deadlocks.
+        /// Should be true only if the notifyTimeout uses resources that does not support cross-thread operations (like UI components).</param>
         /// <returns>Result of the awaited task (awaitable task)</returns>
-        public async static Task<T> WaitTimeout<T>(Func<Task<T>> func, TimeSpan timeout, Func<Task, Task<T>> notifyTimeout, bool continueOnCapturedContext = false)
+        /// <exception cref="TimeoutException">The task did not finish before the timeout, and notifyTimeout is null</exception>
+        public async static Task<T> WaitTimeout<T>(Func<Task<T>> func, TimeSpan timeout, Func<Task<T>, Task<T>> notifyTimeout, bool continueOnCapturedContext = false)
         {
             var task = func();
 
@@ -120,9 +124,10 @@ namespace WDNUtils.Common
         /// <param name="func">Task to be awaited for</param>
         /// <param name="timeout">Timeout for the task await</param>
         /// <param name="notifyTimeout">Action to be called if the task did not finish before the timeout</param>
-        /// <param name="continueOnCapturedContext">True to attempt to run the value factory task in the captured context; default is false, to prevent deadlocks.
-        /// Should be true only if the value factory uses resources that does not support cross-thread operations (like UI components).</param>
+        /// <param name="continueOnCapturedContext">True to attempt to run the notifyTimeout task in the captured context; default is false, to prevent deadlocks.
+        /// Should be true only if the notifyTimeout uses resources that does not support cross-thread operations (like UI components).</param>
         /// <returns>Nothing (awaitable task)</returns>
+        /// <exception cref="TimeoutException">The task did not finish before the timeout, and notifyTimeout is null</exception>
         public async static Task WaitTimeout(Func<CancellationToken, Task> func, TimeSpan timeout, Action<Task> notifyTimeout = null, bool continueOnCapturedContext = false)
         {
             using (var cancellationTokenSource = new CancellationTokenSource())
@@ -152,9 +157,10 @@ namespace WDNUtils.Common
         /// <param name="func">Task to be awaited for</param>
         /// <param name="timeout">Timeout for the task await</param>
         /// <param name="notifyTimeout">Action to be called if the task did not finish before the timeout</param>
-        /// <param name="continueOnCapturedContext">True to attempt to run the value factory task in the captured context; default is false, to prevent deadlocks.
-        /// Should be true only if the value factory uses resources that does not support cross-thread operations (like UI components).</param>
+        /// <param name="continueOnCapturedContext">True to attempt to run the notifyTimeout task in the captured context; default is false, to prevent deadlocks.
+        /// Should be true only if the notifyTimeout uses resources that does not support cross-thread operations (like UI components).</param>
         /// <returns>Nothing (awaitable task)</returns>
+        /// <exception cref="TimeoutException">The task did not finish before the timeout, and notifyTimeout is null</exception>
         public async static Task WaitTimeout(Func<CancellationToken, Task> func, TimeSpan timeout, Func<Task, Task> notifyTimeout, bool continueOnCapturedContext = false)
         {
             using (var cancellationTokenSource = new CancellationTokenSource())
@@ -184,10 +190,11 @@ namespace WDNUtils.Common
         /// <param name="func">Task to be awaited for</param>
         /// <param name="timeout">Timeout for the task await</param>
         /// <param name="notifyTimeout">Action to be called if the task did not finish before the timeout</param>
-        /// <param name="continueOnCapturedContext">True to attempt to run the value factory task in the captured context; default is false, to prevent deadlocks.
-        /// Should be true only if the value factory uses resources that does not support cross-thread operations (like UI components).</param>
+        /// <param name="continueOnCapturedContext">True to attempt to run the notifyTimeout task in the captured context; default is false, to prevent deadlocks.
+        /// Should be true only if the notifyTimeout uses resources that does not support cross-thread operations (like UI components).</param>
         /// <returns>Result of the awaited task (awaitable task)</returns>
-        public async static Task<T> WaitTimeout<T>(Func<CancellationToken, Task<T>> func, TimeSpan timeout, Func<Task, T> notifyTimeout = null, bool continueOnCapturedContext = false)
+        /// <exception cref="TimeoutException">The task did not finish before the timeout, and notifyTimeout is null</exception>
+        public async static Task<T> WaitTimeout<T>(Func<CancellationToken, Task<T>> func, TimeSpan timeout, Func<Task<T>, T> notifyTimeout = null, bool continueOnCapturedContext = false)
         {
             using (var cancellationTokenSource = new CancellationTokenSource())
             {
@@ -213,10 +220,11 @@ namespace WDNUtils.Common
         /// <param name="func">Task to be awaited for</param>
         /// <param name="timeout">Timeout for the task await</param>
         /// <param name="notifyTimeout">Action to be called if the task did not finish before the timeout</param>
-        /// <param name="continueOnCapturedContext">True to attempt to run the value factory task in the captured context; default is false, to prevent deadlocks.
-        /// Should be true only if the value factory uses resources that does not support cross-thread operations (like UI components).</param>
+        /// <param name="continueOnCapturedContext">True to attempt to run the notifyTimeout task in the captured context; default is false, to prevent deadlocks.
+        /// Should be true only if the notifyTimeout uses resources that does not support cross-thread operations (like UI components).</param>
         /// <returns>Result of the awaited task (awaitable task)</returns>
-        public async static Task<T> WaitTimeout<T>(Func<CancellationToken, Task<T>> func, TimeSpan timeout, Func<Task, Task<T>> notifyTimeout, bool continueOnCapturedContext = false)
+        /// <exception cref="TimeoutException">The task did not finish before the timeout, and notifyTimeout is null</exception>
+        public async static Task<T> WaitTimeout<T>(Func<CancellationToken, Task<T>> func, TimeSpan timeout, Func<Task<T>, Task<T>> notifyTimeout, bool continueOnCapturedContext = false)
         {
             using (var cancellationTokenSource = new CancellationTokenSource())
             {
