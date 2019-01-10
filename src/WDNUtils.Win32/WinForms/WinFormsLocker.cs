@@ -143,7 +143,7 @@ namespace WDNUtils.Win32
         public IFormLocker ScanControls(bool resetCustom = false)
         {
             var newControlList = new Dictionary<Control, Func<bool, bool>>(
-                comparer: new ObjectReferenceEqualityComparer<Control>());
+                comparer: ClassEqualityComparer<Control>.ReferenceEquality);
 
             if (!(KeepFormFocus is null))
             {
@@ -158,7 +158,7 @@ namespace WDNUtils.Win32
                         .ToDictionary(
                             item => item.Key,
                             item => item.Value,
-                            new ObjectReferenceEqualityComparer<Control>());
+                            ClassEqualityComparer<Control>.ReferenceEquality);
 
                 var controlStack = new Stack<Control>(Form?.Controls?.OfType<Control>() ?? Enumerable.Empty<Control>());
 
@@ -204,7 +204,7 @@ namespace WDNUtils.Win32
             {
                 var newControlList = new Dictionary<Control, Func<bool, bool>>(
                     dictionary: ControlList,
-                    comparer: new ObjectReferenceEqualityComparer<Control>());
+                    comparer: ClassEqualityComparer<Control>.ReferenceEquality);
 
                 foreach (var control in controls)
                 {
@@ -235,7 +235,7 @@ namespace WDNUtils.Win32
             {
                 var newControlList = new Dictionary<Control, Func<bool, bool>>(
                     dictionary: ControlList,
-                    comparer: new ObjectReferenceEqualityComparer<Control>());
+                    comparer: ClassEqualityComparer<Control>.ReferenceEquality);
 
                 foreach (var control in controls)
                 {
