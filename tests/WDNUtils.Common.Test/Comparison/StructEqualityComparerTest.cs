@@ -146,7 +146,7 @@ namespace WDNUtils.Common.Test
             TestInternal<T>(expected: true, v1: y2, v2: y2, comparer: comparer);
         }
 
-        private void TestInternal<T>(bool expected, T? v1, T? v2, StructEqualityComparer<T> comparer) where T : struct, IComparable<T>
+        private void TestInternal<T>(bool expected, T? v1, T? v2, StructEqualityComparer<T> comparer) where T : struct
         {
             if ((expected) && (comparer.GetHashCode(obj: v1) != comparer.GetHashCode(obj: v2)))
             {
