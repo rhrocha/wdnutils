@@ -17,7 +17,7 @@ namespace WDNUtils.DBSqlServer
         /// Get the current database date/time
         /// </summary>
         /// <param name="connection">Database connection (null for a new connection)</param>
-        /// <param name="connectionStringName">Connection string name (must be not null if connection is null)</param>
+        /// <param name="connectionStringName">Connection string name (must not be null if connection is null)</param>
         /// <returns>The current database date/time</returns>
         public static DateTime GetDateTime(DBSqlServerConnection connection = null, string connectionStringName = null)
         {
@@ -31,7 +31,7 @@ namespace WDNUtils.DBSqlServer
         /// Get the current database date/time
         /// </summary>
         /// <param name="connection">Database connection (null for a new connection)</param>
-        /// <param name="connectionStringName">Connection string name (must be not null if connection is null)</param>
+        /// <param name="connectionStringName">Connection string name (must not be null if connection is null)</param>
         /// <returns>The current database date/time</returns>
         public static async Task<DateTime> GetDateTimeAsync(DBSqlServerConnection connection = null, string connectionStringName = null)
         {
@@ -53,7 +53,7 @@ namespace WDNUtils.DBSqlServer
         /// <param name="columnName">Column name</param>
         /// <param name="useCache">Use column length cache (default is true, use false only to detect changes in the database structure)</param>
         /// <param name="connection">Database connection (null for a new connection)</param>
-        /// <param name="connectionStringName">Connection string name (must be not null if connection is null)</param>
+        /// <param name="connectionStringName">Connection string name (must not be null if connection is null)</param>
         /// <returns>The length of the database column; null if the owner, the table or the column does not exist</returns>
         public static int? GetColumnLength(string owner, string tableName, string columnName, bool useCache = true, DBSqlServerConnection connection = null, string connectionStringName = null)
         {
@@ -99,7 +99,7 @@ namespace WDNUtils.DBSqlServer
         /// <param name="columnName">Column name</param>
         /// <param name="useCache">Use column length cache (default is true, use false only to detect changes in the database structure)</param>
         /// <param name="connection">Database connection (null for a new connection)</param>
-        /// <param name="connectionStringName">Connection string name (must be not null if connection is null)</param>
+        /// <param name="connectionStringName">Connection string name (must not be null if connection is null)</param>
         /// <returns>The length of the database column; null if the owner, the table or the column does not exist</returns>
         public static async Task<int?> GetColumnLengthAsync(string owner, string tableName, string columnName, bool useCache = true, DBSqlServerConnection connection = null, string connectionStringName = null)
         {
@@ -158,7 +158,7 @@ namespace WDNUtils.DBSqlServer
         /// </summary>
         /// <param name="owner">Database owner</param>
         /// <param name="connection">Database connection (null for a new connection)</param>
-        /// <param name="connectionStringName">Connection string name (must be not null if connection is null)</param>
+        /// <param name="connectionStringName">Connection string name (must not be null if connection is null)</param>
         /// <returns>List of sequence names for the specified owner</returns>
         public static List<string> GetSequences(string owner, DBSqlServerConnection connection = null, string connectionStringName = null)
         {
@@ -173,7 +173,7 @@ namespace WDNUtils.DBSqlServer
         /// </summary>
         /// <param name="owner">Database owner</param>
         /// <param name="connection">Database connection (null for a new connection)</param>
-        /// <param name="connectionStringName">Connection string name (must be not null if connection is null)</param>
+        /// <param name="connectionStringName">Connection string name (must not be null if connection is null)</param>
         /// <returns>List of sequence names for the specified owner</returns>
         public static async Task<List<string>> GetSequencesAsync(string owner, DBSqlServerConnection connection = null, string connectionStringName = null)
         {
@@ -192,7 +192,7 @@ namespace WDNUtils.DBSqlServer
         /// </summary>
         /// <param name="owner">Database owner</param>
         /// <param name="connection">Database connection (null for a new connection)</param>
-        /// <param name="connectionStringName">Connection string name (must be not null if connection is null)</param>
+        /// <param name="connectionStringName">Connection string name (must not be null if connection is null)</param>
         /// <returns>List of table names for the specified owner</returns>
         public static List<string> GetTables(string owner, DBSqlServerConnection connection = null, string connectionStringName = null)
         {
@@ -207,7 +207,7 @@ namespace WDNUtils.DBSqlServer
         /// </summary>
         /// <param name="owner">Database owner</param>
         /// <param name="connection">Database connection (null for a new connection)</param>
-        /// <param name="connectionStringName">Connection string name (must be not null if connection is null)</param>
+        /// <param name="connectionStringName">Connection string name (must not be null if connection is null)</param>
         /// <returns>List of table names for the specified owner</returns>
         public static async Task<List<string>> GetTablesAsync(string owner, DBSqlServerConnection connection = null, string connectionStringName = null)
         {
@@ -226,7 +226,7 @@ namespace WDNUtils.DBSqlServer
         /// </summary>
         /// <param name="owner">Database owner</param>
         /// <param name="connection">Database connection (null for a new connection)</param>
-        /// <param name="connectionStringName">Connection string name (must be not null if connection is null)</param>
+        /// <param name="connectionStringName">Connection string name (must not be null if connection is null)</param>
         /// <returns>List of index names for the specified owner</returns>
         public static Dictionary<string, string> GetIndexes(string owner, DBSqlServerConnection connection = null, string connectionStringName = null)
         {
@@ -241,7 +241,7 @@ namespace WDNUtils.DBSqlServer
         /// </summary>
         /// <param name="owner">Database owner</param>
         /// <param name="connection">Database connection (null for a new connection)</param>
-        /// <param name="connectionStringName">Connection string name (must be not null if connection is null)</param>
+        /// <param name="connectionStringName">Connection string name (must not be null if connection is null)</param>
         /// <returns>List of index names for the specified owner</returns>
         public static async Task<Dictionary<string, string>> GetIndexesAsync(string owner, DBSqlServerConnection connection = null, string connectionStringName = null)
         {
@@ -261,7 +261,7 @@ namespace WDNUtils.DBSqlServer
         /// <param name="owner">Database owner</param>
         /// <param name="sequenceName">Sequence name</param>
         /// <param name="connection">Database connection (null for a new connection)</param>
-        /// <param name="connectionStringName">Connection string name (must be not null if connection is null)</param>
+        /// <param name="connectionStringName">Connection string name (must not be null if connection is null)</param>
         /// <returns>The next value from a database sequence</returns>
         public static decimal GetSequenceNextValue(string owner, string sequenceName, DBSqlServerConnection connection = null, string connectionStringName = null)
         {
@@ -277,7 +277,7 @@ namespace WDNUtils.DBSqlServer
         /// <param name="owner">Database owner</param>
         /// <param name="sequenceName">Sequence name</param>
         /// <param name="connection">Database connection (null for a new connection)</param>
-        /// <param name="connectionStringName">Connection string name (must be not null if connection is null)</param>
+        /// <param name="connectionStringName">Connection string name (must not be null if connection is null)</param>
         /// <returns>The next value from a database sequence</returns>
         public static async Task<decimal> GetSequenceNextValueAsync(string owner, string sequenceName, DBSqlServerConnection connection = null, string connectionStringName = null)
         {
@@ -298,7 +298,7 @@ namespace WDNUtils.DBSqlServer
         /// </summary>
         /// <param name="commandText">Command text</param>
         /// <param name="connection">Database connection (null for a new connection)</param>
-        /// <param name="connectionStringName">Connection string name (must be not null if connection is null)</param>
+        /// <param name="connectionStringName">Connection string name (must not be null if connection is null)</param>
         /// <param name="parameters">Bind parameters</param>
         /// <returns>Number of affected rows</returns>
         public static int Execute(string commandText, DBSqlServerConnection connection = null, string connectionStringName = null, params DBSqlServerParameter[] parameters)
@@ -314,7 +314,7 @@ namespace WDNUtils.DBSqlServer
         /// </summary>
         /// <param name="commandText">Command text</param>
         /// <param name="connection">Database connection (null for a new connection)</param>
-        /// <param name="connectionStringName">Connection string name (must be not null if connection is null)</param>
+        /// <param name="connectionStringName">Connection string name (must not be null if connection is null)</param>
         /// <param name="parameters">Bind parameters</param>
         /// <returns>Number of affected rows</returns>
         public static async Task<int> ExecuteAsync(string commandText, DBSqlServerConnection connection = null, string connectionStringName = null, params DBSqlServerParameter[] parameters)
@@ -330,7 +330,7 @@ namespace WDNUtils.DBSqlServer
         /// </summary>
         /// <param name="commandText">Stored procedure name</param>
         /// <param name="connection">Database connection (null for a new connection)</param>
-        /// <param name="connectionStringName">Connection string name (must be not null if connection is null)</param>
+        /// <param name="connectionStringName">Connection string name (must not be null if connection is null)</param>
         /// <param name="parameters">Bind parameters</param>
         /// <returns>Number of affected rows</returns>
         public static int ExecuteSP(string commandText, DBSqlServerConnection connection = null, string connectionStringName = null, params DBSqlServerParameter[] parameters)
@@ -346,7 +346,7 @@ namespace WDNUtils.DBSqlServer
         /// </summary>
         /// <param name="commandText">Stored procedure name</param>
         /// <param name="connection">Database connection (null for a new connection)</param>
-        /// <param name="connectionStringName">Connection string name (must be not null if connection is null)</param>
+        /// <param name="connectionStringName">Connection string name (must not be null if connection is null)</param>
         /// <param name="parameters">Bind parameters</param>
         /// <returns>Number of affected rows</returns>
         public static async Task<int> ExecuteSPAsync(string commandText, DBSqlServerConnection connection = null, string connectionStringName = null, params DBSqlServerParameter[] parameters)
@@ -366,7 +366,7 @@ namespace WDNUtils.DBSqlServer
         /// </summary>
         /// <param name="commandText">Command text</param>
         /// <param name="connection">Database connection (null for a new connection)</param>
-        /// <param name="connectionStringName">Connection string name (must be not null if connection is null)</param>
+        /// <param name="connectionStringName">Connection string name (must not be null if connection is null)</param>
         /// <param name="parameters">Bind parameters</param>
         /// <returns>DataTable with the query results</returns>
         public static DataTable RetrieveDataTable(string commandText, DBSqlServerConnection connection = null, string connectionStringName = null, params DBSqlServerParameter[] parameters)
@@ -382,7 +382,7 @@ namespace WDNUtils.DBSqlServer
         /// </summary>
         /// <param name="commandText">Stored procedure name</param>
         /// <param name="connection">Database connection (null for a new connection)</param>
-        /// <param name="connectionStringName">Connection string name (must be not null if connection is null)</param>
+        /// <param name="connectionStringName">Connection string name (must not be null if connection is null)</param>
         /// <param name="parameters">Bind parameters</param>
         /// <returns>DataTable with the query results</returns>
         public static DataTable RetrieveDataTableSP(string commandText, DBSqlServerConnection connection = null, string connectionStringName = null, params DBSqlServerParameter[] parameters)

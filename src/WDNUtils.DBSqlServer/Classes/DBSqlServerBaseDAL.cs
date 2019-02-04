@@ -32,7 +32,7 @@ namespace WDNUtils.DBSqlServer
         /// Creates a new DBSqlServerBaseDAL instance
         /// </summary>
         /// <param name="connection">Database connection (null for a new connection)</param>
-        /// <param name="connectionStringName">Connection string name (must be not null if connection is null)</param>
+        /// <param name="connectionStringName">Connection string name (must not be null if connection is null)</param>
         protected DBSqlServerBaseDAL(ref DBSqlServerConnection connection, string connectionStringName = null)
             : base(connection: ref connection, connectionStringName: connectionStringName)
         {

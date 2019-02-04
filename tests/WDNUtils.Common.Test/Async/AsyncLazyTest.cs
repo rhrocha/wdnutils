@@ -165,7 +165,7 @@ namespace WDNUtils.Common.Test
         {
             private static bool ThrowException { get; set; }
 
-            public async static Task Test(bool customFactory, bool? captureException, LazyThreadSafetyMode mode, Type expectedException1, Type expectedException2)
+            public static async Task Test(bool customFactory, bool? captureException, LazyThreadSafetyMode mode, Type expectedException1, Type expectedException2)
             {
                 ThrowException = true;
 
@@ -217,7 +217,7 @@ namespace WDNUtils.Common.Test
             private static long RecursiveCounter { get; set; }
             private static AsyncLazyEx<LazyValueClass> LazyValue { get; set; }
 
-            public async static Task Test(bool customFactory, bool? captureException, LazyThreadSafetyMode mode, Type expectedException1, Type expectedException2)
+            public static async Task Test(bool customFactory, bool? captureException, LazyThreadSafetyMode mode, Type expectedException1, Type expectedException2)
             {
                 // Each recursive iteration blocks a thread because LazyValueClass will call the method 'GetValueAsync' from
                 // the constructor using 'Task.Run(...).Wait()', this cannot be fixed because the constructor cannot be async.

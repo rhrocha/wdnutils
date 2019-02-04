@@ -130,7 +130,7 @@ namespace WDNUtils.Common.Test
 
         #region Await Action
 
-        private async static Task TestAwaitActionOk()
+        private static async Task TestAwaitActionOk()
         {
             await TaskUtils.WaitTimeout(
                 async () => await Task.Delay(TimeSpan1),
@@ -138,7 +138,7 @@ namespace WDNUtils.Common.Test
                 notifyTimeout: (Action<Task>)((task) => throw new ApplicationException()));
         }
 
-        private async static Task TestAwaitActionOkAsync()
+        private static async Task TestAwaitActionOkAsync()
         {
             await TaskUtils.WaitTimeout(
                 async () => await Task.Delay(TimeSpan1),
@@ -146,7 +146,7 @@ namespace WDNUtils.Common.Test
                 notifyTimeout: (Func<Task, Task>)((task) => throw new ApplicationException()));
         }
 
-        private async static Task TestAwaitActionException()
+        private static async Task TestAwaitActionException()
         {
             try
             {
@@ -163,7 +163,7 @@ namespace WDNUtils.Common.Test
             }
         }
 
-        private async static Task TestAwaitActionExceptionAsync()
+        private static async Task TestAwaitActionExceptionAsync()
         {
             try
             {
@@ -180,7 +180,7 @@ namespace WDNUtils.Common.Test
             }
         }
 
-        private async static Task TestAwaitActionTimeout()
+        private static async Task TestAwaitActionTimeout()
         {
             try
             {
@@ -197,7 +197,7 @@ namespace WDNUtils.Common.Test
             }
         }
 
-        private async static Task TestAwaitActionTimeoutAsync()
+        private static async Task TestAwaitActionTimeoutAsync()
         {
             try
             {
@@ -214,7 +214,7 @@ namespace WDNUtils.Common.Test
             }
         }
 
-        private async static Task TestAwaitActionTimeoutNotify()
+        private static async Task TestAwaitActionTimeoutNotify()
         {
             var finished = false;
 
@@ -226,7 +226,7 @@ namespace WDNUtils.Common.Test
             Assert.IsTrue(finished);
         }
 
-        private async static Task TestAwaitActionTimeoutNotifyAsync()
+        private static async Task TestAwaitActionTimeoutNotifyAsync()
         {
             var finished = false;
 
@@ -238,7 +238,7 @@ namespace WDNUtils.Common.Test
             Assert.IsTrue(finished);
         }
 
-        private async static Task TestAwaitCancelableActionOk()
+        private static async Task TestAwaitCancelableActionOk()
         {
             await TaskUtils.WaitTimeout(
                 async (cancelToken) => await Task.Delay(TimeSpan1),
@@ -246,7 +246,7 @@ namespace WDNUtils.Common.Test
                 notifyTimeout: (Action<Task>)((task) => throw new ApplicationException()));
         }
 
-        private async static Task TestAwaitCancelableActionOkAsync()
+        private static async Task TestAwaitCancelableActionOkAsync()
         {
             await TaskUtils.WaitTimeout(
                 async (cancelToken) => await Task.Delay(TimeSpan1),
@@ -254,7 +254,7 @@ namespace WDNUtils.Common.Test
                 notifyTimeout: (Func<Task, Task>)((task) => throw new ApplicationException()));
         }
 
-        private async static Task TestAwaitCancelableActionException()
+        private static async Task TestAwaitCancelableActionException()
         {
             try
             {
@@ -271,7 +271,7 @@ namespace WDNUtils.Common.Test
             }
         }
 
-        private async static Task TestAwaitCancelableActionExceptionAsync()
+        private static async Task TestAwaitCancelableActionExceptionAsync()
         {
             try
             {
@@ -288,7 +288,7 @@ namespace WDNUtils.Common.Test
             }
         }
 
-        private async static Task TestAwaitCancelableActionTimeout()
+        private static async Task TestAwaitCancelableActionTimeout()
         {
             try
             {
@@ -305,7 +305,7 @@ namespace WDNUtils.Common.Test
             }
         }
 
-        private async static Task TestAwaitCancelableActionTimeoutAsync()
+        private static async Task TestAwaitCancelableActionTimeoutAsync()
         {
             try
             {
@@ -322,7 +322,7 @@ namespace WDNUtils.Common.Test
             }
         }
 
-        private async static Task TestAwaitCancelableActionTimeoutNotify()
+        private static async Task TestAwaitCancelableActionTimeoutNotify()
         {
             var finished = false;
 
@@ -334,7 +334,7 @@ namespace WDNUtils.Common.Test
             Assert.IsTrue(finished);
         }
 
-        private async static Task TestAwaitCancelableActionTimeoutNotifyAsync()
+        private static async Task TestAwaitCancelableActionTimeoutNotifyAsync()
         {
             var finished = false;
 
@@ -350,7 +350,7 @@ namespace WDNUtils.Common.Test
 
         #region Await Function
 
-        private async static Task TestAwaitFunctionOk()
+        private static async Task TestAwaitFunctionOk()
         {
             var result = await TaskUtils.WaitTimeout(
                     func: async () => { await Task.Delay(TimeSpan1); return 1; },
@@ -360,7 +360,7 @@ namespace WDNUtils.Common.Test
             Assert.AreEqual(1, result);
         }
 
-        private async static Task TestAwaitFunctionOkAsync()
+        private static async Task TestAwaitFunctionOkAsync()
         {
 
             var result = await TaskUtils.WaitTimeout(
@@ -371,7 +371,7 @@ namespace WDNUtils.Common.Test
             Assert.AreEqual(1, result);
         }
 
-        private async static Task TestAwaitFunctionException()
+        private static async Task TestAwaitFunctionException()
         {
             try
             {
@@ -388,7 +388,7 @@ namespace WDNUtils.Common.Test
             }
         }
 
-        private async static Task TestAwaitFunctionExceptionAsync()
+        private static async Task TestAwaitFunctionExceptionAsync()
         {
             try
             {
@@ -405,7 +405,7 @@ namespace WDNUtils.Common.Test
             }
         }
 
-        private async static Task TestAwaitFunctionTimeout()
+        private static async Task TestAwaitFunctionTimeout()
         {
             try
             {
@@ -422,7 +422,7 @@ namespace WDNUtils.Common.Test
             }
         }
 
-        private async static Task TestAwaitFunctionTimeoutAsync()
+        private static async Task TestAwaitFunctionTimeoutAsync()
         {
             try
             {
@@ -439,7 +439,7 @@ namespace WDNUtils.Common.Test
             }
         }
 
-        private async static Task TestAwaitFunctionTimeoutNotify()
+        private static async Task TestAwaitFunctionTimeoutNotify()
         {
             var result = await TaskUtils.WaitTimeout(
                 func: async () => { await Task.Delay(TimeSpan2); return 1; },
@@ -449,7 +449,7 @@ namespace WDNUtils.Common.Test
             Assert.AreEqual(-1, result);
         }
 
-        private async static Task TestAwaitFunctionTimeoutNotifyAsync()
+        private static async Task TestAwaitFunctionTimeoutNotifyAsync()
         {
             var result = await TaskUtils.WaitTimeout(
                 func: async () => { await Task.Delay(TimeSpan2); return 1; },
@@ -459,7 +459,7 @@ namespace WDNUtils.Common.Test
             Assert.AreEqual(-1, result);
         }
 
-        private async static Task TestAwaitCancelableFunctionOk()
+        private static async Task TestAwaitCancelableFunctionOk()
         {
             var result = await TaskUtils.WaitTimeout(
                 func: async (cancelToken) => { await Task.Delay(TimeSpan1); return 1; },
@@ -469,7 +469,7 @@ namespace WDNUtils.Common.Test
             Assert.AreEqual(1, result);
         }
 
-        private async static Task TestAwaitCancelableFunctionOkAsync()
+        private static async Task TestAwaitCancelableFunctionOkAsync()
         {
             var result = await TaskUtils.WaitTimeout(
                 func: async (cancelToken) => { await Task.Delay(TimeSpan1); return 1; },
@@ -479,7 +479,7 @@ namespace WDNUtils.Common.Test
             Assert.AreEqual(1, result);
         }
 
-        private async static Task TestAwaitCancelableFunctionException()
+        private static async Task TestAwaitCancelableFunctionException()
         {
             try
             {
@@ -496,7 +496,7 @@ namespace WDNUtils.Common.Test
             }
         }
 
-        private async static Task TestAwaitCancelableFunctionExceptionAsync()
+        private static async Task TestAwaitCancelableFunctionExceptionAsync()
         {
             try
             {
@@ -513,7 +513,7 @@ namespace WDNUtils.Common.Test
             }
         }
 
-        private async static Task TestAwaitCancelableFunctionTimeout()
+        private static async Task TestAwaitCancelableFunctionTimeout()
         {
             try
             {
@@ -530,7 +530,7 @@ namespace WDNUtils.Common.Test
             }
         }
 
-        private async static Task TestAwaitCancelableFunctionTimeoutAsync()
+        private static async Task TestAwaitCancelableFunctionTimeoutAsync()
         {
             try
             {
@@ -547,7 +547,7 @@ namespace WDNUtils.Common.Test
             }
         }
 
-        private async static Task TestAwaitCancelableFunctionTimeoutNotify()
+        private static async Task TestAwaitCancelableFunctionTimeoutNotify()
         {
             var result = await TaskUtils.WaitTimeout(
                 func: async (cancelToken) => { await Task.Delay(TimeSpan2); cancelToken.ThrowIfCancellationRequested(); Assert.Fail(@"Cancellation token failed"); return 1; },
@@ -557,7 +557,7 @@ namespace WDNUtils.Common.Test
             Assert.AreEqual(-1, result);
         }
 
-        private async static Task TestAwaitCancelableFunctionTimeoutNotifyAsync()
+        private static async Task TestAwaitCancelableFunctionTimeoutNotifyAsync()
         {
             var result = await TaskUtils.WaitTimeout(
                 func: async (cancelToken) => { await Task.Delay(TimeSpan2); cancelToken.ThrowIfCancellationRequested(); Assert.Fail(@"Cancellation token failed"); return 1; },
@@ -615,7 +615,7 @@ namespace WDNUtils.Common.Test
 
         #region FireAndForget
 
-        private async static Task TestFireAndForget(bool function, bool asynchronous, bool notify, bool notifyAsync, bool delay, bool exception)
+        private static async Task TestFireAndForget(bool function, bool asynchronous, bool notify, bool notifyAsync, bool delay, bool exception)
         {
             var taskCompletionSource = new TaskCompletionSource<bool>();
 

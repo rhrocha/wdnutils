@@ -16,7 +16,7 @@ namespace WDNUtils.DBOracle
         /// Get the current database date/time
         /// </summary>
         /// <param name="connection">Database connection (null for a new connection)</param>
-        /// <param name="connectionStringName">Connection string name (must be not null if connection is null)</param>
+        /// <param name="connectionStringName">Connection string name (must not be null if connection is null)</param>
         /// <returns>The current database date/time</returns>
         public static DateTime GetDateTime(DBOracleConnection connection = null, string connectionStringName = null)
         {
@@ -38,7 +38,7 @@ namespace WDNUtils.DBOracle
         /// <param name="columnName">Column name</param>
         /// <param name="useCache">Use column length cache (default is true, use false only to detect changes in the database structure)</param>
         /// <param name="connection">Database connection (null for a new connection)</param>
-        /// <param name="connectionStringName">Connection string name (must be not null if connection is null)</param>
+        /// <param name="connectionStringName">Connection string name (must not be null if connection is null)</param>
         /// <returns>The length of the database column; null if the owner, the table or the column does not exist</returns>
         public static int? GetColumnLength(string owner, string tableName, string columnName, bool useCache = true, DBOracleConnection connection = null, string connectionStringName = null)
         {
@@ -99,7 +99,7 @@ namespace WDNUtils.DBOracle
         /// <param name="objectName">Object name</param>
         /// <param name="objectType">Object type (see Oracle documentation for valid values)</param>
         /// <param name="connection">Database connection (null for a new connection)</param>
-        /// <param name="connectionStringName">Connection string name (must be not null if connection is null)</param>
+        /// <param name="connectionStringName">Connection string name (must not be null if connection is null)</param>
         /// <returns>The creation script for the specified object</returns>
         public static string GetCreationScript(string owner, string objectName, string objectType, DBOracleConnection connection = null, string connectionStringName = null)
         {
@@ -115,7 +115,7 @@ namespace WDNUtils.DBOracle
         /// <param name="owner">Database owner</param>
         /// <param name="sequenceName">Sequence name</param>
         /// <param name="connection">Database connection (null for a new connection)</param>
-        /// <param name="connectionStringName">Connection string name (must be not null if connection is null)</param>
+        /// <param name="connectionStringName">Connection string name (must not be null if connection is null)</param>
         /// <returns>The creation script for the specified sequence</returns>
         public static string GetCreationScriptSequence(string owner, string sequenceName, DBOracleConnection connection = null, string connectionStringName = null)
         {
@@ -131,7 +131,7 @@ namespace WDNUtils.DBOracle
         /// <param name="owner">Database owner</param>
         /// <param name="tableName">Table name</param>
         /// <param name="connection">Database connection (null for a new connection)</param>
-        /// <param name="connectionStringName">Connection string name (must be not null if connection is null)</param>
+        /// <param name="connectionStringName">Connection string name (must not be null if connection is null)</param>
         /// <returns>The creation script for the specified table</returns>
         public static string GetCreationScriptTable(string owner, string tableName, DBOracleConnection connection = null, string connectionStringName = null)
         {
@@ -147,7 +147,7 @@ namespace WDNUtils.DBOracle
         /// <param name="owner">Database owner</param>
         /// <param name="indexName">Index name</param>
         /// <param name="connection">Database connection (null for a new connection)</param>
-        /// <param name="connectionStringName">Connection string name (must be not null if connection is null)</param>
+        /// <param name="connectionStringName">Connection string name (must not be null if connection is null)</param>
         /// <returns>The creation script for the specified index</returns>
         public static string GetCreationScriptIndex(string owner, string indexName, DBOracleConnection connection = null, string connectionStringName = null)
         {
@@ -166,7 +166,7 @@ namespace WDNUtils.DBOracle
         /// </summary>
         /// <param name="owner">Database owner</param>
         /// <param name="connection">Database connection (null for a new connection)</param>
-        /// <param name="connectionStringName">Connection string name (must be not null if connection is null)</param>
+        /// <param name="connectionStringName">Connection string name (must not be null if connection is null)</param>
         /// <returns>List of sequence names for the specified owner</returns>
         public static List<string> GetSequences(string owner, DBOracleConnection connection = null, string connectionStringName = null)
         {
@@ -185,7 +185,7 @@ namespace WDNUtils.DBOracle
         /// </summary>
         /// <param name="owner">Database owner</param>
         /// <param name="connection">Database connection (null for a new connection)</param>
-        /// <param name="connectionStringName">Connection string name (must be not null if connection is null)</param>
+        /// <param name="connectionStringName">Connection string name (must not be null if connection is null)</param>
         /// <returns>List of table names for the specified owner</returns>
         public static List<string> GetTables(string owner, DBOracleConnection connection = null, string connectionStringName = null)
         {
@@ -204,7 +204,7 @@ namespace WDNUtils.DBOracle
         /// </summary>
         /// <param name="owner">Database owner</param>
         /// <param name="connection">Database connection (null for a new connection)</param>
-        /// <param name="connectionStringName">Connection string name (must be not null if connection is null)</param>
+        /// <param name="connectionStringName">Connection string name (must not be null if connection is null)</param>
         /// <returns>List of index names for the specified owner</returns>
         public static Dictionary<string, string> GetIndexes(string owner, DBOracleConnection connection = null, string connectionStringName = null)
         {
@@ -224,7 +224,7 @@ namespace WDNUtils.DBOracle
         /// <param name="owner">Database owner</param>
         /// <param name="sequenceName">Sequence name</param>
         /// <param name="connection">Database connection (null for a new connection)</param>
-        /// <param name="connectionStringName">Connection string name (must be not null if connection is null)</param>
+        /// <param name="connectionStringName">Connection string name (must not be null if connection is null)</param>
         /// <returns>The next value from a database sequence</returns>
         public static decimal GetSequenceNextValue(string owner, string sequenceName, DBOracleConnection connection = null, string connectionStringName = null)
         {
@@ -245,7 +245,7 @@ namespace WDNUtils.DBOracle
         /// </summary>
         /// <param name="commandText">Command text</param>
         /// <param name="connection">Database connection (null for a new connection)</param>
-        /// <param name="connectionStringName">Connection string name (must be not null if connection is null)</param>
+        /// <param name="connectionStringName">Connection string name (must not be null if connection is null)</param>
         /// <param name="parameters">Bind parameters</param>
         /// <returns>Number of affected rows</returns>
         public static int Execute(string commandText, DBOracleConnection connection = null, string connectionStringName = null, params DBOracleParameter[] parameters)
@@ -261,7 +261,7 @@ namespace WDNUtils.DBOracle
         /// </summary>
         /// <param name="commandText">Stored procedure name</param>
         /// <param name="connection">Database connection (null for a new connection)</param>
-        /// <param name="connectionStringName">Connection string name (must be not null if connection is null)</param>
+        /// <param name="connectionStringName">Connection string name (must not be null if connection is null)</param>
         /// <param name="parameters">Bind parameters</param>
         /// <returns>Number of affected rows</returns>
         public static int ExecuteSP(string commandText, DBOracleConnection connection = null, string connectionStringName = null, params DBOracleParameter[] parameters)
@@ -281,7 +281,7 @@ namespace WDNUtils.DBOracle
         /// </summary>
         /// <param name="commandText">Command text</param>
         /// <param name="connection">Database connection (null for a new connection)</param>
-        /// <param name="connectionStringName">Connection string name (must be not null if connection is null)</param>
+        /// <param name="connectionStringName">Connection string name (must not be null if connection is null)</param>
         /// <param name="parameters">Bind parameters</param>
         /// <returns>DataTable with the query results</returns>
         public static DataTable RetrieveDataTable(string commandText, DBOracleConnection connection = null, string connectionStringName = null, params DBOracleParameter[] parameters)
@@ -297,7 +297,7 @@ namespace WDNUtils.DBOracle
         /// </summary>
         /// <param name="commandText">Stored procedure name</param>
         /// <param name="connection">Database connection (null for a new connection)</param>
-        /// <param name="connectionStringName">Connection string name (must be not null if connection is null)</param>
+        /// <param name="connectionStringName">Connection string name (must not be null if connection is null)</param>
         /// <param name="parameters">Bind parameters</param>
         /// <returns>DataTable with the query results</returns>
         public static DataTable RetrieveDataTableSP(string commandText, DBOracleConnection connection = null, string connectionStringName = null, params DBOracleParameter[] parameters)

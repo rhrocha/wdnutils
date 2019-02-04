@@ -295,7 +295,7 @@ namespace WDNUtils.DBSqlServer
         /// <param name="isStoredProcedure">Indicates if the command text is a stored procedure name</param>
         /// <param name="parameters">Bind parameters</param>
         /// <returns>List of objects of the return type</returns>
-        internal async static Task<List<T>> RetrieveDataListAsync<T>(DBSqlServerConnection connection, Func<DBSqlServerDataReader, T> dataFiller, string commandText, bool isStoredProcedure, params DBSqlServerParameter[] parameters)
+        internal static async Task<List<T>> RetrieveDataListAsync<T>(DBSqlServerConnection connection, Func<DBSqlServerDataReader, T> dataFiller, string commandText, bool isStoredProcedure, params DBSqlServerParameter[] parameters)
         {
             try
             {
@@ -458,7 +458,7 @@ namespace WDNUtils.DBSqlServer
         /// <param name="nullValue">Value to be returned if the query command text does not return any row</param>
         /// <param name="parameters">Bind parameters</param>
         /// <returns>Command text result, or nullValue if none</returns>
-        internal async static Task<T> RetrieveDataItemAsync<T>(DBSqlServerConnection connection, Func<DBSqlServerDataReader, T> dataFiller, string commandText, bool isStoredProcedure, T nullValue = default(T), params DBSqlServerParameter[] parameters)
+        internal static async Task<T> RetrieveDataItemAsync<T>(DBSqlServerConnection connection, Func<DBSqlServerDataReader, T> dataFiller, string commandText, bool isStoredProcedure, T nullValue = default(T), params DBSqlServerParameter[] parameters)
         {
             try
             {
@@ -557,7 +557,7 @@ namespace WDNUtils.DBSqlServer
         /// <param name="isStoredProcedure">Indicates if the command text is a stored procedure name</param>
         /// <param name="parameters">Bind parameters</param>
         /// <returns>Number of affected rows</returns>
-        internal async static Task<int> ExecuteNonQueryAsync(DBSqlServerConnection connection, string commandText, bool isStoredProcedure, params DBSqlServerParameter[] parameters)
+        internal static async Task<int> ExecuteNonQueryAsync(DBSqlServerConnection connection, string commandText, bool isStoredProcedure, params DBSqlServerParameter[] parameters)
         {
             try
             {

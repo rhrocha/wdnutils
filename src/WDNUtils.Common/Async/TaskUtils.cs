@@ -22,7 +22,7 @@ namespace WDNUtils.Common
         /// Should be true only if the notifyTimeout uses resources that does not support cross-thread operations (like UI components).</param>
         /// <returns>Nothing (awaitable task)</returns>
         /// <exception cref="TimeoutException">The task did not finish before the timeout, and notifyTimeout is null</exception>
-        public async static Task WaitTimeout(Func<Task> func, TimeSpan timeout, Action<Task> notifyTimeout = null, bool continueOnCapturedContext = false)
+        public static async Task WaitTimeout(Func<Task> func, TimeSpan timeout, Action<Task> notifyTimeout = null, bool continueOnCapturedContext = false)
         {
             var task = func();
 
@@ -50,7 +50,7 @@ namespace WDNUtils.Common
         /// Should be true only if the notifyTimeout uses resources that does not support cross-thread operations (like UI components).</param>
         /// <returns>Nothing (awaitable task)</returns>
         /// <exception cref="TimeoutException">The task did not finish before the timeout, and notifyTimeout is null</exception>
-        public async static Task WaitTimeout(Func<Task> func, TimeSpan timeout, Func<Task, Task> notifyTimeout, bool continueOnCapturedContext = false)
+        public static async Task WaitTimeout(Func<Task> func, TimeSpan timeout, Func<Task, Task> notifyTimeout, bool continueOnCapturedContext = false)
         {
             var task = func();
 
@@ -78,7 +78,7 @@ namespace WDNUtils.Common
         /// Should be true only if the notifyTimeout uses resources that does not support cross-thread operations (like UI components).</param>
         /// <returns>Result of the awaited task (awaitable task)</returns>
         /// <exception cref="TimeoutException">The task did not finish before the timeout, and notifyTimeout is null</exception>
-        public async static Task<T> WaitTimeout<T>(Func<Task<T>> func, TimeSpan timeout, Func<Task<T>, T> notifyTimeout = null, bool continueOnCapturedContext = false)
+        public static async Task<T> WaitTimeout<T>(Func<Task<T>> func, TimeSpan timeout, Func<Task<T>, T> notifyTimeout = null, bool continueOnCapturedContext = false)
         {
             var task = func();
 
@@ -103,7 +103,7 @@ namespace WDNUtils.Common
         /// Should be true only if the notifyTimeout uses resources that does not support cross-thread operations (like UI components).</param>
         /// <returns>Result of the awaited task (awaitable task)</returns>
         /// <exception cref="TimeoutException">The task did not finish before the timeout, and notifyTimeout is null</exception>
-        public async static Task<T> WaitTimeout<T>(Func<Task<T>> func, TimeSpan timeout, Func<Task<T>, Task<T>> notifyTimeout, bool continueOnCapturedContext = false)
+        public static async Task<T> WaitTimeout<T>(Func<Task<T>> func, TimeSpan timeout, Func<Task<T>, Task<T>> notifyTimeout, bool continueOnCapturedContext = false)
         {
             var task = func();
 
@@ -128,7 +128,7 @@ namespace WDNUtils.Common
         /// Should be true only if the notifyTimeout uses resources that does not support cross-thread operations (like UI components).</param>
         /// <returns>Nothing (awaitable task)</returns>
         /// <exception cref="TimeoutException">The task did not finish before the timeout, and notifyTimeout is null</exception>
-        public async static Task WaitTimeout(Func<CancellationToken, Task> func, TimeSpan timeout, Action<Task> notifyTimeout = null, bool continueOnCapturedContext = false)
+        public static async Task WaitTimeout(Func<CancellationToken, Task> func, TimeSpan timeout, Action<Task> notifyTimeout = null, bool continueOnCapturedContext = false)
         {
             using (var cancellationTokenSource = new CancellationTokenSource())
             {
@@ -161,7 +161,7 @@ namespace WDNUtils.Common
         /// Should be true only if the notifyTimeout uses resources that does not support cross-thread operations (like UI components).</param>
         /// <returns>Nothing (awaitable task)</returns>
         /// <exception cref="TimeoutException">The task did not finish before the timeout, and notifyTimeout is null</exception>
-        public async static Task WaitTimeout(Func<CancellationToken, Task> func, TimeSpan timeout, Func<Task, Task> notifyTimeout, bool continueOnCapturedContext = false)
+        public static async Task WaitTimeout(Func<CancellationToken, Task> func, TimeSpan timeout, Func<Task, Task> notifyTimeout, bool continueOnCapturedContext = false)
         {
             using (var cancellationTokenSource = new CancellationTokenSource())
             {
@@ -194,7 +194,7 @@ namespace WDNUtils.Common
         /// Should be true only if the notifyTimeout uses resources that does not support cross-thread operations (like UI components).</param>
         /// <returns>Result of the awaited task (awaitable task)</returns>
         /// <exception cref="TimeoutException">The task did not finish before the timeout, and notifyTimeout is null</exception>
-        public async static Task<T> WaitTimeout<T>(Func<CancellationToken, Task<T>> func, TimeSpan timeout, Func<Task<T>, T> notifyTimeout = null, bool continueOnCapturedContext = false)
+        public static async Task<T> WaitTimeout<T>(Func<CancellationToken, Task<T>> func, TimeSpan timeout, Func<Task<T>, T> notifyTimeout = null, bool continueOnCapturedContext = false)
         {
             using (var cancellationTokenSource = new CancellationTokenSource())
             {
@@ -224,7 +224,7 @@ namespace WDNUtils.Common
         /// Should be true only if the notifyTimeout uses resources that does not support cross-thread operations (like UI components).</param>
         /// <returns>Result of the awaited task (awaitable task)</returns>
         /// <exception cref="TimeoutException">The task did not finish before the timeout, and notifyTimeout is null</exception>
-        public async static Task<T> WaitTimeout<T>(Func<CancellationToken, Task<T>> func, TimeSpan timeout, Func<Task<T>, Task<T>> notifyTimeout, bool continueOnCapturedContext = false)
+        public static async Task<T> WaitTimeout<T>(Func<CancellationToken, Task<T>> func, TimeSpan timeout, Func<Task<T>, Task<T>> notifyTimeout, bool continueOnCapturedContext = false)
         {
             using (var cancellationTokenSource = new CancellationTokenSource())
             {
