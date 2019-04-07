@@ -91,7 +91,7 @@ namespace WDNUtils.DBSqlServer
             {
                 GetColumnLength_CommandText = TrimCommandText($@"
                     SELECT
-                        COALESCE(CHARACTER_MAXIMUM_LENGTH, NUMERIC_PRECISION)
+                        COALESCE(CHARACTER_MAXIMUM_LENGTH, NUMERIC_PRECISION, IIF(DATA_TYPE = 'bit', 1, IIF(DATA_TYPE = 'uniqueidentifier', 36, -1)))
                     FROM
                         INFORMATION_SCHEMA.COLUMNS
                     WHERE
@@ -123,7 +123,7 @@ namespace WDNUtils.DBSqlServer
             {
                 GetColumnLength_CommandText = TrimCommandText($@"
                     SELECT
-                        COALESCE(CHARACTER_MAXIMUM_LENGTH, NUMERIC_PRECISION)
+                        COALESCE(CHARACTER_MAXIMUM_LENGTH, NUMERIC_PRECISION, IIF(DATA_TYPE = 'bit', 1, IIF(DATA_TYPE = 'uniqueidentifier', 36, -1)))
                     FROM
                         INFORMATION_SCHEMA.COLUMNS
                     WHERE
@@ -161,7 +161,7 @@ namespace WDNUtils.DBSqlServer
                     SELECT
                         UPPER(TABLE_NAME),
                         UPPER(COLUMN_NAME),
-                        COALESCE(CHARACTER_MAXIMUM_LENGTH, NUMERIC_PRECISION)
+                        COALESCE(CHARACTER_MAXIMUM_LENGTH, NUMERIC_PRECISION, IIF(DATA_TYPE = 'bit', 1, IIF(DATA_TYPE = 'uniqueidentifier', 36, -1)))
                     FROM
                         INFORMATION_SCHEMA.COLUMNS
                     WHERE
@@ -202,7 +202,7 @@ namespace WDNUtils.DBSqlServer
                     SELECT
                         UPPER(TABLE_NAME),
                         UPPER(COLUMN_NAME),
-                        COALESCE(CHARACTER_MAXIMUM_LENGTH, NUMERIC_PRECISION)
+                        COALESCE(CHARACTER_MAXIMUM_LENGTH, NUMERIC_PRECISION, IIF(DATA_TYPE = 'bit', 1, IIF(DATA_TYPE = 'uniqueidentifier', 36, -1)))
                     FROM
                         INFORMATION_SCHEMA.COLUMNS
                     WHERE
