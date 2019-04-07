@@ -28,10 +28,10 @@ namespace WDNUtils.Common
         private Func<Task<T>> _valueFactory;
 
         /// <summary>
-        /// Semaphore to synchronize the creation/publication of values in the mode <see cref="LazyThreadSafetyMode.ExecutionAndPublication"/>
+        /// Lock to synchronize the creation/publication of values in the mode <see cref="LazyThreadSafetyMode.ExecutionAndPublication"/>
         /// </summary>
         [NonSerialized]
-        private readonly SemaphoreSlim _semaphore;
+        private readonly AsyncLock _lock;
 
         /// <summary>
         /// Current execution context flag to detect recursive reentrancy in the method <see cref="AsyncLazy{T}.GetValueAsync"/> for the modes <see cref="LazyThreadSafetyMode.None"/> and <see cref="LazyThreadSafetyMode.ExecutionAndPublication"/>
@@ -74,17 +74,17 @@ namespace WDNUtils.Common
 
             if (mode == LazyThreadSafetyMode.ExecutionAndPublication)
             {
-                _semaphore = new SemaphoreSlim(1);
+                _lock = new AsyncLock();
                 _blockRecursion = new AsyncLocal<bool>();
             }
             else if (mode == LazyThreadSafetyMode.PublicationOnly)
             {
-                _semaphore = null;
+                _lock = null;
                 _blockRecursion = null;
             }
             else if (mode == LazyThreadSafetyMode.None)
             {
-                _semaphore = null;
+                _lock = null;
                 _blockRecursion = new AsyncLocal<bool>();
             }
             else
@@ -286,7 +286,7 @@ namespace WDNUtils.Common
 
                 #endregion
             }
-            else if (_semaphore is null)
+            else if (_lock is null)
             {
                 #region LazyThreadSafetyMode.None
 
@@ -372,9 +372,7 @@ namespace WDNUtils.Common
                 _blockRecursion.Value = true;
 
                 // Block concurrent calls to the value factory, and concurrent or new publications of the created value
-                await _semaphore.WaitAsync().ConfigureAwait(continueOnCapturedContext);
-
-                try
+                return await _lock.InvokeWithLock(async () =>
                 {
                     if (_value is Tuple<T> value2)
                     {
@@ -411,11 +409,7 @@ namespace WDNUtils.Common
 
                         throw;
                     }
-                }
-                finally
-                {
-                    _semaphore.Release();
-                }
+                }).ConfigureAwait(continueOnCapturedContext);
 
                 #endregion
             }

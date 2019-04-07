@@ -16,7 +16,7 @@
     <RepositoryType></RepositoryType>
     <PackageLicenseUrl>https://github.com/rhrocha/wdnutils/blob/master/LICENSE</PackageLicenseUrl>
     <PackageTags>WDN</PackageTags>
-    <PackageReleaseNotes>Added IEqualityComparer implementations for objects and structs, improvements in TaskUtils.</PackageReleaseNotes>
+    <PackageReleaseNotes>Added AsyncLock class, added IEqualityComparer implementations for objects and structs, improvements in TaskUtils.</PackageReleaseNotes>
     <Version>1.0.8-beta</Version>
     <PackageProjectUrl>https://github.com/rhrocha/wdnutils/</PackageProjectUrl>
   </PropertyGroup>
