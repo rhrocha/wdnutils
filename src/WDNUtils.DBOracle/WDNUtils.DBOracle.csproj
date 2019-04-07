@@ -14,11 +14,11 @@
     <AssemblyVersion>1.0.8.8</AssemblyVersion>
     <FileVersion>1.0.8.8</FileVersion>
     <RepositoryType></RepositoryType>
-    <PackageLicenseUrl>https://github.com/rhrocha/wdnutils/blob/master/LICENSE</PackageLicenseUrl>
     <PackageTags>WDN</PackageTags>
     <PackageReleaseNotes>No changes.</PackageReleaseNotes>
     <Version>1.0.8-beta</Version>
     <PackageProjectUrl>https://github.com/rhrocha/wdnutils/</PackageProjectUrl>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -56,6 +56,13 @@
 
   <ItemGroup Condition="'$(TargetFramework)'=='net461'">
     <PackageReference Include="Oracle.ManagedDataAccess" Version="18.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>

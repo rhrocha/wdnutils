@@ -14,11 +14,11 @@
     <AssemblyVersion>1.0.8.8</AssemblyVersion>
     <FileVersion>1.0.8.8</FileVersion>
     <RepositoryType></RepositoryType>
-    <PackageLicenseUrl>https://github.com/rhrocha/wdnutils/blob/master/LICENSE</PackageLicenseUrl>
     <PackageTags>WDN</PackageTags>
     <PackageReleaseNotes>No changes.</PackageReleaseNotes>
     <Version>1.0.8-beta</Version>
     <PackageProjectUrl>https://github.com/rhrocha/wdnutils/</PackageProjectUrl>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -49,6 +49,13 @@
     <PackageReference Include="System.Data.SqlClient" Version="4.6.0" />
     <!-- <PackageReference Include="WDNUtils.Common" Version="1.0.7-beta" /> -->
     <ProjectReference Include="..\..\src\WDNUtils.Common\WDNUtils.Common.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
