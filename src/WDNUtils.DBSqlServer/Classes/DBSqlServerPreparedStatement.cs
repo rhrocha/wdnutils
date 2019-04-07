@@ -61,7 +61,6 @@ namespace WDNUtils.DBSqlServer
             return Command.Execute();
         }
 
-
         /// <summary>
         /// Executes the prepared statement
         /// </summary>

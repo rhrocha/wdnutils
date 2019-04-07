@@ -362,7 +362,6 @@ namespace WDNUtils.Common.Test
 
         private static async Task TestAwaitFunctionOkAsync()
         {
-
             var result = await TaskUtils.WaitTimeout(
                 func: async () => { await Task.Delay(TimeSpan1); return 1; },
                 timeout: TimeSpan2,

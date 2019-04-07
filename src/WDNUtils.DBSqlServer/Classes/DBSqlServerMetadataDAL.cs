@@ -377,7 +377,6 @@ namespace WDNUtils.DBSqlServer
                 .ToDictionary(item => item.IndexName, item => item.TableName);
         }
 
-
         /// <summary>
         /// Get the names of the indexes for a specified owner
         /// </summary>
