@@ -12,9 +12,9 @@ namespace WDNUtils.Common.Test
         [TestMethod]
         public async Task TestAsyncLazyConcurrency()
         {
-            var test1 = new AsyncLazyConcurrentTester().Test(mode: LazyThreadSafetyMode.None, keepValue: false);
-            var test2 = new AsyncLazyConcurrentTester().Test(mode: LazyThreadSafetyMode.PublicationOnly, keepValue: true);
-            var test3 = new AsyncLazyConcurrentTester().Test(mode: LazyThreadSafetyMode.ExecutionAndPublication, keepValue: true);
+            var test1 = new AsyncLazyConcurrentTester().Test(mode: LazyThreadSafetyMode.None);
+            var test2 = new AsyncLazyConcurrentTester().Test(mode: LazyThreadSafetyMode.PublicationOnly);
+            var test3 = new AsyncLazyConcurrentTester().Test(mode: LazyThreadSafetyMode.ExecutionAndPublication);
 
             await Task.WhenAll(test1, test2, test3);
         }
@@ -96,7 +96,7 @@ namespace WDNUtils.Common.Test
 
             private bool IsSlowTask { get; set; }
 
-            public async Task Test(LazyThreadSafetyMode mode, bool keepValue)
+            public async Task Test(LazyThreadSafetyMode mode)
             {
                 var lazyValue = new AsyncLazy<bool>(valueFactory: async () =>
                 {
