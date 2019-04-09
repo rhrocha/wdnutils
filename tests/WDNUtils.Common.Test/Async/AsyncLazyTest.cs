@@ -73,15 +73,15 @@ namespace WDNUtils.Common.Test
             {
                 // Default constructor
 
-                await AsyncLazyRecursiveTester.Test(customFactory: false, captureException: null, mode: mode, expectedException1: (mode == LazyThreadSafetyMode.PublicationOnly) ? null : typeof(InvalidOperationException), expectedException2: null);
-                await AsyncLazyRecursiveTester.Test(customFactory: false, captureException: false, mode: mode, expectedException1: (mode == LazyThreadSafetyMode.PublicationOnly) ? null : typeof(InvalidOperationException), expectedException2: null);
-                await AsyncLazyRecursiveTester.Test(customFactory: false, captureException: true, mode: mode, expectedException1: (mode == LazyThreadSafetyMode.PublicationOnly) ? null : typeof(InvalidOperationException), expectedException2: (mode == LazyThreadSafetyMode.PublicationOnly) ? null : typeof(InvalidOperationException));
+                await AsyncLazyRecursiveTester.Test(customFactory: false, captureException: null, mode: mode, expectedException1: (mode == LazyThreadSafetyMode.PublicationOnly) ? null : typeof(LockRecursionException), expectedException2: null);
+                await AsyncLazyRecursiveTester.Test(customFactory: false, captureException: false, mode: mode, expectedException1: (mode == LazyThreadSafetyMode.PublicationOnly) ? null : typeof(LockRecursionException), expectedException2: null);
+                await AsyncLazyRecursiveTester.Test(customFactory: false, captureException: true, mode: mode, expectedException1: (mode == LazyThreadSafetyMode.PublicationOnly) ? null : typeof(LockRecursionException), expectedException2: (mode == LazyThreadSafetyMode.PublicationOnly) ? null : typeof(LockRecursionException));
 
                 // Custom value factory
 
-                await AsyncLazyRecursiveTester.Test(customFactory: true, captureException: null, mode: mode, expectedException1: (mode == LazyThreadSafetyMode.PublicationOnly) ? null : typeof(InvalidOperationException), expectedException2: (mode == LazyThreadSafetyMode.PublicationOnly) ? null : typeof(InvalidOperationException));
-                await AsyncLazyRecursiveTester.Test(customFactory: true, captureException: false, mode: mode, expectedException1: (mode == LazyThreadSafetyMode.PublicationOnly) ? null : typeof(InvalidOperationException), expectedException2: null);
-                await AsyncLazyRecursiveTester.Test(customFactory: true, captureException: true, mode: mode, expectedException1: (mode == LazyThreadSafetyMode.PublicationOnly) ? null : typeof(InvalidOperationException), expectedException2: (mode == LazyThreadSafetyMode.PublicationOnly) ? null : typeof(InvalidOperationException));
+                await AsyncLazyRecursiveTester.Test(customFactory: true, captureException: null, mode: mode, expectedException1: (mode == LazyThreadSafetyMode.PublicationOnly) ? null : typeof(LockRecursionException), expectedException2: (mode == LazyThreadSafetyMode.PublicationOnly) ? null : typeof(LockRecursionException));
+                await AsyncLazyRecursiveTester.Test(customFactory: true, captureException: false, mode: mode, expectedException1: (mode == LazyThreadSafetyMode.PublicationOnly) ? null : typeof(LockRecursionException), expectedException2: null);
+                await AsyncLazyRecursiveTester.Test(customFactory: true, captureException: true, mode: mode, expectedException1: (mode == LazyThreadSafetyMode.PublicationOnly) ? null : typeof(LockRecursionException), expectedException2: (mode == LazyThreadSafetyMode.PublicationOnly) ? null : typeof(LockRecursionException));
             }
         }
 

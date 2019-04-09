@@ -53,7 +53,7 @@ namespace WDNUtils.Common
         /// By default, it is disabled in the mode <see cref="LazyThreadSafetyMode.PublicationOnly"/>, or if the value factory is the T's default constructor
         /// </summary>
         protected virtual bool CaptureException(object valueFactory) =>
-            (!(_blockRecursion is null)) && // Mode is not LazyThreadSafetyMode.PublicationOnly
+            (!((_blockRecursion is null) && (_lock is null))) && // Mode is not LazyThreadSafetyMode.PublicationOnly
             (!ReferenceEquals(valueFactory, DefaultCreateValue)); // Value factory is not the T's default constructor
 
         #endregion
@@ -75,7 +75,7 @@ namespace WDNUtils.Common
             if (mode == LazyThreadSafetyMode.ExecutionAndPublication)
             {
                 _lock = new AsyncLock();
-                _blockRecursion = new AsyncLocal<bool>();
+                _blockRecursion = null;
             }
             else if (mode == LazyThreadSafetyMode.PublicationOnly)
             {
@@ -204,7 +204,7 @@ namespace WDNUtils.Common
         /// <returns>The lazily initialized value of the current <see cref="AsyncLazy{T}"/></returns>
         /// <exception cref="MemberAccessException">The <see cref="AsyncLazy{T}"/> instance is initialized to use the default constructor of the type that is being lazily initialized, and permissions to access the constructor are missing</exception>
         /// <exception cref="MissingMemberException">The <see cref= "AsyncLazy{T}" /> instance is initialized to use the default constructor of the type that is being lazily initialized, and that type does not have a public, parameterless constructor</exception>
-        /// <exception cref="InvalidOperationException">The initialization function tries to access<see cref="AsyncLazy{T}.GetValueAsync"/> on this instance</exception>
+        /// <exception cref="LockRecursionException">The initialization function tries to access<see cref="AsyncLazy{T}.GetValueAsync"/> on this instance</exception>
         /// <remarks>Please <see cref="LazyThreadSafetyMode"/> for more information on how <see cref="AsyncLazy{T}"/> will behave if an exception is thrown from initialization delegate</remarks>
         public async Task<T> GetValueAsync(bool continueOnCapturedContext = false)
         {
@@ -222,7 +222,7 @@ namespace WDNUtils.Common
 
             #endregion
 
-            if (_blockRecursion is null)
+            if ((_blockRecursion is null) && (_lock is null))
             {
                 #region LazyThreadSafetyMode.PublicationOnly
 
@@ -290,11 +290,6 @@ namespace WDNUtils.Common
             {
                 #region LazyThreadSafetyMode.None
 
-                // #2 - Allow concurrent calls to the value factory
-                // #3 - Allow concurrent publications of the created value
-                // #4 - Allow new publications of the created value
-                // #5 - Prevent calling the value factory after a value is created successfully
-
                 var valueFactory = _valueFactory;
 
                 // Prevent calling the value factory after a value is created successfully (may fail to block in concurrent calls, by design)
@@ -313,7 +308,7 @@ namespace WDNUtils.Common
 
                 // Block recursive reentrant calls to the value factory
                 if (_blockRecursion.Value == true)
-                    throw new InvalidOperationException();
+                    throw new LockRecursionException();
 
                 _blockRecursion.Value = true;
 
@@ -364,12 +359,6 @@ namespace WDNUtils.Common
                         throw new Exception(); // Just to prevent compiler warnings, since ex.Throw() will throw an exception
                     }
                 }
-
-                // Block recursive reentrant calls to the value factory
-                if (_blockRecursion.Value == true)
-                    throw new InvalidOperationException();
-
-                _blockRecursion.Value = true;
 
                 // Block concurrent calls to the value factory, and concurrent or new publications of the created value
                 return await _lock.InvokeWithLock(async () =>
