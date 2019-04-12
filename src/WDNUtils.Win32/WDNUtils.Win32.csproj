@@ -15,7 +15,7 @@
     <FileVersion>1.0.8.8</FileVersion>
     <RepositoryType></RepositoryType>
     <PackageTags>WDN</PackageTags>
-    <PackageReleaseNotes>Added form locker and form data status for WinForms.</PackageReleaseNotes>
+    <PackageReleaseNotes>Added MutexFactory, and form locker and form data status for WinForms.</PackageReleaseNotes>
     <Version>1.0.8-beta</Version>
     <PackageProjectUrl>https://github.com/rhrocha/wdnutils/</PackageProjectUrl>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
