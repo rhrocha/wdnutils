@@ -1,21 +1,36 @@
 ﻿#############################################################################
+Add alias for PDB1 database in XE instance:
+#############################################################################
+
+NETWORK\ADMIN\tnsnames.ora
+
+XEPDB1 =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL = TCP)(HOST = <HOSTNAME>)(PORT = 1521))
+    (CONNECT_DATA =
+      (SERVER = DEDICATED)
+      (SERVICE_NAME = XEPDB1)
+    )
+  )
+
+#############################################################################
 Create tablespace and user for WDNUtils.DBOracle unit tests:
 #############################################################################
 
-sqlplus sys/system@xe as sysdba
+sqlplus sys/system@XEPDB1 as sysdba
 
 CREATE TABLESPACE wdnutils DATAFILE 'wdnutils.DBF' SIZE 16M AUTOEXTEND ON NEXT 16M MAXSIZE 512M ONLINE PERMANENT EXTENT MANAGEMENT LOCAL AUTOALLOCATE SEGMENT SPACE MANAGEMENT AUTO;
 CREATE USER wdnutils IDENTIFIED BY WDN_Utils#123 DEFAULT TABLESPACE wdnutils TEMPORARY TABLESPACE TEMP;
 GRANT CREATE SESSION, ALTER SESSION, CREATE TABLE, CREATE PROCEDURE, CREATE VIEW, CREATE MATERIALIZED VIEW, CREATE TRIGGER, CREATE SEQUENCE, CREATE ANY DIRECTORY, CREATE TYPE, CREATE SYNONYM TO wdnutils;
 GRANT UNLIMITED TABLESPACE TO wdnutils;
 
-sqlplus wdnutils/WDN_Utils#123@xe
+sqlplus wdnutils/WDN_Utils#123@XEPDB1
 
 #############################################################################
 Drop tablespace and user for wdnutils.DBOracle unit tests:
 #############################################################################
 
-sqlplus sys/system@xe as sysdba
+sqlplus sys/system@XEPDB1 as sysdba
 
 DROP USER wdnutils CASCADE;
 DROP TABLESPACE wdnutils INCLUDING CONTENTS AND DATAFILES CASCADE CONSTRAINTS;
