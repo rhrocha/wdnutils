@@ -21,6 +21,8 @@ CREATE USER wdnutils FOR LOGIN wdnutils WITH DEFAULT_SCHEMA = wdnutils;
 GO
 GRANT ALL PRIVILEGES TO wdnutils;
 GO
+CREATE SCHEMA wdnutils AUTHORIZATION wdnutils;
+GO
 
 sqlcmd -S (localdb)\wdnutils -U wdnutils -P WDN_Utils#123
 
