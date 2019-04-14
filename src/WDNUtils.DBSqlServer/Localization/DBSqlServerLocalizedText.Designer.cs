@@ -259,6 +259,15 @@ namespace WDNUtils.DBSqlServer.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unexpected null value for the column &apos;{0}&apos;!.
+        /// </summary>
+        internal static string DBSqlServerDataReader_ColumnIsNull {
+            get {
+                return ResourceManager.GetString("DBSqlServerDataReader_ColumnIsNull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The column &apos;{0}&apos; does not exist in the data set!.
         /// </summary>
         internal static string DBSqlServerDataReader_ColumnNotFound {

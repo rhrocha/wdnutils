@@ -259,6 +259,15 @@ namespace WDNUtils.DBOracle.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unexpected null value for the column &apos;{0}&apos;!.
+        /// </summary>
+        internal static string DBOracleDataReader_ColumnIsNull {
+            get {
+                return ResourceManager.GetString("DBOracleDataReader_ColumnIsNull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The column &apos;{0}&apos; does not exist in the data set!.
         /// </summary>
         internal static string DBOracleDataReader_ColumnNotFound {

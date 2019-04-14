@@ -111,11 +111,29 @@ namespace WDNUtils.DBOracle
         /// <summary>
         /// Returns the value of a BigInteger column
         /// </summary>
+        /// <param name="index">Column index</param>
+        /// <returns>The value of the specified column</returns>
+        public BigInteger GetBigIntegerNotNull(int index)
+            => GetBigInteger(index: index, nullValue: null)
+                ?? throw new ApplicationException(string.Format(DBOracleLocalizedText.DBOracleDataReader_ColumnIsNull, OracleDataReader.GetName(index)));
+
+        /// <summary>
+        /// Returns the value of a BigInteger column
+        /// </summary>
         /// <param name="columnName">Column name</param>
         /// <param name="nullValue">Value to be returned if the column value is null (default is NULL)</param>
         /// <returns>The value of the specified column</returns>
         public BigInteger? GetBigInteger(string columnName, BigInteger? nullValue = null)
             => GetBigInteger(GetColumnIndex(columnName: columnName), nullValue: nullValue);
+
+        /// <summary>
+        /// Returns the value of a BigInteger column
+        /// </summary>
+        /// <param name="columnName">Column name</param>
+        /// <returns>The value of the specified column</returns>
+        public BigInteger GetBigIntegerNotNull(string columnName)
+            => GetBigInteger(columnName: columnName, nullValue: null)
+                ?? throw new ApplicationException(string.Format(DBOracleLocalizedText.DBOracleDataReader_ColumnIsNull, columnName));
 
         /// <summary>
         /// Returns the value of a decimal column
@@ -129,11 +147,29 @@ namespace WDNUtils.DBOracle
         /// <summary>
         /// Returns the value of a decimal column
         /// </summary>
+        /// <param name="index">Column index</param>
+        /// <returns>The value of the specified column</returns>
+        public decimal GetDecimalNotNull(int index)
+            => GetDecimal(index: index, nullValue: null)
+                ?? throw new ApplicationException(string.Format(DBOracleLocalizedText.DBOracleDataReader_ColumnIsNull, OracleDataReader.GetName(index)));
+
+        /// <summary>
+        /// Returns the value of a decimal column
+        /// </summary>
         /// <param name="columnName">Column name</param>
         /// <param name="nullValue">Value to be returned if the column value is null (default is NULL)</param>
         /// <returns>The value of the specified column</returns>
         public decimal? GetDecimal(string columnName, decimal? nullValue = null)
             => GetDecimal(GetColumnIndex(columnName: columnName), nullValue: nullValue);
+
+        /// <summary>
+        /// Returns the value of a decimal column
+        /// </summary>
+        /// <param name="columnName">Column name</param>
+        /// <returns>The value of the specified column</returns>
+        public decimal GetDecimalNotNull(string columnName)
+            => GetDecimal(columnName: columnName, nullValue: null)
+                ?? throw new ApplicationException(string.Format(DBOracleLocalizedText.DBOracleDataReader_ColumnIsNull, columnName));
 
         /// <summary>
         /// Returns the value of a long column
@@ -147,11 +183,29 @@ namespace WDNUtils.DBOracle
         /// <summary>
         /// Returns the value of a long column
         /// </summary>
+        /// <param name="index">Column index</param>
+        /// <returns>The value of the specified column</returns>
+        public long GetInt64NotNull(int index)
+            => GetInt64(index: index, nullValue: null)
+                ?? throw new ApplicationException(string.Format(DBOracleLocalizedText.DBOracleDataReader_ColumnIsNull, OracleDataReader.GetName(index)));
+
+        /// <summary>
+        /// Returns the value of a long column
+        /// </summary>
         /// <param name="columnName">Column name</param>
         /// <param name="nullValue">Value to be returned if the column value is null (default is NULL)</param>
         /// <returns>The value of the specified column</returns>
         public long? GetInt64(string columnName, long? nullValue = null)
             => GetInt64(GetColumnIndex(columnName: columnName), nullValue: nullValue);
+
+        /// <summary>
+        /// Returns the value of a long column
+        /// </summary>
+        /// <param name="columnName">Column name</param>
+        /// <returns>The value of the specified column</returns>
+        public long GetInt64NotNull(string columnName)
+            => GetInt64(columnName: columnName, nullValue: null)
+                ?? throw new ApplicationException(string.Format(DBOracleLocalizedText.DBOracleDataReader_ColumnIsNull, columnName));
 
         /// <summary>
         /// Returns the value of a int column
@@ -165,11 +219,29 @@ namespace WDNUtils.DBOracle
         /// <summary>
         /// Returns the value of a int column
         /// </summary>
+        /// <param name="index">Column index</param>
+        /// <returns>The value of the specified column</returns>
+        public int GetInt32NotNull(int index)
+            => GetInt32(index: index, nullValue: null)
+                ?? throw new ApplicationException(string.Format(DBOracleLocalizedText.DBOracleDataReader_ColumnIsNull, OracleDataReader.GetName(index)));
+
+        /// <summary>
+        /// Returns the value of a int column
+        /// </summary>
         /// <param name="columnName">Column name</param>
         /// <param name="nullValue">Value to be returned if the column value is null (default is NULL)</param>
         /// <returns>The value of the specified column</returns>
         public int? GetInt32(string columnName, int? nullValue = null)
             => GetInt32(GetColumnIndex(columnName: columnName), nullValue: nullValue);
+
+        /// <summary>
+        /// Returns the value of a int column
+        /// </summary>
+        /// <param name="columnName">Column name</param>
+        /// <returns>The value of the specified column</returns>
+        public int GetInt32NotNull(string columnName)
+            => GetInt32(columnName: columnName, nullValue: null)
+                ?? throw new ApplicationException(string.Format(DBOracleLocalizedText.DBOracleDataReader_ColumnIsNull, columnName));
 
         /// <summary>
         /// Returns the value of a short column
@@ -183,11 +255,29 @@ namespace WDNUtils.DBOracle
         /// <summary>
         /// Returns the value of a short column
         /// </summary>
+        /// <param name="index">Column index</param>
+        /// <returns>The value of the specified column</returns>
+        public short GetInt16NotNull(int index)
+            => GetInt16(index: index, nullValue: null)
+                ?? throw new ApplicationException(string.Format(DBOracleLocalizedText.DBOracleDataReader_ColumnIsNull, OracleDataReader.GetName(index)));
+
+        /// <summary>
+        /// Returns the value of a short column
+        /// </summary>
         /// <param name="columnName">Column name</param>
         /// <param name="nullValue">Value to be returned if the column value is null (default is NULL)</param>
         /// <returns>The value of the specified column</returns>
         public short? GetInt16(string columnName, short? nullValue = null)
             => GetInt16(GetColumnIndex(columnName: columnName), nullValue: nullValue);
+
+        /// <summary>
+        /// Returns the value of a short column
+        /// </summary>
+        /// <param name="columnName">Column name</param>
+        /// <returns>The value of the specified column</returns>
+        public short GetInt16NotNull(string columnName)
+            => GetInt16(columnName: columnName, nullValue: null)
+                ?? throw new ApplicationException(string.Format(DBOracleLocalizedText.DBOracleDataReader_ColumnIsNull, columnName));
 
         /// <summary>
         /// Returns the value of a byte column
@@ -201,11 +291,29 @@ namespace WDNUtils.DBOracle
         /// <summary>
         /// Returns the value of a byte column
         /// </summary>
+        /// <param name="index">Column index</param>
+        /// <returns>The value of the specified column</returns>
+        public byte GetByteNotNull(int index)
+            => GetByte(index: index, nullValue: null)
+                ?? throw new ApplicationException(string.Format(DBOracleLocalizedText.DBOracleDataReader_ColumnIsNull, OracleDataReader.GetName(index)));
+
+        /// <summary>
+        /// Returns the value of a byte column
+        /// </summary>
         /// <param name="columnName">Column name</param>
         /// <param name="nullValue">Value to be returned if the column value is null (default is NULL)</param>
         /// <returns>The value of the specified column</returns>
         public byte? GetByte(string columnName, byte? nullValue = null)
             => GetByte(GetColumnIndex(columnName: columnName), nullValue: nullValue);
+
+        /// <summary>
+        /// Returns the value of a byte column
+        /// </summary>
+        /// <param name="columnName">Column name</param>
+        /// <returns>The value of the specified column</returns>
+        public byte GetByteNotNull(string columnName)
+            => GetByte(columnName: columnName, nullValue: null)
+                ?? throw new ApplicationException(string.Format(DBOracleLocalizedText.DBOracleDataReader_ColumnIsNull, columnName));
 
         /// <summary>
         /// Returns the value of a string column
@@ -219,11 +327,29 @@ namespace WDNUtils.DBOracle
         /// <summary>
         /// Returns the value of a string column
         /// </summary>
+        /// <param name="index">Column index</param>
+        /// <returns>The value of the specified column</returns>
+        public string GetStringNotNull(int index)
+            => GetString(index: index, nullValue: null)
+                ?? throw new ApplicationException(string.Format(DBOracleLocalizedText.DBOracleDataReader_ColumnIsNull, OracleDataReader.GetName(index)));
+
+        /// <summary>
+        /// Returns the value of a string column
+        /// </summary>
         /// <param name="columnName">Column name</param>
         /// <param name="nullValue">Value to be returned if the column value is null (default is NULL)</param>
         /// <returns>The value of the specified column</returns>
         public string GetString(string columnName, string nullValue = null)
             => GetString(GetColumnIndex(columnName: columnName), nullValue: nullValue);
+
+        /// <summary>
+        /// Returns the value of a string column
+        /// </summary>
+        /// <param name="columnName">Column name</param>
+        /// <returns>The value of the specified column</returns>
+        public string GetStringNotNull(string columnName)
+            => GetString(columnName: columnName, nullValue: null)
+                ?? throw new ApplicationException(string.Format(DBOracleLocalizedText.DBOracleDataReader_ColumnIsNull, columnName));
 
         /// <summary>
         /// Returns the value of a large string column
@@ -237,11 +363,29 @@ namespace WDNUtils.DBOracle
         /// <summary>
         /// Returns the value of a large string column
         /// </summary>
+        /// <param name="index">Column index</param>
+        /// <returns>The value of the specified column</returns>
+        public string GetClobNotNull(int index)
+            => GetClob(index: index, nullValue: null)
+                ?? throw new ApplicationException(string.Format(DBOracleLocalizedText.DBOracleDataReader_ColumnIsNull, OracleDataReader.GetName(index)));
+
+        /// <summary>
+        /// Returns the value of a large string column
+        /// </summary>
         /// <param name="columnName">Column name</param>
         /// <param name="nullValue">Value to be returned if the column value is null (default is NULL)</param>
         /// <returns>The value of the specified column</returns>
         public string GetClob(string columnName, string nullValue = null)
             => GetClob(GetColumnIndex(columnName: columnName), nullValue: nullValue);
+
+        /// <summary>
+        /// Returns the value of a large string column
+        /// </summary>
+        /// <param name="columnName">Column name</param>
+        /// <returns>The value of the specified column</returns>
+        public string GetClobNotNull(string columnName)
+            => GetClob(columnName: columnName, nullValue: null)
+                ?? throw new ApplicationException(string.Format(DBOracleLocalizedText.DBOracleDataReader_ColumnIsNull, columnName));
 
         /// <summary>
         /// Returns the value of a DateTime column
@@ -255,11 +399,29 @@ namespace WDNUtils.DBOracle
         /// <summary>
         /// Returns the value of a DateTime column
         /// </summary>
+        /// <param name="index">Column index</param>
+        /// <returns>The value of the specified column</returns>
+        public DateTime GetDateTimeNotNull(int index)
+            => GetDateTime(index: index, nullValue: null)
+                ?? throw new ApplicationException(string.Format(DBOracleLocalizedText.DBOracleDataReader_ColumnIsNull, OracleDataReader.GetName(index)));
+
+        /// <summary>
+        /// Returns the value of a DateTime column
+        /// </summary>
         /// <param name="columnName">Column name</param>
         /// <param name="nullValue">Value to be returned if the column value is null (default is NULL)</param>
         /// <returns>The value of the specified column</returns>
         public DateTime? GetDateTime(string columnName, DateTime? nullValue = null)
             => GetDateTime(GetColumnIndex(columnName: columnName), nullValue: nullValue);
+
+        /// <summary>
+        /// Returns the value of a DateTime column
+        /// </summary>
+        /// <param name="columnName">Column name</param>
+        /// <returns>The value of the specified column</returns>
+        public DateTime GetDateTimeNotNull(string columnName)
+            => GetDateTime(columnName: columnName, nullValue: null)
+                ?? throw new ApplicationException(string.Format(DBOracleLocalizedText.DBOracleDataReader_ColumnIsNull, columnName));
 
         /// <summary>
         /// Returns the value of a TimeSpan column
@@ -273,11 +435,29 @@ namespace WDNUtils.DBOracle
         /// <summary>
         /// Returns the value of a TimeSpan column
         /// </summary>
+        /// <param name="index">Column index</param>
+        /// <returns>The value of the specified column</returns>
+        public TimeSpan GetTimeSpanNotNull(int index)
+            => GetTimeSpan(index: index, nullValue: null)
+                ?? throw new ApplicationException(string.Format(DBOracleLocalizedText.DBOracleDataReader_ColumnIsNull, OracleDataReader.GetName(index)));
+
+        /// <summary>
+        /// Returns the value of a TimeSpan column
+        /// </summary>
         /// <param name="columnName">Column name</param>
         /// <param name="nullValue">Value to be returned if the column value is null (default is NULL)</param>
         /// <returns>The value of the specified column</returns>
         public TimeSpan? GetTimeSpan(string columnName, TimeSpan? nullValue = null)
             => GetTimeSpan(GetColumnIndex(columnName: columnName), nullValue: nullValue);
+
+        /// <summary>
+        /// Returns the value of a TimeSpan column
+        /// </summary>
+        /// <param name="columnName">Column name</param>
+        /// <returns>The value of the specified column</returns>
+        public TimeSpan GetTimeSpanNotNull(string columnName)
+            => GetTimeSpan(columnName: columnName, nullValue: null)
+                ?? throw new ApplicationException(string.Format(DBOracleLocalizedText.DBOracleDataReader_ColumnIsNull, columnName));
 
         /// <summary>
         /// Returns the value of a month/year interval column
@@ -291,11 +471,29 @@ namespace WDNUtils.DBOracle
         /// <summary>
         /// Returns the value of a month/year interval column
         /// </summary>
+        /// <param name="index">Column index</param>
+        /// <returns>The value of the specified column</returns>
+        public long GetIntervalYMNotNull(int index)
+            => GetIntervalYM(index: index, nullValue: null)
+                ?? throw new ApplicationException(string.Format(DBOracleLocalizedText.DBOracleDataReader_ColumnIsNull, OracleDataReader.GetName(index)));
+
+        /// <summary>
+        /// Returns the value of a month/year interval column
+        /// </summary>
         /// <param name="columnName">Column name</param>
         /// <param name="nullValue">Value to be returned if the column value is null (default is NULL)</param>
         /// <returns>The value of the specified column</returns>
         public long? GetIntervalYM(string columnName, long? nullValue = null)
             => GetIntervalYM(GetColumnIndex(columnName: columnName), nullValue: nullValue);
+
+        /// <summary>
+        /// Returns the value of a month/year interval column
+        /// </summary>
+        /// <param name="columnName">Column name</param>
+        /// <returns>The value of the specified column</returns>
+        public long GetIntervalYMNotNull(string columnName)
+            => GetIntervalYM(columnName: columnName, nullValue: null)
+                ?? throw new ApplicationException(string.Format(DBOracleLocalizedText.DBOracleDataReader_ColumnIsNull, columnName));
 
         /// <summary>
         /// Returns the value of a byte array column
@@ -309,11 +507,29 @@ namespace WDNUtils.DBOracle
         /// <summary>
         /// Returns the value of a byte array column
         /// </summary>
+        /// <param name="index">Column index</param>
+        /// <returns>The value of the specified column</returns>
+        public byte[] GetBlobNotNull(int index)
+            => GetBlob(index: index, nullValue: null)
+                ?? throw new ApplicationException(string.Format(DBOracleLocalizedText.DBOracleDataReader_ColumnIsNull, OracleDataReader.GetName(index)));
+
+        /// <summary>
+        /// Returns the value of a byte array column
+        /// </summary>
         /// <param name="columnName">Column name</param>
         /// <param name="nullValue">Value to be returned if the column value is null (default is NULL)</param>
         /// <returns>The value of the specified column</returns>
         public byte[] GetBlob(string columnName, byte[] nullValue = null)
             => GetBlob(GetColumnIndex(columnName: columnName), nullValue: nullValue);
+
+        /// <summary>
+        /// Returns the value of a byte array column
+        /// </summary>
+        /// <param name="columnName">Column name</param>
+        /// <returns>The value of the specified column</returns>
+        public byte[] GetBlobNotNull(string columnName)
+            => GetBlob(columnName: columnName, nullValue: null)
+                ?? throw new ApplicationException(string.Format(DBOracleLocalizedText.DBOracleDataReader_ColumnIsNull, columnName));
 
         #endregion
     }

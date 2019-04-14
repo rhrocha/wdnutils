@@ -62,7 +62,7 @@ namespace WDNUtils.DBOracle
             }
 
             return RetrieveDataItem(
-                dataFiller: dr => dr.GetDateTime(0).Value,
+                dataFiller: dr => dr.GetDateTimeNotNull(0),
                 commandText: GetDateTime_CommandText);
         }
 
@@ -324,7 +324,7 @@ namespace WDNUtils.DBOracle
             }
 
             return RetrieveDataItem(
-                dataFiller: dr => dr.GetDecimal(0).Value,
+                dataFiller: dr => dr.GetDecimalNotNull(0),
                 commandText: string.Format(GetSequenceNextValue_CommandText, owner, sequenceName));
         }
 

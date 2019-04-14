@@ -75,7 +75,7 @@ namespace WDNUtils.DBSqlServer
             }
 
             return RetrieveDataItem(
-                dataFiller: dr => dr.GetDateTime(0).Value,
+                dataFiller: dr => dr.GetDateTimeNotNull(0),
                 commandText: GetDateTime_CommandText);
         }
 
@@ -93,7 +93,7 @@ namespace WDNUtils.DBSqlServer
             }
 
             return await RetrieveDataItemAsync(
-                dataFiller: dr => dr.GetDateTime(0).Value,
+                dataFiller: dr => dr.GetDateTimeNotNull(0),
                 commandText: GetDateTime_CommandText).ConfigureAwait(false);
         }
 

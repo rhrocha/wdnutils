@@ -228,4 +228,7 @@
   <data name="DBOracleTransaction_RollbackTransaction_AlreadyFinished" xml:space="preserve">
     <value>Não foi possível fazer o rollback da transação porque ela já está finalizada</value>
   </data>
+  <data name="DBOracleDataReader_ColumnIsNull" xml:space="preserve">
+    <value>Valor nulo inesperado para a coluna '{0}'!</value>
+  </data>
 </root>
