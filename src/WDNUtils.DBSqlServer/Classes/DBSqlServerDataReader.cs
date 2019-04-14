@@ -222,8 +222,8 @@ namespace WDNUtils.DBSqlServer
         /// <param name="columnName">Column name</param>
         /// <param name="nullValue">Value to be returned if the column value is null (default is NULL)</param>
         /// <returns>The value of the specified column</returns>
-        public byte? GetBoolean(string columnName, byte? nullValue = null)
-            => GetByte(GetColumnIndex(columnName: columnName), nullValue: nullValue);
+        public bool? GetBoolean(string columnName, bool? nullValue = null)
+            => GetBoolean(GetColumnIndex(columnName: columnName), nullValue: nullValue);
 
         /// <summary>
         /// Returns the value of a string column
