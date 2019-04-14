@@ -15,7 +15,7 @@
     <FileVersion>1.0.8.8</FileVersion>
     <RepositoryType></RepositoryType>
     <PackageTags>WDN</PackageTags>
-    <PackageReleaseNotes>Added AsyncLock class, added IEqualityComparer implementations for objects and structs, improvements in TaskUtils.</PackageReleaseNotes>
+    <PackageReleaseNotes>Added AsyncLock class, added IEqualityComparer implementations for objects and structs, improvements in TaskUtils, log4net replaced by custom log appender interface.</PackageReleaseNotes>
     <Version>1.0.8-beta</Version>
     <PackageProjectUrl>https://github.com/rhrocha/wdnutils/</PackageProjectUrl>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
@@ -28,10 +28,6 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="log4net" Version="2.0.8" />
-  </ItemGroup>
 
   <ItemGroup>
     <None Include="..\..\LICENSE">

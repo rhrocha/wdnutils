@@ -15,7 +15,7 @@
     <FileVersion>1.0.8.8</FileVersion>
     <RepositoryType></RepositoryType>
     <PackageTags>WDN</PackageTags>
-    <PackageReleaseNotes>Improvements in database connection creation, added methods to get non-null values from data reader.</PackageReleaseNotes>
+    <PackageReleaseNotes>Improvements in database connection creation, added methods to get non-null values from data reader, removed reference to log4net.</PackageReleaseNotes>
     <Version>1.0.8-beta</Version>
     <PackageProjectUrl>https://github.com/rhrocha/wdnutils/</PackageProjectUrl>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
@@ -45,7 +45,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="log4net" Version="2.0.8" />
     <PackageReference Include="System.Data.SqlClient" Version="4.6.0" />
     <!-- <PackageReference Include="WDNUtils.Common" Version="1.0.7-beta" /> -->
     <ProjectReference Include="..\..\src\WDNUtils.Common\WDNUtils.Common.csproj" />

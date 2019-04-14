@@ -1,5 +1,4 @@
-﻿using log4net;
-using Oracle.ManagedDataAccess.Client;
+﻿using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -16,8 +15,8 @@ namespace WDNUtils.DBOracle
     {
         #region Logger
 
-        private static CachedProperty<ILog> _log = new CachedProperty<ILog>(() => LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType));
-        private static ILog Log => _log.Value;
+        private static readonly CachedProperty<ILogAppender> _log = LogAppenderRepository.GetLogAppender(MethodBase.GetCurrentMethod().DeclaringType);
+        private static ILogAppender Log => _log.Value;
 
         #endregion
 

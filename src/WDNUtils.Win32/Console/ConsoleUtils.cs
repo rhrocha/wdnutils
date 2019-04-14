@@ -1,5 +1,4 @@
-﻿using log4net;
-using System;
+﻿using System;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using WDNUtils.Common;
@@ -14,8 +13,8 @@ namespace WDNUtils.Win32
     {
         #region Logger
 
-        private static CachedProperty<ILog> _log = new CachedProperty<ILog>(() => LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType));
-        private static ILog Log => _log.Value;
+        private static readonly CachedProperty<ILogAppender> _log = LogAppenderRepository.GetLogAppender(MethodBase.GetCurrentMethod().DeclaringType);
+        private static ILogAppender Log => _log.Value;
 
         #endregion
 
