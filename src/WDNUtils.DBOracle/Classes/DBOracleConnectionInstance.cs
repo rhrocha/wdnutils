@@ -13,7 +13,7 @@ namespace WDNUtils.DBOracle
     /// Database connection wrapper, supporting transactions, with a custom IDisposable
     /// implementation to prevent exception overriding at the end of the 'using' clause.
     /// </summary>
-    public sealed class DBOracleConnection : IDisposable
+    internal sealed class DBOracleConnectionInstance : IDisposable
     {
         #region Logger
 
@@ -25,20 +25,14 @@ namespace WDNUtils.DBOracle
         #region Properties and attributes
 
         /// <summary>
-        /// Connection string name
-        /// </summary>
-        public string ConnectionStringName { get; private set; }
-
-        /// <summary>
         /// Reference to the database connection, that is managed by this wrapper class.
         /// </summary>
-        private OracleConnection OracleConnection { get; set; } = null;
+        public OracleConnection Connection { get; set; } = null;
 
         /// <summary>
         /// Indicates if the database connection is opened
         /// </summary>
-        /// <remarks>ODP.NET only supports Open and Close for ConnectionState</remarks>
-        public bool Connected => (OracleConnection?.State == ConnectionState.Open);
+        public bool Connected => ((Connection?.State)?.HasFlag(ConnectionState.Open) == true);
 
         /// <summary>
         /// Indicates if there is an active transaction for this database connection. Returns false if the connection is not opened.
@@ -48,12 +42,12 @@ namespace WDNUtils.DBOracle
         /// <summary>
         /// Reference to the database transaction, that is managed by this wrapper class.
         /// </summary>
-        internal OracleTransaction Transaction { get; set; } = null;
+        public OracleTransaction Transaction { get; set; } = null;
 
         /// <summary>
         /// Lock used for the connection and transaction
         /// </summary>
-        internal readonly object _connectionLock = new object();
+        public readonly object _connectionLock = new object();
 
         /// <summary>
         /// Counter used to create unique savepoint names
@@ -72,12 +66,12 @@ namespace WDNUtils.DBOracle
         #region Constructor
 
         /// <summary>
-        /// Creates a new database connection (does not open it, used by DBOracleConnectionContainer)
+        /// Creates a new instance of DBOracleConnectionInstance
         /// </summary>
-        /// <param name="connectionStringName">Connection string name</param>
-        internal DBOracleConnection(string connectionStringName)
+        /// <param name="databaseConnection">Database connection</param>
+        private DBOracleConnectionInstance(OracleConnection databaseConnection)
         {
-            ConnectionStringName = connectionStringName ?? throw new ArgumentNullException(nameof(connectionStringName));
+            Connection = databaseConnection ?? throw new ArgumentNullException(nameof(databaseConnection));
         }
 
         #endregion
@@ -85,31 +79,42 @@ namespace WDNUtils.DBOracle
         #region Open connection
 
         /// <summary>
-        /// Opens the database connection if necessary
+        /// Opens a new database connection
         /// </summary>
-        /// <returns>True if a new connection was opened, false if the connection was already opened</returns>
-        internal bool OpenConnection()
+        /// <param name="connectionStringName">Connection string name</param>
+        /// <returns>New database connection</returns>
+        public static DBOracleConnectionInstance Open(string connectionStringName)
         {
-            if (Connected)
-                return false;
+            var connectionString = DBOracleConnectionStrings.Get(connectionStringName: connectionStringName);
 
-            lock (_connectionLock)
+            if (string.IsNullOrWhiteSpace(connectionString))
+                throw new InvalidOperationException(DBOracleLocalizedText.DBOracleConnection_EmptyConnectionString);
+
+            DBOracleConnectionInstance connection;
+
+            try { }
+            finally
             {
-                if (Connected)
-                    return false;
-
-                var connectionString = DBOracleConnectionStrings.Get(connectionStringName: ConnectionStringName);
-
-                if (string.IsNullOrWhiteSpace(connectionString))
-                    throw new InvalidOperationException(DBOracleLocalizedText.DBOracleConnection_EmptyConnectionString);
-
-                OracleConnection = new OracleConnection(connectionString);
+                var databaseConnection = new OracleConnection(connectionString);
 
                 try
                 {
                     try
                     {
-                        OracleConnection.Open();
+                        databaseConnection.Open();
+
+                        connection = new DBOracleConnectionInstance(databaseConnection: databaseConnection);
+
+#if DEBUG_ORACLE
+                        try
+                        {
+                            Log.Debug($@"Database connection opened - total: {System.Threading.Interlocked.Increment(ref _connectionCounter)}");
+                        }
+                        catch (Exception)
+                        {
+                            // Nothing to do
+                        }
+#endif
                     }
                     catch (Exception ex)
                     {
@@ -130,7 +135,7 @@ namespace WDNUtils.DBOracle
 
                     try
                     {
-                        OracleConnection?.Dispose();
+                        databaseConnection?.Dispose();
                     }
                     catch (Exception ex2)
                     {
@@ -144,23 +149,11 @@ namespace WDNUtils.DBOracle
                         }
                     }
 
-                    OracleConnection = null;
                     throw;
                 }
+            }
 
-#if DEBUG_ORACLE
-            try
-            {
-                Log.Debug($@"Database connection opened - total: {System.Threading.Interlocked.Increment(ref _connectionCounter)}");
-            }
-            catch (Exception)
-            {
-                // Nothing to do
-            }
-#endif
-
-                return true;
-            }
+            return connection;
         }
 
         #endregion
@@ -171,9 +164,9 @@ namespace WDNUtils.DBOracle
         /// Creates a transaction wrapper, beginning a new transaction if necessary
         /// </summary>
         /// <param name="createSavepoint">Indicates if a savepoint should be created if there is already an active transaction</param>
-        /// <param name="serializableIsolationLevel">Indicates if the transaction isolation level should be 'SERIALIZABLE' instead of 'READ COMMITTED' (default is false, to use 'READ COMMITTED')</param>
+        /// <param name="isolationLevel">Transaction isolation level, only <see cref="IsolationLevel.ReadCommitted"/> and <see cref="IsolationLevel.Serializable"/> are supported by Oracle managed client (default is <see cref="IsolationLevel.ReadCommitted"/>)</param>
         /// <returns>New transaction wrapper</returns>
-        public DBOracleTransaction BeginTransaction(bool createSavepoint = false, bool serializableIsolationLevel = false)
+        public DBOracleTransaction BeginTransaction(bool createSavepoint = false, IsolationLevel isolationLevel = IsolationLevel.ReadCommitted)
         {
             if (!Connected)
                 throw new InvalidOperationException(DBOracleLocalizedText.DBOracleConnection_BeginTransaction_Closed);
@@ -191,10 +184,7 @@ namespace WDNUtils.DBOracle
                     {
                         if (Transaction is null)
                         {
-                            // Oracle supports only 'READ COMMITTED' and 'SERIALIZABLE' isolation levels
-                            Transaction = (serializableIsolationLevel)
-                                ? OracleConnection.BeginTransaction(IsolationLevel.Serializable)
-                                : OracleConnection.BeginTransaction(IsolationLevel.ReadCommitted);
+                            Transaction = Connection.BeginTransaction(isolationLevel);
                         }
                         else
                         {
@@ -235,58 +225,75 @@ namespace WDNUtils.DBOracle
 
         #endregion
 
-        #region Create command
-
-        /// <summary>
-        /// Creates a database command (used by DBOracleCommand)
-        /// </summary>
-        /// <returns>New database command</returns>
-        internal OracleCommand CreateCommand()
-        {
-            return OracleConnection.CreateCommand();
-        }
-
-        #endregion
-
         #region Close connection
 
         /// <summary>
         /// Closes the database connection, automatically rolling back any pending transactions
         /// </summary>
-        internal void Close()
+        public void Close()
         {
-            if (OracleConnection is null)
-                return;
-
-            lock (_connectionLock)
+            try { }
+            finally
             {
-                if (OracleConnection is null)
-                    return;
-
-                if (!(Transaction is null))
+                if (!(Connection is null))
                 {
                     lock (_connectionLock)
                     {
-                        if (!(Transaction is null))
+                        if (!(Connection is null))
                         {
-                            try
+                            if (!(Transaction is null))
                             {
-                                Transaction.Rollback();
-
                                 try
                                 {
-                                    Log.Error(DBOracleLocalizedText.DBOracleConnection_ClosedWithActiveTransaction);
+                                    Transaction.Rollback();
+
+                                    try
+                                    {
+                                        Log.Error(DBOracleLocalizedText.DBOracleConnection_ClosedWithActiveTransaction);
+                                    }
+                                    catch (Exception)
+                                    {
+                                        // Nothing to do
+                                    }
                                 }
-                                catch (Exception)
+                                catch (Exception ex)
                                 {
-                                    // Nothing to do
+                                    try
+                                    {
+                                        Log.Error(DBOracleLocalizedText.DBOracleConnection_Rollback_Error, ex);
+                                    }
+                                    catch (Exception)
+                                    {
+                                        // Nothing to do
+                                    }
+                                }
+
+                                Transaction = null;
+                            }
+
+                            try
+                            {
+                                if (Connected)
+                                {
+                                    Connection?.Close();
+
+#if DEBUG_ORACLE
+                                    try
+                                    {
+                                        Log.Debug($@"Database connection closed - total: {System.Threading.Interlocked.Decrement(ref _connectionCounter)}");
+                                    }
+                                    catch (Exception)
+                                    {
+                                        // Nothing to do
+                                    }
+#endif
                                 }
                             }
                             catch (Exception ex)
                             {
                                 try
                                 {
-                                    Log.Error(DBOracleLocalizedText.DBOracleConnection_Rollback_Error, ex);
+                                    Log.Error(DBOracleLocalizedText.DBOracleConnection_Close_Error, ex);
                                 }
                                 catch (Exception)
                                 {
@@ -294,58 +301,26 @@ namespace WDNUtils.DBOracle
                                 }
                             }
 
-                            Transaction = null;
+                            try
+                            {
+                                Connection?.Dispose();
+                            }
+                            catch (Exception ex)
+                            {
+                                try
+                                {
+                                    Log.Error(DBOracleLocalizedText.DBOracleConnection_Disposal_Error, ex);
+                                }
+                                catch (Exception)
+                                {
+                                    // Nothing to do
+                                }
+                            }
+
+                            Connection = null;
                         }
                     }
                 }
-
-                try
-                {
-                    if (Connected)
-                    {
-                        OracleConnection?.Close();
-
-#if DEBUG_ORACLE
-                    try
-                    {
-                        Log.Debug($@"Database connection closed - total: {System.Threading.Interlocked.Decrement(ref _connectionCounter)}");
-                    }
-                    catch (Exception)
-                    {
-                        // Nothing to do
-                    }
-#endif
-                    }
-                }
-                catch (Exception ex)
-                {
-                    try
-                    {
-                        Log.Error(DBOracleLocalizedText.DBOracleConnection_Close_Error, ex);
-                    }
-                    catch (Exception)
-                    {
-                        // Nothing to do
-                    }
-                }
-
-                try
-                {
-                    OracleConnection?.Dispose();
-                }
-                catch (Exception ex)
-                {
-                    try
-                    {
-                        Log.Error(DBOracleLocalizedText.DBOracleConnection_Disposal_Error, ex);
-                    }
-                    catch (Exception)
-                    {
-                        // Nothing to do
-                    }
-                }
-
-                OracleConnection = null;
             }
         }
 

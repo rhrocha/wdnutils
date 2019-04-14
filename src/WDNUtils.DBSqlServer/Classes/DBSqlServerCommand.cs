@@ -48,9 +48,9 @@ namespace WDNUtils.DBSqlServer
 
             try
             {
-                Command = connection.CreateCommand();
+                Command = connection.Connection.Connection.CreateCommand();
 
-                Command.Transaction = connection.Transaction;
+                Command.Transaction = connection.Connection.Transaction;
                 Command.CommandType = (isStoredProcedure) ? CommandType.StoredProcedure : CommandType.Text;
                 Command.CommandText = commandText;
             }

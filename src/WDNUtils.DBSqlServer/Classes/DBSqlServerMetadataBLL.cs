@@ -21,7 +21,7 @@ namespace WDNUtils.DBSqlServer
         /// <returns>The current database date/time</returns>
         public static DateTime GetDateTime(DBSqlServerConnection connection = null, string connectionStringName = null)
         {
-            using (var dbSqlServerMedatadataDAL = new DBSqlServerMetadataDAL(connection: ref connection, connectionStringName: connectionStringName))
+            using (var dbSqlServerMedatadataDAL = DBSqlServerMetadataDAL.Create(connection: connection, connectionStringName: connectionStringName))
             {
                 return dbSqlServerMedatadataDAL.GetDateTime();
             }
@@ -35,7 +35,7 @@ namespace WDNUtils.DBSqlServer
         /// <returns>The current database date/time</returns>
         public static async Task<DateTime> GetDateTimeAsync(DBSqlServerConnection connection = null, string connectionStringName = null)
         {
-            using (var dbSqlServerMedatadataDAL = new DBSqlServerMetadataDAL(connection: ref connection, connectionStringName: connectionStringName))
+            using (var dbSqlServerMedatadataDAL = await DBSqlServerMetadataDAL.CreateAsync(connection: connection, connectionStringName: connectionStringName).ConfigureAwait(false))
             {
                 return await dbSqlServerMedatadataDAL.GetDateTimeAsync().ConfigureAwait(false);
             }
@@ -59,7 +59,7 @@ namespace WDNUtils.DBSqlServer
         {
             if (!useCache)
             {
-                using (var dbSqlServerMedatadataDAL = new DBSqlServerMetadataDAL(connection: ref connection, connectionStringName: connectionStringName))
+                using (var dbSqlServerMedatadataDAL = DBSqlServerMetadataDAL.Create(connection: connection, connectionStringName: connectionStringName))
                 {
                     return dbSqlServerMedatadataDAL.GetColumnLength(owner: owner, tableName: tableName, columnName: columnName);
                 }
@@ -69,7 +69,7 @@ namespace WDNUtils.DBSqlServer
 
             if (!GetColumnLength_Cache.TryGetValue(owner, out var ownerCache))
             {
-                using (var dbSqlServerMedatadataDAL = new DBSqlServerMetadataDAL(connection: ref connection, connectionStringName: connectionStringName))
+                using (var dbSqlServerMedatadataDAL = DBSqlServerMetadataDAL.Create(connection: connection, connectionStringName: connectionStringName))
                 {
                     ownerCache = dbSqlServerMedatadataDAL.GetColumnLengthTable(owner);
                 }
@@ -105,7 +105,7 @@ namespace WDNUtils.DBSqlServer
         {
             if (!useCache)
             {
-                using (var dbSqlServerMedatadataDAL = new DBSqlServerMetadataDAL(connection: ref connection, connectionStringName: connectionStringName))
+                using (var dbSqlServerMedatadataDAL = await DBSqlServerMetadataDAL.CreateAsync(connection: connection, connectionStringName: connectionStringName).ConfigureAwait(false))
                 {
                     return await dbSqlServerMedatadataDAL.GetColumnLengthAsync(owner: owner, tableName: tableName, columnName: columnName).ConfigureAwait(false);
                 }
@@ -115,7 +115,7 @@ namespace WDNUtils.DBSqlServer
 
             if (!GetColumnLength_Cache.TryGetValue(owner, out var ownerCache))
             {
-                using (var dbSqlServerMedatadataDAL = new DBSqlServerMetadataDAL(connection: ref connection, connectionStringName: connectionStringName))
+                using (var dbSqlServerMedatadataDAL = await DBSqlServerMetadataDAL.CreateAsync(connection: connection, connectionStringName: connectionStringName).ConfigureAwait(false))
                 {
                     ownerCache = await dbSqlServerMedatadataDAL.GetColumnLengthTableAsync(owner).ConfigureAwait(false);
                 }
@@ -162,7 +162,7 @@ namespace WDNUtils.DBSqlServer
         /// <returns>List of sequence names for the specified owner</returns>
         public static List<string> GetSequences(string owner, DBSqlServerConnection connection = null, string connectionStringName = null)
         {
-            using (var dbSqlServerMedatadataDAL = new DBSqlServerMetadataDAL(connection: ref connection, connectionStringName: connectionStringName))
+            using (var dbSqlServerMedatadataDAL = DBSqlServerMetadataDAL.Create(connection: connection, connectionStringName: connectionStringName))
             {
                 return dbSqlServerMedatadataDAL.GetSequences(owner: owner);
             }
@@ -177,7 +177,7 @@ namespace WDNUtils.DBSqlServer
         /// <returns>List of sequence names for the specified owner</returns>
         public static async Task<List<string>> GetSequencesAsync(string owner, DBSqlServerConnection connection = null, string connectionStringName = null)
         {
-            using (var dbSqlServerMedatadataDAL = new DBSqlServerMetadataDAL(connection: ref connection, connectionStringName: connectionStringName))
+            using (var dbSqlServerMedatadataDAL = await DBSqlServerMetadataDAL.CreateAsync(connection: connection, connectionStringName: connectionStringName).ConfigureAwait(false))
             {
                 return await dbSqlServerMedatadataDAL.GetSequencesAsync(owner: owner).ConfigureAwait(false);
             }
@@ -196,7 +196,7 @@ namespace WDNUtils.DBSqlServer
         /// <returns>List of table names for the specified owner</returns>
         public static List<string> GetTables(string owner, DBSqlServerConnection connection = null, string connectionStringName = null)
         {
-            using (var dbSqlServerMedatadataDAL = new DBSqlServerMetadataDAL(connection: ref connection, connectionStringName: connectionStringName))
+            using (var dbSqlServerMedatadataDAL = DBSqlServerMetadataDAL.Create(connection: connection, connectionStringName: connectionStringName))
             {
                 return dbSqlServerMedatadataDAL.GetTables(owner: owner);
             }
@@ -211,7 +211,7 @@ namespace WDNUtils.DBSqlServer
         /// <returns>List of table names for the specified owner</returns>
         public static async Task<List<string>> GetTablesAsync(string owner, DBSqlServerConnection connection = null, string connectionStringName = null)
         {
-            using (var dbSqlServerMedatadataDAL = new DBSqlServerMetadataDAL(connection: ref connection, connectionStringName: connectionStringName))
+            using (var dbSqlServerMedatadataDAL = await DBSqlServerMetadataDAL.CreateAsync(connection: connection, connectionStringName: connectionStringName).ConfigureAwait(false))
             {
                 return await dbSqlServerMedatadataDAL.GetTablesAsync(owner: owner).ConfigureAwait(false);
             }
@@ -230,7 +230,7 @@ namespace WDNUtils.DBSqlServer
         /// <returns>List of index names for the specified owner</returns>
         public static Dictionary<string, string> GetIndexes(string owner, DBSqlServerConnection connection = null, string connectionStringName = null)
         {
-            using (var dbSqlServerMedatadataDAL = new DBSqlServerMetadataDAL(connection: ref connection, connectionStringName: connectionStringName))
+            using (var dbSqlServerMedatadataDAL = DBSqlServerMetadataDAL.Create(connection: connection, connectionStringName: connectionStringName))
             {
                 return dbSqlServerMedatadataDAL.GetIndexes(owner: owner);
             }
@@ -245,7 +245,7 @@ namespace WDNUtils.DBSqlServer
         /// <returns>List of index names for the specified owner</returns>
         public static async Task<Dictionary<string, string>> GetIndexesAsync(string owner, DBSqlServerConnection connection = null, string connectionStringName = null)
         {
-            using (var dbSqlServerMedatadataDAL = new DBSqlServerMetadataDAL(connection: ref connection, connectionStringName: connectionStringName))
+            using (var dbSqlServerMedatadataDAL = await DBSqlServerMetadataDAL.CreateAsync(connection: connection, connectionStringName: connectionStringName).ConfigureAwait(false))
             {
                 return await dbSqlServerMedatadataDAL.GetIndexesAsync(owner: owner).ConfigureAwait(false);
             }
@@ -265,7 +265,7 @@ namespace WDNUtils.DBSqlServer
         /// <returns>The next value from a database sequence</returns>
         public static decimal GetSequenceNextValue(string owner, string sequenceName, DBSqlServerConnection connection = null, string connectionStringName = null)
         {
-            using (var dbSqlServerMedatadataDAL = new DBSqlServerMetadataDAL(connection: ref connection, connectionStringName: connectionStringName))
+            using (var dbSqlServerMedatadataDAL = DBSqlServerMetadataDAL.Create(connection: connection, connectionStringName: connectionStringName))
             {
                 return dbSqlServerMedatadataDAL.GetSequenceNextValue(owner: owner, sequenceName: sequenceName);
             }
@@ -281,7 +281,7 @@ namespace WDNUtils.DBSqlServer
         /// <returns>The next value from a database sequence</returns>
         public static async Task<decimal> GetSequenceNextValueAsync(string owner, string sequenceName, DBSqlServerConnection connection = null, string connectionStringName = null)
         {
-            using (var dbSqlServerMedatadataDAL = new DBSqlServerMetadataDAL(connection: ref connection, connectionStringName: connectionStringName))
+            using (var dbSqlServerMedatadataDAL = await DBSqlServerMetadataDAL.CreateAsync(connection: connection, connectionStringName: connectionStringName).ConfigureAwait(false))
             {
                 return await dbSqlServerMedatadataDAL.GetSequenceNextValueAsync(owner: owner, sequenceName: sequenceName).ConfigureAwait(false);
             }
@@ -303,7 +303,7 @@ namespace WDNUtils.DBSqlServer
         /// <returns>Number of affected rows</returns>
         public static int Execute(string commandText, DBSqlServerConnection connection = null, string connectionStringName = null, params DBSqlServerParameter[] parameters)
         {
-            using (var dbSqlServerMedatadataDAL = new DBSqlServerMetadataDAL(connection: ref connection, connectionStringName: connectionStringName))
+            using (var dbSqlServerMedatadataDAL = DBSqlServerMetadataDAL.Create(connection: connection, connectionStringName: connectionStringName))
             {
                 return dbSqlServerMedatadataDAL.Execute(commandText: commandText, parameters: parameters);
             }
@@ -319,7 +319,7 @@ namespace WDNUtils.DBSqlServer
         /// <returns>Number of affected rows</returns>
         public static async Task<int> ExecuteAsync(string commandText, DBSqlServerConnection connection = null, string connectionStringName = null, params DBSqlServerParameter[] parameters)
         {
-            using (var dbSqlServerMedatadataDAL = new DBSqlServerMetadataDAL(connection: ref connection, connectionStringName: connectionStringName))
+            using (var dbSqlServerMedatadataDAL = await DBSqlServerMetadataDAL.CreateAsync(connection: connection, connectionStringName: connectionStringName).ConfigureAwait(false))
             {
                 return await dbSqlServerMedatadataDAL.ExecuteAsync(commandText: commandText, parameters: parameters).ConfigureAwait(false);
             }
@@ -335,7 +335,7 @@ namespace WDNUtils.DBSqlServer
         /// <returns>Number of affected rows</returns>
         public static int ExecuteSP(string commandText, DBSqlServerConnection connection = null, string connectionStringName = null, params DBSqlServerParameter[] parameters)
         {
-            using (var dbSqlServerMedatadataDAL = new DBSqlServerMetadataDAL(connection: ref connection, connectionStringName: connectionStringName))
+            using (var dbSqlServerMedatadataDAL = DBSqlServerMetadataDAL.Create(connection: connection, connectionStringName: connectionStringName))
             {
                 return dbSqlServerMedatadataDAL.ExecuteSP(commandText: commandText, parameters: parameters);
             }
@@ -351,7 +351,7 @@ namespace WDNUtils.DBSqlServer
         /// <returns>Number of affected rows</returns>
         public static async Task<int> ExecuteSPAsync(string commandText, DBSqlServerConnection connection = null, string connectionStringName = null, params DBSqlServerParameter[] parameters)
         {
-            using (var dbSqlServerMedatadataDAL = new DBSqlServerMetadataDAL(connection: ref connection, connectionStringName: connectionStringName))
+            using (var dbSqlServerMedatadataDAL = await DBSqlServerMetadataDAL.CreateAsync(connection: connection, connectionStringName: connectionStringName).ConfigureAwait(false))
             {
                 return await dbSqlServerMedatadataDAL.ExecuteSPAsync(commandText: commandText, parameters: parameters).ConfigureAwait(false);
             }
@@ -371,7 +371,7 @@ namespace WDNUtils.DBSqlServer
         /// <returns>DataTable with the query results</returns>
         public static DataTable RetrieveDataTable(string commandText, DBSqlServerConnection connection = null, string connectionStringName = null, params DBSqlServerParameter[] parameters)
         {
-            using (var dbSqlServerMedatadataDAL = new DBSqlServerMetadataDAL(connection: ref connection, connectionStringName: connectionStringName))
+            using (var dbSqlServerMedatadataDAL = DBSqlServerMetadataDAL.Create(connection: connection, connectionStringName: connectionStringName))
             {
                 return dbSqlServerMedatadataDAL.RetrieveDataTable(commandText: commandText, parameters: parameters);
             }
@@ -387,7 +387,7 @@ namespace WDNUtils.DBSqlServer
         /// <returns>DataTable with the query results</returns>
         public static DataTable RetrieveDataTableSP(string commandText, DBSqlServerConnection connection = null, string connectionStringName = null, params DBSqlServerParameter[] parameters)
         {
-            using (var dbSqlServerMedatadataDAL = new DBSqlServerMetadataDAL(connection: ref connection, connectionStringName: connectionStringName))
+            using (var dbSqlServerMedatadataDAL = DBSqlServerMetadataDAL.Create(connection: connection, connectionStringName: connectionStringName))
             {
                 return dbSqlServerMedatadataDAL.RetrieveDataTableSP(commandText: commandText, parameters: parameters);
             }

@@ -1,45 +1,162 @@
 ﻿using System;
+using System.Data;
+using System.Threading.Tasks;
+using WDNUtils.DBSqlServer.Localization;
 
 namespace WDNUtils.DBSqlServer
 {
     /// <summary>
     /// Disposable wrapper for a database connection (the connection will be closed if it was opened by this class, but will remain opened if it was already opened)
     /// </summary>
-    public class DBSqlServerConnectionContainer : IDisposable
+    public class DBSqlServerConnection : IDisposable
     {
         #region Properties
 
         /// <summary>
         /// Database connection
         /// </summary>
-        protected DBSqlServerConnection Connection { get; set; }
+        internal DBSqlServerConnectionInstance Connection { get; set; }
 
         /// <summary>
         /// Indicates if the database connection should be closed and disposed when this object is disposed
         /// </summary>
         private bool DisposeConnection { get; set; }
 
+        /// <summary>
+        /// Indicates if the database connection is opened
+        /// </summary>
+        public bool Connected => Connection?.Connected ?? false;
+
+        /// <summary>
+        /// Indicates if there is an active transaction for this database connection. Returns false if the connection is not opened.
+        /// </summary>
+        public bool HasTransaction => Connection?.HasTransaction ?? false;
+
         #endregion
 
         #region Constructor
 
         /// <summary>
+        /// Creates a new instance of DBSqlServerConnection
+        /// </summary>
+        protected DBSqlServerConnection()
+        {
+        }
+
+        #endregion
+
+        #region Create new connection wrapper
+
+        /// <summary>
         /// Creates a disposable container with a database connection, creating a new connection if necessary
         /// </summary>
-        /// <param name="connection">Database connection</param>
-        /// <param name="connectionStringName">Connection string name</param>
-        public DBSqlServerConnectionContainer(ref DBSqlServerConnection connection, string connectionStringName = null)
+        /// <param name="connection">Database connection (null for a new connection)</param>
+        /// <param name="connectionStringName">Connection string name (must not be null if connection is null)</param>
+        protected static T Create<T>(DBSqlServerConnection connection, string connectionStringName) where T : DBSqlServerConnection
         {
+            var newConnection = (T)Activator.CreateInstance(type: typeof(T), nonPublic: true);
+
             if (connection is null)
             {
-                if (connectionStringName is null)
-                    throw new ArgumentNullException(nameof(connection));
-
-                connection = new DBSqlServerConnection(connectionStringName);
+                newConnection.DisposeConnection = true;
+                newConnection.Connection = DBSqlServerConnectionInstance.Open(connectionStringName);
+            }
+            else
+            {
+                newConnection.DisposeConnection = false;
+                newConnection.Connection = connection.Connection;
             }
 
-            Connection = connection;
-            DisposeConnection = connection.OpenConnection();
+            return newConnection;
+        }
+
+        /// <summary>
+        /// Creates a disposable container with a database connection, creating a new connection if necessary
+        /// </summary>
+        /// <param name="connection">Database connection (null for a new connection)</param>
+        /// <param name="connectionStringName">Connection string name (must not be null if connection is null)</param>
+        public static DBSqlServerConnection Create(DBSqlServerConnection connection, string connectionStringName)
+        {
+            var newConnection = new DBSqlServerConnection();
+
+            if (connection is null)
+            {
+                newConnection.DisposeConnection = true;
+                newConnection.Connection = DBSqlServerConnectionInstance.Open(connectionStringName);
+            }
+            else
+            {
+                newConnection.DisposeConnection = false;
+                newConnection.Connection = connection.Connection;
+            }
+
+            return newConnection;
+        }
+
+        #endregion
+
+        #region Create new connection wrapper (async)
+
+        /// <summary>
+        /// Creates a disposable container with a database connection, creating a new connection if necessary
+        /// </summary>
+        /// <param name="connection">Database connection (null for a new connection)</param>
+        /// <param name="connectionStringName">Connection string name (must not be null if connection is null)</param>
+        protected static async Task<T> CreateAsync<T>(DBSqlServerConnection connection, string connectionStringName) where T : DBSqlServerConnection
+        {
+            var newConnection = (T)Activator.CreateInstance(type: typeof(T), nonPublic: true);
+
+            if (connection is null)
+            {
+                newConnection.DisposeConnection = true;
+                newConnection.Connection = await DBSqlServerConnectionInstance.OpenAsync(connectionStringName).ConfigureAwait(false);
+            }
+            else
+            {
+                newConnection.DisposeConnection = false;
+                newConnection.Connection = connection.Connection;
+            }
+
+            return newConnection;
+        }
+
+        /// <summary>
+        /// Creates a disposable container with a database connection, creating a new connection if necessary
+        /// </summary>
+        /// <param name="connection">Database connection (null for a new connection)</param>
+        /// <param name="connectionStringName">Connection string name (must not be null if connection is null)</param>
+        public static async Task<DBSqlServerConnection> CreateAsync(DBSqlServerConnection connection, string connectionStringName)
+        {
+            var newConnection = new DBSqlServerConnection();
+
+            if (connection is null)
+            {
+                newConnection.DisposeConnection = true;
+                newConnection.Connection = await DBSqlServerConnectionInstance.OpenAsync(connectionStringName).ConfigureAwait(false);
+            }
+            else
+            {
+                newConnection.DisposeConnection = false;
+                newConnection.Connection = connection.Connection;
+            }
+
+            return newConnection;
+        }
+
+        #endregion
+
+        #region Create transaction
+
+        /// <summary>
+        /// Creates a transaction wrapper, beginning a new transaction if necessary
+        /// </summary>
+        /// <param name="createSavepoint">Indicates if a savepoint should be created if there is already an active transaction</param>
+        /// <param name="isolationLevel">Transaction isolation level (default is <see cref="IsolationLevel.ReadCommitted"/>)</param>
+        /// <returns>New transaction wrapper</returns>
+        public DBSqlServerTransaction BeginTransaction(bool createSavepoint = false, IsolationLevel isolationLevel = IsolationLevel.ReadCommitted)
+        {
+            return Connection?.BeginTransaction(createSavepoint: createSavepoint, isolationLevel: isolationLevel)
+                ?? throw new InvalidOperationException(DBSqlServerLocalizedText.DBSqlServerConnection_BeginTransaction_Closed);
         }
 
         #endregion

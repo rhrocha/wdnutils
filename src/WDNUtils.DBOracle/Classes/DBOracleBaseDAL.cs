@@ -9,7 +9,7 @@ namespace WDNUtils.DBOracle
     /// <summary>
     /// Base class for DAL implementations
     /// </summary>
-    public abstract class DBOracleBaseDAL : DBOracleConnectionContainer, IDisposable
+    public abstract class DBOracleBaseDAL : DBOracleConnection
     {
         #region Properties
 
@@ -25,15 +25,12 @@ namespace WDNUtils.DBOracle
 
         #endregion
 
-        #region Constructors
+        #region Constructor
 
         /// <summary>
-        /// Creates a new DBOracleBaseDAL instance
+        /// Creates a new instance of DBOracleBaseDAL
         /// </summary>
-        /// <param name="connection">Database connection (null for a new connection)</param>
-        /// <param name="connectionStringName">Connection string name (must not be null if connection is null)</param>
-        protected DBOracleBaseDAL(ref DBOracleConnection connection, string connectionStringName = null)
-            : base(connection: ref connection, connectionStringName: connectionStringName)
+        protected DBOracleBaseDAL()
         {
         }
 
@@ -188,7 +185,7 @@ namespace WDNUtils.DBOracle
         /// <returns>List of objects of the return type</returns>
         protected List<T> RetrieveDataList<T>(Func<DBOracleDataReader, T> dataFiller, string commandText, params DBOracleParameter[] parameters)
         {
-            return DBOracleCommand.RetrieveDataList(connection: Connection, dataFiller: dataFiller, commandText: commandText, isStoredProcedure: false, parameters: parameters);
+            return DBOracleCommand.RetrieveDataList(connection: this, dataFiller: dataFiller, commandText: commandText, isStoredProcedure: false, parameters: parameters);
         }
 
         /// <summary>
@@ -201,7 +198,7 @@ namespace WDNUtils.DBOracle
         /// <returns>List of objects of the return type</returns>
         protected List<T> RetrieveDataListSP<T>(Func<DBOracleDataReader, T> dataFiller, string commandText, params DBOracleParameter[] parameters)
         {
-            return DBOracleCommand.RetrieveDataList(connection: Connection, dataFiller: dataFiller, commandText: commandText, isStoredProcedure: true, parameters: parameters);
+            return DBOracleCommand.RetrieveDataList(connection: this, dataFiller: dataFiller, commandText: commandText, isStoredProcedure: true, parameters: parameters);
         }
 
         #endregion
@@ -219,7 +216,7 @@ namespace WDNUtils.DBOracle
         /// <returns>Query result, or nullValue if none</returns>
         protected T RetrieveDataItem<T>(Func<DBOracleDataReader, T> dataFiller, string commandText, T nullValue = default(T), params DBOracleParameter[] parameters)
         {
-            return DBOracleCommand.RetrieveDataItem(connection: Connection, dataFiller: dataFiller, commandText: commandText, isStoredProcedure: false, nullValue: nullValue, parameters: parameters);
+            return DBOracleCommand.RetrieveDataItem(connection: this, dataFiller: dataFiller, commandText: commandText, isStoredProcedure: false, nullValue: nullValue, parameters: parameters);
         }
 
         /// <summary>
@@ -233,7 +230,7 @@ namespace WDNUtils.DBOracle
         /// <returns>Stored procedure result, or nullValue if none</returns>
         protected T RetrieveDataItemSP<T>(Func<DBOracleDataReader, T> dataFiller, string commandText, T nullValue = default(T), params DBOracleParameter[] parameters)
         {
-            return DBOracleCommand.RetrieveDataItem(connection: Connection, dataFiller: dataFiller, commandText: commandText, isStoredProcedure: true, nullValue: nullValue, parameters: parameters);
+            return DBOracleCommand.RetrieveDataItem(connection: this, dataFiller: dataFiller, commandText: commandText, isStoredProcedure: true, nullValue: nullValue, parameters: parameters);
         }
 
         #endregion
@@ -248,7 +245,7 @@ namespace WDNUtils.DBOracle
         /// <returns>Number of affected rows</returns>
         protected int Execute(string commandText, params DBOracleParameter[] parameters)
         {
-            return DBOracleCommand.ExecuteNonQuery(connection: Connection, commandText: commandText, isStoredProcedure: false, parameters: parameters);
+            return DBOracleCommand.ExecuteNonQuery(connection: this, commandText: commandText, isStoredProcedure: false, parameters: parameters);
         }
 
         /// <summary>
@@ -259,7 +256,7 @@ namespace WDNUtils.DBOracle
         /// <returns>Number of affected rows</returns>
         protected int ExecuteSP(string commandText, params DBOracleParameter[] parameters)
         {
-            return DBOracleCommand.ExecuteNonQuery(connection: Connection, commandText: commandText, isStoredProcedure: true, parameters: parameters);
+            return DBOracleCommand.ExecuteNonQuery(connection: this, commandText: commandText, isStoredProcedure: true, parameters: parameters);
         }
 
         #endregion
@@ -274,7 +271,7 @@ namespace WDNUtils.DBOracle
         /// <returns>New prepared statement</returns>
         protected DBOraclePreparedStatement CreatePreparedStatement(string commandText, params DBOracleParameter[] parameters)
         {
-            return AddPreparedStatement(new DBOraclePreparedStatement(connection: Connection, commandText: commandText, isStoredProcedure: false, parameters: parameters));
+            return AddPreparedStatement(new DBOraclePreparedStatement(connection: this, commandText: commandText, isStoredProcedure: false, parameters: parameters));
         }
 
         /// <summary>
@@ -285,7 +282,7 @@ namespace WDNUtils.DBOracle
         /// <returns>New prepared statement</returns>
         protected DBOraclePreparedStatement CreatePreparedStatementSP(string commandText, params DBOracleParameter[] parameters)
         {
-            return AddPreparedStatement(new DBOraclePreparedStatement(connection: Connection, commandText: commandText, isStoredProcedure: true, parameters: parameters));
+            return AddPreparedStatement(new DBOraclePreparedStatement(connection: this, commandText: commandText, isStoredProcedure: true, parameters: parameters));
         }
 
         #endregion
@@ -300,7 +297,7 @@ namespace WDNUtils.DBOracle
         /// <returns>DataTable with the query results</returns>
         protected DataTable RetrieveDataTable(string commandText, params DBOracleParameter[] parameters)
         {
-            return DBOracleCommand.GetDataTable(connection: Connection, commandText: commandText, isStoredProcedure: false, parameters: parameters);
+            return DBOracleCommand.GetDataTable(connection: this, commandText: commandText, isStoredProcedure: false, parameters: parameters);
         }
 
         /// <summary>
@@ -311,7 +308,7 @@ namespace WDNUtils.DBOracle
         /// <returns>DataTable with the query results</returns>
         protected DataTable RetrieveDataTableSP(string commandText, params DBOracleParameter[] parameters)
         {
-            return DBOracleCommand.GetDataTable(connection: Connection, commandText: commandText, isStoredProcedure: true, parameters: parameters);
+            return DBOracleCommand.GetDataTable(connection: this, commandText: commandText, isStoredProcedure: true, parameters: parameters);
         }
 
         #endregion

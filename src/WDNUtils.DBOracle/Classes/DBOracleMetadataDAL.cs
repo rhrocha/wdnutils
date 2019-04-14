@@ -22,13 +22,24 @@ namespace WDNUtils.DBOracle
         #region Constructor
 
         /// <summary>
-        /// Creates a new DBOracleMetadataDAL instance
+        /// Creates a new instance of DBOracleMetadataDAL
+        /// </summary>
+        private DBOracleMetadataDAL()
+        {
+        }
+
+        #endregion
+
+        #region Create instance
+
+        /// <summary>
+        /// Creates a new DBOracleMetadataDAL, opening a new connection if necessary
         /// </summary>
         /// <param name="connection">Database connection (null for a new connection)</param>
         /// <param name="connectionStringName">Connection string name (must not be null if connection is null)</param>
-        public DBOracleMetadataDAL(ref DBOracleConnection connection, string connectionStringName = null)
-            : base(ref connection, connectionStringName)
+        public new static DBOracleMetadataDAL Create(DBOracleConnection connection, string connectionStringName)
         {
+            return Create<DBOracleMetadataDAL>(connection: connection, connectionStringName: connectionStringName);
         }
 
         #endregion

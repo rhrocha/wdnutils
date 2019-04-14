@@ -23,13 +23,38 @@ namespace WDNUtils.DBSqlServer
         #region Constructor
 
         /// <summary>
-        /// Creates a new DBSqlServerMetadataDAL instance
+        /// Creates a new instance of DBSqlServerMetadataDAL
+        /// </summary>
+        private DBSqlServerMetadataDAL()
+        {
+        }
+
+        #endregion
+
+        #region Create instance
+
+        /// <summary>
+        /// Creates a new DBSqlServerMetadataDAL, opening a new connection if necessary
         /// </summary>
         /// <param name="connection">Database connection (null for a new connection)</param>
         /// <param name="connectionStringName">Connection string name (must not be null if connection is null)</param>
-        public DBSqlServerMetadataDAL(ref DBSqlServerConnection connection, string connectionStringName = null)
-            : base(ref connection, connectionStringName)
+        public new static DBSqlServerMetadataDAL Create(DBSqlServerConnection connection, string connectionStringName)
         {
+            return Create<DBSqlServerMetadataDAL>(connection: connection, connectionStringName: connectionStringName);
+        }
+
+        #endregion
+
+        #region Create instance (async)
+
+        /// <summary>
+        /// Creates a new DBSqlServerMetadataDAL, opening a new connection if necessary
+        /// </summary>
+        /// <param name="connection">Database connection (null for a new connection)</param>
+        /// <param name="connectionStringName">Connection string name (must not be null if connection is null)</param>
+        public new static async Task<DBSqlServerMetadataDAL> CreateAsync(DBSqlServerConnection connection, string connectionStringName)
+        {
+            return await CreateAsync<DBSqlServerMetadataDAL>(connection: connection, connectionStringName: connectionStringName).ConfigureAwait(false);
         }
 
         #endregion

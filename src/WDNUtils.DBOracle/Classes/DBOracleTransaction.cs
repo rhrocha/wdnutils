@@ -24,7 +24,7 @@ namespace WDNUtils.DBOracle
         /// Connection whose transaction or savepoint is handled by this object; null if the transaction or savepoint is
         /// already committed or rolled back, or if it's a dummy wrapper (nested transaction without creating a savepoint)
         /// </summary>
-        private DBOracleConnection Connection { get; set; }
+        private DBOracleConnectionInstance Connection { get; set; }
 
         /// <summary>
         /// Name of the savepoint that is handled by this object; null if this class handles a transaction instead of a savepoint, the
@@ -41,7 +41,7 @@ namespace WDNUtils.DBOracle
         /// </summary>
         /// <param name="connection">Database connection, null if it's a dummy wrapper (nested transaction without creating a savepoint)</param>
         /// <param name="savepointName">Savepoint name, null if it's a transaction instead of a savepoint</param>
-        internal DBOracleTransaction(DBOracleConnection connection, string savepointName)
+        internal DBOracleTransaction(DBOracleConnectionInstance connection, string savepointName)
         {
             if ((connection is null) && (!(savepointName is null)))
                 throw new ArgumentNullException(nameof(connection));

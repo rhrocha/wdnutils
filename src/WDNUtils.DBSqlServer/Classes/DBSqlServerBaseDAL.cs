@@ -10,7 +10,7 @@ namespace WDNUtils.DBSqlServer
     /// <summary>
     /// Base class for DAL implementations
     /// </summary>
-    public abstract class DBSqlServerBaseDAL : DBSqlServerConnectionContainer, IDisposable
+    public abstract class DBSqlServerBaseDAL : DBSqlServerConnection
     {
         #region Properties
 
@@ -26,15 +26,12 @@ namespace WDNUtils.DBSqlServer
 
         #endregion
 
-        #region Constructors
+        #region Constructor
 
         /// <summary>
-        /// Creates a new DBSqlServerBaseDAL instance
+        /// Creates a new instance of DBSqlServerBaseDAL
         /// </summary>
-        /// <param name="connection">Database connection (null for a new connection)</param>
-        /// <param name="connectionStringName">Connection string name (must not be null if connection is null)</param>
-        protected DBSqlServerBaseDAL(ref DBSqlServerConnection connection, string connectionStringName = null)
-            : base(connection: ref connection, connectionStringName: connectionStringName)
+        protected DBSqlServerBaseDAL()
         {
         }
 
@@ -180,7 +177,7 @@ namespace WDNUtils.DBSqlServer
         /// <returns>List of objects of the return type</returns>
         protected List<T> RetrieveDataList<T>(Func<DBSqlServerDataReader, T> dataFiller, string commandText, params DBSqlServerParameter[] parameters)
         {
-            return DBSqlServerCommand.RetrieveDataList(connection: Connection, dataFiller: dataFiller, commandText: commandText, isStoredProcedure: false, parameters: parameters);
+            return DBSqlServerCommand.RetrieveDataList(connection: this, dataFiller: dataFiller, commandText: commandText, isStoredProcedure: false, parameters: parameters);
         }
 
         /// <summary>
@@ -193,7 +190,7 @@ namespace WDNUtils.DBSqlServer
         /// <returns>List of objects of the return type</returns>
         protected async Task<List<T>> RetrieveDataListAsync<T>(Func<DBSqlServerDataReader, T> dataFiller, string commandText, params DBSqlServerParameter[] parameters)
         {
-            return await DBSqlServerCommand.RetrieveDataListAsync(connection: Connection, dataFiller: dataFiller, commandText: commandText, isStoredProcedure: false, parameters: parameters).ConfigureAwait(false);
+            return await DBSqlServerCommand.RetrieveDataListAsync(connection: this, dataFiller: dataFiller, commandText: commandText, isStoredProcedure: false, parameters: parameters).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -206,7 +203,7 @@ namespace WDNUtils.DBSqlServer
         /// <returns>List of objects of the return type</returns>
         protected List<T> RetrieveDataListSP<T>(Func<DBSqlServerDataReader, T> dataFiller, string commandText, params DBSqlServerParameter[] parameters)
         {
-            return DBSqlServerCommand.RetrieveDataList(connection: Connection, dataFiller: dataFiller, commandText: commandText, isStoredProcedure: true, parameters: parameters);
+            return DBSqlServerCommand.RetrieveDataList(connection: this, dataFiller: dataFiller, commandText: commandText, isStoredProcedure: true, parameters: parameters);
         }
 
         /// <summary>
@@ -219,7 +216,7 @@ namespace WDNUtils.DBSqlServer
         /// <returns>List of objects of the return type</returns>
         protected async Task<List<T>> RetrieveDataListSPAsync<T>(Func<DBSqlServerDataReader, T> dataFiller, string commandText, params DBSqlServerParameter[] parameters)
         {
-            return await DBSqlServerCommand.RetrieveDataListAsync(connection: Connection, dataFiller: dataFiller, commandText: commandText, isStoredProcedure: true, parameters: parameters).ConfigureAwait(false);
+            return await DBSqlServerCommand.RetrieveDataListAsync(connection: this, dataFiller: dataFiller, commandText: commandText, isStoredProcedure: true, parameters: parameters).ConfigureAwait(false);
         }
 
         #endregion
@@ -237,7 +234,7 @@ namespace WDNUtils.DBSqlServer
         /// <returns>Query result, or nullValue if none</returns>
         protected T RetrieveDataItem<T>(Func<DBSqlServerDataReader, T> dataFiller, string commandText, T nullValue = default(T), params DBSqlServerParameter[] parameters)
         {
-            return DBSqlServerCommand.RetrieveDataItem(connection: Connection, dataFiller: dataFiller, commandText: commandText, isStoredProcedure: false, nullValue: nullValue, parameters: parameters);
+            return DBSqlServerCommand.RetrieveDataItem(connection: this, dataFiller: dataFiller, commandText: commandText, isStoredProcedure: false, nullValue: nullValue, parameters: parameters);
         }
 
         /// <summary>
@@ -251,7 +248,7 @@ namespace WDNUtils.DBSqlServer
         /// <returns>Query result, or nullValue if none</returns>
         protected async Task<T> RetrieveDataItemAsync<T>(Func<DBSqlServerDataReader, T> dataFiller, string commandText, T nullValue = default(T), params DBSqlServerParameter[] parameters)
         {
-            return await DBSqlServerCommand.RetrieveDataItemAsync(connection: Connection, dataFiller: dataFiller, commandText: commandText, isStoredProcedure: false, nullValue: nullValue, parameters: parameters).ConfigureAwait(false);
+            return await DBSqlServerCommand.RetrieveDataItemAsync(connection: this, dataFiller: dataFiller, commandText: commandText, isStoredProcedure: false, nullValue: nullValue, parameters: parameters).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -265,7 +262,7 @@ namespace WDNUtils.DBSqlServer
         /// <returns>Stored procedure result, or nullValue if none</returns>
         protected T RetrieveDataItemSP<T>(Func<DBSqlServerDataReader, T> dataFiller, string commandText, T nullValue = default(T), params DBSqlServerParameter[] parameters)
         {
-            return DBSqlServerCommand.RetrieveDataItem(connection: Connection, dataFiller: dataFiller, commandText: commandText, isStoredProcedure: true, nullValue: nullValue, parameters: parameters);
+            return DBSqlServerCommand.RetrieveDataItem(connection: this, dataFiller: dataFiller, commandText: commandText, isStoredProcedure: true, nullValue: nullValue, parameters: parameters);
         }
 
         /// <summary>
@@ -279,7 +276,7 @@ namespace WDNUtils.DBSqlServer
         /// <returns>Stored procedure result, or nullValue if none</returns>
         protected async Task<T> RetrieveDataItemSPAsync<T>(Func<DBSqlServerDataReader, T> dataFiller, string commandText, T nullValue = default(T), params DBSqlServerParameter[] parameters)
         {
-            return await DBSqlServerCommand.RetrieveDataItemAsync(connection: Connection, dataFiller: dataFiller, commandText: commandText, isStoredProcedure: true, nullValue: nullValue, parameters: parameters).ConfigureAwait(false);
+            return await DBSqlServerCommand.RetrieveDataItemAsync(connection: this, dataFiller: dataFiller, commandText: commandText, isStoredProcedure: true, nullValue: nullValue, parameters: parameters).ConfigureAwait(false);
         }
 
         #endregion
@@ -294,7 +291,7 @@ namespace WDNUtils.DBSqlServer
         /// <returns>Number of affected rows</returns>
         protected int Execute(string commandText, params DBSqlServerParameter[] parameters)
         {
-            return DBSqlServerCommand.ExecuteNonQuery(connection: Connection, commandText: commandText, isStoredProcedure: false, parameters: parameters);
+            return DBSqlServerCommand.ExecuteNonQuery(connection: this, commandText: commandText, isStoredProcedure: false, parameters: parameters);
         }
 
         /// <summary>
@@ -305,7 +302,7 @@ namespace WDNUtils.DBSqlServer
         /// <returns>Number of affected rows</returns>
         protected async Task<int> ExecuteAsync(string commandText, params DBSqlServerParameter[] parameters)
         {
-            return await DBSqlServerCommand.ExecuteNonQueryAsync(connection: Connection, commandText: commandText, isStoredProcedure: false, parameters: parameters).ConfigureAwait(false);
+            return await DBSqlServerCommand.ExecuteNonQueryAsync(connection: this, commandText: commandText, isStoredProcedure: false, parameters: parameters).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -316,7 +313,7 @@ namespace WDNUtils.DBSqlServer
         /// <returns>Number of affected rows</returns>
         protected int ExecuteSP(string commandText, params DBSqlServerParameter[] parameters)
         {
-            return DBSqlServerCommand.ExecuteNonQuery(connection: Connection, commandText: commandText, isStoredProcedure: true, parameters: parameters);
+            return DBSqlServerCommand.ExecuteNonQuery(connection: this, commandText: commandText, isStoredProcedure: true, parameters: parameters);
         }
 
         /// <summary>
@@ -327,7 +324,7 @@ namespace WDNUtils.DBSqlServer
         /// <returns>Number of affected rows</returns>
         protected async Task<int> ExecuteSPAsync(string commandText, params DBSqlServerParameter[] parameters)
         {
-            return await DBSqlServerCommand.ExecuteNonQueryAsync(connection: Connection, commandText: commandText, isStoredProcedure: true, parameters: parameters).ConfigureAwait(false);
+            return await DBSqlServerCommand.ExecuteNonQueryAsync(connection: this, commandText: commandText, isStoredProcedure: true, parameters: parameters).ConfigureAwait(false);
         }
 
         #endregion
@@ -342,7 +339,7 @@ namespace WDNUtils.DBSqlServer
         /// <returns>New prepared statement</returns>
         protected DBSqlServerPreparedStatement CreatePreparedStatement(string commandText, params DBSqlServerParameter[] parameters)
         {
-            return AddPreparedStatement(new DBSqlServerPreparedStatement(connection: Connection, commandText: commandText, isStoredProcedure: false, parameters: parameters));
+            return AddPreparedStatement(new DBSqlServerPreparedStatement(connection: this, commandText: commandText, isStoredProcedure: false, parameters: parameters));
         }
 
         /// <summary>
@@ -353,7 +350,7 @@ namespace WDNUtils.DBSqlServer
         /// <returns>New prepared statement</returns>
         protected DBSqlServerPreparedStatement CreatePreparedStatementSP(string commandText, params DBSqlServerParameter[] parameters)
         {
-            return AddPreparedStatement(new DBSqlServerPreparedStatement(connection: Connection, commandText: commandText, isStoredProcedure: true, parameters: parameters));
+            return AddPreparedStatement(new DBSqlServerPreparedStatement(connection: this, commandText: commandText, isStoredProcedure: true, parameters: parameters));
         }
 
         #endregion
@@ -368,7 +365,7 @@ namespace WDNUtils.DBSqlServer
         /// <returns>DataTable with the query results</returns>
         protected DataTable RetrieveDataTable(string commandText, params DBSqlServerParameter[] parameters)
         {
-            return DBSqlServerCommand.GetDataTable(connection: Connection, commandText: commandText, isStoredProcedure: false, parameters: parameters);
+            return DBSqlServerCommand.GetDataTable(connection: this, commandText: commandText, isStoredProcedure: false, parameters: parameters);
         }
 
         /// <summary>
@@ -379,7 +376,7 @@ namespace WDNUtils.DBSqlServer
         /// <returns>DataTable with the query results</returns>
         protected DataTable RetrieveDataTableSP(string commandText, params DBSqlServerParameter[] parameters)
         {
-            return DBSqlServerCommand.GetDataTable(connection: Connection, commandText: commandText, isStoredProcedure: true, parameters: parameters);
+            return DBSqlServerCommand.GetDataTable(connection: this, commandText: commandText, isStoredProcedure: true, parameters: parameters);
         }
 
         #endregion

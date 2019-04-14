@@ -20,7 +20,7 @@ namespace WDNUtils.DBOracle
         /// <returns>The current database date/time</returns>
         public static DateTime GetDateTime(DBOracleConnection connection = null, string connectionStringName = null)
         {
-            using (var dbOracleMedatadataDAL = new DBOracleMetadataDAL(connection: ref connection, connectionStringName: connectionStringName))
+            using (var dbOracleMedatadataDAL = DBOracleMetadataDAL.Create(connection: connection, connectionStringName: connectionStringName))
             {
                 return dbOracleMedatadataDAL.GetDateTime();
             }
@@ -44,7 +44,7 @@ namespace WDNUtils.DBOracle
         {
             if (!useCache)
             {
-                using (var dbOracleMedatadataDAL = new DBOracleMetadataDAL(connection: ref connection, connectionStringName: connectionStringName))
+                using (var dbOracleMedatadataDAL = DBOracleMetadataDAL.Create(connection: connection, connectionStringName: connectionStringName))
                 {
                     return dbOracleMedatadataDAL.GetColumnLength(owner: owner, tableName: tableName, columnName: columnName);
                 }
@@ -54,7 +54,7 @@ namespace WDNUtils.DBOracle
 
             if (!GetColumnLength_Cache.TryGetValue(owner, out var ownerCache))
             {
-                using (var dbOracleMedatadataDAL = new DBOracleMetadataDAL(connection: ref connection, connectionStringName: connectionStringName))
+                using (var dbOracleMedatadataDAL = DBOracleMetadataDAL.Create(connection: connection, connectionStringName: connectionStringName))
                 {
                     ownerCache = dbOracleMedatadataDAL.GetColumnLengthTable(owner);
                 }
@@ -103,7 +103,7 @@ namespace WDNUtils.DBOracle
         /// <returns>The creation script for the specified object</returns>
         public static string GetCreationScript(string owner, string objectName, string objectType, DBOracleConnection connection = null, string connectionStringName = null)
         {
-            using (var dbOracleMedatadataDAL = new DBOracleMetadataDAL(connection: ref connection, connectionStringName: connectionStringName))
+            using (var dbOracleMedatadataDAL = DBOracleMetadataDAL.Create(connection: connection, connectionStringName: connectionStringName))
             {
                 return dbOracleMedatadataDAL.GetCreationScript(owner: owner, objectName: objectName, objectType: objectType);
             }
@@ -119,7 +119,7 @@ namespace WDNUtils.DBOracle
         /// <returns>The creation script for the specified sequence</returns>
         public static string GetCreationScriptSequence(string owner, string sequenceName, DBOracleConnection connection = null, string connectionStringName = null)
         {
-            using (var dbOracleMedatadataDAL = new DBOracleMetadataDAL(connection: ref connection, connectionStringName: connectionStringName))
+            using (var dbOracleMedatadataDAL = DBOracleMetadataDAL.Create(connection: connection, connectionStringName: connectionStringName))
             {
                 return dbOracleMedatadataDAL.GetCreationScriptSequence(owner: owner, sequenceName: sequenceName);
             }
@@ -135,7 +135,7 @@ namespace WDNUtils.DBOracle
         /// <returns>The creation script for the specified table</returns>
         public static string GetCreationScriptTable(string owner, string tableName, DBOracleConnection connection = null, string connectionStringName = null)
         {
-            using (var dbOracleMedatadataDAL = new DBOracleMetadataDAL(connection: ref connection, connectionStringName: connectionStringName))
+            using (var dbOracleMedatadataDAL = DBOracleMetadataDAL.Create(connection: connection, connectionStringName: connectionStringName))
             {
                 return dbOracleMedatadataDAL.GetCreationScriptTable(owner: owner, tableName: tableName);
             }
@@ -151,7 +151,7 @@ namespace WDNUtils.DBOracle
         /// <returns>The creation script for the specified index</returns>
         public static string GetCreationScriptIndex(string owner, string indexName, DBOracleConnection connection = null, string connectionStringName = null)
         {
-            using (var dbOracleMedatadataDAL = new DBOracleMetadataDAL(connection: ref connection, connectionStringName: connectionStringName))
+            using (var dbOracleMedatadataDAL = DBOracleMetadataDAL.Create(connection: connection, connectionStringName: connectionStringName))
             {
                 return dbOracleMedatadataDAL.GetCreationScriptIndex(owner: owner, indexName: indexName);
             }
@@ -170,7 +170,7 @@ namespace WDNUtils.DBOracle
         /// <returns>List of sequence names for the specified owner</returns>
         public static List<string> GetSequences(string owner, DBOracleConnection connection = null, string connectionStringName = null)
         {
-            using (var dbOracleMedatadataDAL = new DBOracleMetadataDAL(connection: ref connection, connectionStringName: connectionStringName))
+            using (var dbOracleMedatadataDAL = DBOracleMetadataDAL.Create(connection: connection, connectionStringName: connectionStringName))
             {
                 return dbOracleMedatadataDAL.GetSequences(owner: owner);
             }
@@ -189,7 +189,7 @@ namespace WDNUtils.DBOracle
         /// <returns>List of table names for the specified owner</returns>
         public static List<string> GetTables(string owner, DBOracleConnection connection = null, string connectionStringName = null)
         {
-            using (var dbOracleMedatadataDAL = new DBOracleMetadataDAL(connection: ref connection, connectionStringName: connectionStringName))
+            using (var dbOracleMedatadataDAL = DBOracleMetadataDAL.Create(connection: connection, connectionStringName: connectionStringName))
             {
                 return dbOracleMedatadataDAL.GetTables(owner: owner);
             }
@@ -208,7 +208,7 @@ namespace WDNUtils.DBOracle
         /// <returns>List of index names for the specified owner</returns>
         public static Dictionary<string, string> GetIndexes(string owner, DBOracleConnection connection = null, string connectionStringName = null)
         {
-            using (var dbOracleMedatadataDAL = new DBOracleMetadataDAL(connection: ref connection, connectionStringName: connectionStringName))
+            using (var dbOracleMedatadataDAL = DBOracleMetadataDAL.Create(connection: connection, connectionStringName: connectionStringName))
             {
                 return dbOracleMedatadataDAL.GetIndexes(owner: owner);
             }
@@ -228,7 +228,7 @@ namespace WDNUtils.DBOracle
         /// <returns>The next value from a database sequence</returns>
         public static decimal GetSequenceNextValue(string owner, string sequenceName, DBOracleConnection connection = null, string connectionStringName = null)
         {
-            using (var dbOracleMedatadataDAL = new DBOracleMetadataDAL(connection: ref connection, connectionStringName: connectionStringName))
+            using (var dbOracleMedatadataDAL = DBOracleMetadataDAL.Create(connection: connection, connectionStringName: connectionStringName))
             {
                 return dbOracleMedatadataDAL.GetSequenceNextValue(owner: owner, sequenceName: sequenceName);
             }
@@ -250,7 +250,7 @@ namespace WDNUtils.DBOracle
         /// <returns>Number of affected rows</returns>
         public static int Execute(string commandText, DBOracleConnection connection = null, string connectionStringName = null, params DBOracleParameter[] parameters)
         {
-            using (var dbOracleMedatadataDAL = new DBOracleMetadataDAL(connection: ref connection, connectionStringName: connectionStringName))
+            using (var dbOracleMedatadataDAL = DBOracleMetadataDAL.Create(connection: connection, connectionStringName: connectionStringName))
             {
                 return dbOracleMedatadataDAL.Execute(commandText: commandText, parameters: parameters);
             }
@@ -266,7 +266,7 @@ namespace WDNUtils.DBOracle
         /// <returns>Number of affected rows</returns>
         public static int ExecuteSP(string commandText, DBOracleConnection connection = null, string connectionStringName = null, params DBOracleParameter[] parameters)
         {
-            using (var dbOracleMedatadataDAL = new DBOracleMetadataDAL(connection: ref connection, connectionStringName: connectionStringName))
+            using (var dbOracleMedatadataDAL = DBOracleMetadataDAL.Create(connection: connection, connectionStringName: connectionStringName))
             {
                 return dbOracleMedatadataDAL.ExecuteSP(commandText: commandText, parameters: parameters);
             }
@@ -286,7 +286,7 @@ namespace WDNUtils.DBOracle
         /// <returns>DataTable with the query results</returns>
         public static DataTable RetrieveDataTable(string commandText, DBOracleConnection connection = null, string connectionStringName = null, params DBOracleParameter[] parameters)
         {
-            using (var dbOracleMedatadataDAL = new DBOracleMetadataDAL(connection: ref connection, connectionStringName: connectionStringName))
+            using (var dbOracleMedatadataDAL = DBOracleMetadataDAL.Create(connection: connection, connectionStringName: connectionStringName))
             {
                 return dbOracleMedatadataDAL.RetrieveDataTable(commandText: commandText, parameters: parameters);
             }
@@ -302,7 +302,7 @@ namespace WDNUtils.DBOracle
         /// <returns>DataTable with the query results</returns>
         public static DataTable RetrieveDataTableSP(string commandText, DBOracleConnection connection = null, string connectionStringName = null, params DBOracleParameter[] parameters)
         {
-            using (var dbOracleMedatadataDAL = new DBOracleMetadataDAL(connection: ref connection, connectionStringName: connectionStringName))
+            using (var dbOracleMedatadataDAL = DBOracleMetadataDAL.Create(connection: connection, connectionStringName: connectionStringName))
             {
                 return dbOracleMedatadataDAL.RetrieveDataTableSP(commandText: commandText, parameters: parameters);
             }
