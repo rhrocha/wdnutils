@@ -252,7 +252,7 @@ namespace WDNUtils.DBOracle
         {
             using (var dbOracleMedatadataDAL = new DBOracleMetadataDAL(connection: ref connection, connectionStringName: connectionStringName))
             {
-                return dbOracleMedatadataDAL.Execute(commandText: commandText);
+                return dbOracleMedatadataDAL.Execute(commandText: commandText, parameters: parameters);
             }
         }
 
@@ -268,7 +268,7 @@ namespace WDNUtils.DBOracle
         {
             using (var dbOracleMedatadataDAL = new DBOracleMetadataDAL(connection: ref connection, connectionStringName: connectionStringName))
             {
-                return dbOracleMedatadataDAL.ExecuteSP(commandText: commandText);
+                return dbOracleMedatadataDAL.ExecuteSP(commandText: commandText, parameters: parameters);
             }
         }
 
@@ -288,7 +288,7 @@ namespace WDNUtils.DBOracle
         {
             using (var dbOracleMedatadataDAL = new DBOracleMetadataDAL(connection: ref connection, connectionStringName: connectionStringName))
             {
-                return dbOracleMedatadataDAL.RetrieveDataTable(commandText: commandText);
+                return dbOracleMedatadataDAL.RetrieveDataTable(commandText: commandText, parameters: parameters);
             }
         }
 
@@ -304,7 +304,7 @@ namespace WDNUtils.DBOracle
         {
             using (var dbOracleMedatadataDAL = new DBOracleMetadataDAL(connection: ref connection, connectionStringName: connectionStringName))
             {
-                return dbOracleMedatadataDAL.RetrieveDataTableSP(commandText: commandText);
+                return dbOracleMedatadataDAL.RetrieveDataTableSP(commandText: commandText, parameters: parameters);
             }
         }
 

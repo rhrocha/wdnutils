@@ -305,7 +305,7 @@ namespace WDNUtils.DBSqlServer
         {
             using (var dbSqlServerMedatadataDAL = new DBSqlServerMetadataDAL(connection: ref connection, connectionStringName: connectionStringName))
             {
-                return dbSqlServerMedatadataDAL.Execute(commandText: commandText);
+                return dbSqlServerMedatadataDAL.Execute(commandText: commandText, parameters: parameters);
             }
         }
 
@@ -321,7 +321,7 @@ namespace WDNUtils.DBSqlServer
         {
             using (var dbSqlServerMedatadataDAL = new DBSqlServerMetadataDAL(connection: ref connection, connectionStringName: connectionStringName))
             {
-                return await dbSqlServerMedatadataDAL.ExecuteAsync(commandText: commandText).ConfigureAwait(false);
+                return await dbSqlServerMedatadataDAL.ExecuteAsync(commandText: commandText, parameters: parameters).ConfigureAwait(false);
             }
         }
 
@@ -337,7 +337,7 @@ namespace WDNUtils.DBSqlServer
         {
             using (var dbSqlServerMedatadataDAL = new DBSqlServerMetadataDAL(connection: ref connection, connectionStringName: connectionStringName))
             {
-                return dbSqlServerMedatadataDAL.ExecuteSP(commandText: commandText);
+                return dbSqlServerMedatadataDAL.ExecuteSP(commandText: commandText, parameters: parameters);
             }
         }
 
@@ -353,7 +353,7 @@ namespace WDNUtils.DBSqlServer
         {
             using (var dbSqlServerMedatadataDAL = new DBSqlServerMetadataDAL(connection: ref connection, connectionStringName: connectionStringName))
             {
-                return await dbSqlServerMedatadataDAL.ExecuteSPAsync(commandText: commandText).ConfigureAwait(false);
+                return await dbSqlServerMedatadataDAL.ExecuteSPAsync(commandText: commandText, parameters: parameters).ConfigureAwait(false);
             }
         }
 
@@ -373,7 +373,7 @@ namespace WDNUtils.DBSqlServer
         {
             using (var dbSqlServerMedatadataDAL = new DBSqlServerMetadataDAL(connection: ref connection, connectionStringName: connectionStringName))
             {
-                return dbSqlServerMedatadataDAL.RetrieveDataTable(commandText: commandText);
+                return dbSqlServerMedatadataDAL.RetrieveDataTable(commandText: commandText, parameters: parameters);
             }
         }
 
@@ -389,7 +389,7 @@ namespace WDNUtils.DBSqlServer
         {
             using (var dbSqlServerMedatadataDAL = new DBSqlServerMetadataDAL(connection: ref connection, connectionStringName: connectionStringName))
             {
-                return dbSqlServerMedatadataDAL.RetrieveDataTableSP(commandText: commandText);
+                return dbSqlServerMedatadataDAL.RetrieveDataTableSP(commandText: commandText, parameters: parameters);
             }
         }
 
