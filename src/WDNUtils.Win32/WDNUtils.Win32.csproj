@@ -11,12 +11,12 @@
     <Company>Ricardo H. Rocha</Company>
     <Description>WDNUtils Win32 library</Description>
     <Copyright>Copyright © 2018-2019 Ricardo H. Rocha</Copyright>
-    <AssemblyVersion>1.0.8.8</AssemblyVersion>
-    <FileVersion>1.0.8.8</FileVersion>
+    <AssemblyVersion>1.0.9.9</AssemblyVersion>
+    <FileVersion>1.0.9.9</FileVersion>
     <RepositoryType></RepositoryType>
     <PackageTags>WDN</PackageTags>
-    <PackageReleaseNotes>Added MutexFactory, form controller for WinForms, added console log appender, removed reference to log4net.</PackageReleaseNotes>
-    <Version>1.0.8-beta</Version>
+    <PackageReleaseNotes>No changes.</PackageReleaseNotes>
+    <Version>1.0.9-beta</Version>
     <PackageProjectUrl>https://github.com/rhrocha/wdnutils/</PackageProjectUrl>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
@@ -45,8 +45,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="WDNUtils.Common" Version="1.0.8-beta" />
-    <!-- <ProjectReference Include="..\..\src\WDNUtils.Common\WDNUtils.Common.csproj" /> -->
+    <!-- <PackageReference Include="WDNUtils.Common" Version="1.0.8-beta" /> -->
+    <ProjectReference Include="..\..\src\WDNUtils.Common\WDNUtils.Common.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -11,12 +11,12 @@
     <Company>Ricardo H. Rocha</Company>
     <Description>WDNUtils DBOracle library</Description>
     <Copyright>Copyright © 2018-2019 Ricardo H. Rocha</Copyright>
-    <AssemblyVersion>1.0.8.8</AssemblyVersion>
-    <FileVersion>1.0.8.8</FileVersion>
+    <AssemblyVersion>1.0.9.9</AssemblyVersion>
+    <FileVersion>1.0.9.9</FileVersion>
     <RepositoryType></RepositoryType>
     <PackageTags>WDN</PackageTags>
-    <PackageReleaseNotes>Improvements in database connection creation, added methods to get non-null values from data reader, removed reference to log4net, Oracle.ManagedDataAccess NuGet package updated.</PackageReleaseNotes>
-    <Version>1.0.8-beta</Version>
+    <PackageReleaseNotes>No changes.</PackageReleaseNotes>
+    <Version>1.0.9-beta</Version>
     <PackageProjectUrl>https://github.com/rhrocha/wdnutils/</PackageProjectUrl>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
@@ -45,8 +45,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="WDNUtils.Common" Version="1.0.8-beta" />
-    <!-- <ProjectReference Include="..\..\src\WDNUtils.Common\WDNUtils.Common.csproj" /> -->
+    <!-- <PackageReference Include="WDNUtils.Common" Version="1.0.8-beta" /> -->
+    <ProjectReference Include="..\..\src\WDNUtils.Common\WDNUtils.Common.csproj" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)'=='netcoreapp2.0'">

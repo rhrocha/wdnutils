@@ -11,12 +11,12 @@
     <Company>Ricardo H. Rocha</Company>
     <Description>WDNUtils Common library</Description>
     <Copyright>Copyright © 2018-2019 Ricardo H. Rocha</Copyright>
-    <AssemblyVersion>1.0.8.8</AssemblyVersion>
-    <FileVersion>1.0.8.8</FileVersion>
+    <AssemblyVersion>1.0.9.9</AssemblyVersion>
+    <FileVersion>1.0.9.9</FileVersion>
     <RepositoryType></RepositoryType>
     <PackageTags>WDN</PackageTags>
-    <PackageReleaseNotes>Added AsyncLock class, added IEqualityComparer implementations for objects and structs, improvements in TaskUtils, log4net replaced by custom log appender interface.</PackageReleaseNotes>
-    <Version>1.0.8-beta</Version>
+    <PackageReleaseNotes>No changes.</PackageReleaseNotes>
+    <Version>1.0.9-beta</Version>
     <PackageProjectUrl>https://github.com/rhrocha/wdnutils/</PackageProjectUrl>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
