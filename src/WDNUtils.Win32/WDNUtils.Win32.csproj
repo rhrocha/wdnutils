@@ -15,7 +15,7 @@
     <FileVersion>1.0.8.8</FileVersion>
     <RepositoryType></RepositoryType>
     <PackageTags>WDN</PackageTags>
-    <PackageReleaseNotes>Added MutexFactory, form locker and form data status for WinForms, added console log appender, removed reference to log4net.</PackageReleaseNotes>
+    <PackageReleaseNotes>Added MutexFactory, form controller for WinForms, added console log appender, removed reference to log4net.</PackageReleaseNotes>
     <Version>1.0.8-beta</Version>
     <PackageProjectUrl>https://github.com/rhrocha/wdnutils/</PackageProjectUrl>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
