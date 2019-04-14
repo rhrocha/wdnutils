@@ -138,10 +138,10 @@
   <data name="ConsoleUtils_DisableClosing_LogError" xml:space="preserve">
     <value>Erro ao alterar o menu da janela do console</value>
   </data>
-  <data name="IFormDataStatus_Dialog_Body" xml:space="preserve">
+  <data name="IFormController_Dialog_Body" xml:space="preserve">
     <value>Deseja descartar as alterações?</value>
   </data>
-  <data name="IFormDataStatus_Dialog_Title" xml:space="preserve">
+  <data name="IFormController_Dialog_Title" xml:space="preserve">
     <value>Alerta</value>
   </data>
 </root>

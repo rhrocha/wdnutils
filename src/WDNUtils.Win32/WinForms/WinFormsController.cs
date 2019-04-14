@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 using WDNUtils.Common;
+using WDNUtils.Win32.Localization;
 
 namespace WDNUtils.Win32
 {
@@ -15,7 +16,7 @@ namespace WDNUtils.Win32
     /// The form locker instance must be created in the constructor after calling InitializeComponent(),
     /// because it will scan all form controls that should be locked/unlocked.
     /// </remarks>
-    public sealed class WinFormsLocker : IFormLocker
+    public sealed class WinFormsController : IFormController<Control>
     {
         #region Constants
 
@@ -60,12 +61,32 @@ namespace WDNUtils.Win32
         /// </summary>
         public bool IsLocked => (lockStatus != LockStatus_Unlocked);
 
+        /// <summary>
+        /// Indicates if the data loaded in the form is invalid and cannot be saved, so there is no need to show the "Discard changes?" dialog
+        /// </summary>
+        public bool IsDataInvalid { get; private set; } = false;
+
+        /// <summary>
+        /// Indicates if the data in the form was changed by the user, so the "Discard changes?" dialog must be displayed before overwriting the data
+        /// </summary>
+        public bool IsDataChanged { get; private set; } = false;
+
+        /// <summary>
+        /// Custom "Discard changes?" dialog box for this instance
+        /// </summary>
+        public Func<Form, bool> DiscardChangesDialog { get; set; }
+
+        /// <summary>
+        /// Default "Discard changes?" dialog box for all instances
+        /// </summary>
+        public static Func<Form, bool> DefaultDiscardChangesDialog { get; set; }
+
         private Control ActiveControlAfterUnlock { get; set; } = null;
 
         /// <summary>
         /// The control that should be active when the form is unlocked
         /// </summary>
-        public object ActiveControl
+        public Control ActiveControl
         {
             get => (IsLocked) ? ActiveControlAfterUnlock : Form.ActiveControl;
 
@@ -106,7 +127,7 @@ namespace WDNUtils.Win32
         /// </summary>
         /// <param name="form">Form to be locked/unlocked (null to create a dummy form locker)</param>
         /// <param name="addKeepFormFocus">Indicates if a read-only hidden textbox should be added to keep the keyboard focus when all controls of the form are disabled</param>
-        public WinFormsLocker(Form form, bool addKeepFormFocus = true)
+        public WinFormsController(Form form, bool addKeepFormFocus = true)
         {
             Form = form;
 
@@ -115,7 +136,7 @@ namespace WDNUtils.Win32
                 KeepFormFocus = new TextBox()
                 {
                     Location = new Point(Screen.AllScreens.Min(screen => screen.Bounds.Left) - 8000, Screen.AllScreens.Min(screen => screen.Bounds.Top) - 8000),
-                    Name = $@"{form.Name}_{nameof(WinFormsLocker)}_{nameof(KeepFormFocus)}",
+                    Name = $@"{form.Name}_{nameof(WinFormsController)}_{nameof(KeepFormFocus)}",
                     ReadOnly = true,
                     TabStop = false,
                     Size = new Size(100, 25),
@@ -130,6 +151,30 @@ namespace WDNUtils.Win32
             }
 
             ScanControls();
+
+            Form.FormClosing += Form_FormClosing;
+            Form.HandleDestroyed += Form_HandleDestroyed;
+        }
+
+        #endregion
+
+        #region Form events
+
+        private void Form_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if ((e.CloseReason == CloseReason.UserClosing) && (!CheckDataChanged()))
+            {
+                e.Cancel = true;
+            }
+        }
+
+        private void Form_HandleDestroyed(object sender, EventArgs e)
+        {
+            if (Form is Form form)
+            {
+                form.HandleDestroyed -= Form_HandleDestroyed;
+                form.FormClosing -= Form_FormClosing;
+            }
         }
 
         #endregion
@@ -140,7 +185,7 @@ namespace WDNUtils.Win32
         /// Scan the controls of the form that should be locked/unlocked by this class
         /// </summary>
         /// <returns>A reference to this instance</returns>
-        public IFormLocker ScanControls(bool resetCustom = false)
+        public IFormController<Control> ScanControls(bool resetCustom = false)
         {
             var newControlList = new Dictionary<Control, Func<bool, bool>>(
                 comparer: ClassEqualityComparer<Control>.ReferenceEquality);
@@ -198,7 +243,7 @@ namespace WDNUtils.Win32
         /// <param name="getLocked">Custom locking condition (if null, the default locking will be used)</param>
         /// <param name="controls">List of controls</param>
         /// <returns>A reference to this instance</returns>
-        public IFormLocker SetControlLocking(Func<bool, bool> getLocked, params object[] controls)
+        public IFormController<Control> SetControlLocking(Func<bool, bool> getLocked, params Control[] controls)
         {
             lock (_lockControlList)
             {
@@ -229,7 +274,7 @@ namespace WDNUtils.Win32
         /// </summary>
         /// <param name="controls">List of controls</param>
         /// <returns>A reference to this instance</returns>
-        public IFormLocker RemoveControl(params object[] controls)
+        public IFormController<Control> RemoveControlLocking(params Control[] controls)
         {
             lock (_lockControlList)
             {
@@ -600,7 +645,7 @@ namespace WDNUtils.Win32
             /// <summary>
             /// FormLocker assigned to this instance
             /// </summary>
-            private WinFormsLocker FormLocker = null;
+            private WinFormsController FormLocker = null;
 
             #endregion
 
@@ -610,7 +655,7 @@ namespace WDNUtils.Win32
             /// Creates a new instance of WinFormsLockerDiposable for a FormLocker object
             /// </summary>
             /// <param name="formLocker">FormLocker assigned to this instance</param>
-            internal WinFormsLockerDiposable(WinFormsLocker formLocker)
+            internal WinFormsLockerDiposable(WinFormsController formLocker)
             {
                 FormLocker = formLocker;
             }
@@ -657,6 +702,202 @@ namespace WDNUtils.Win32
             }
 
             #endregion
+        }
+
+        #endregion
+
+        #region Add input controls to be monitored
+
+        /// <summary>
+        /// Add input controls to be monitored.
+        /// Supported controls: TextBoxBase, ComboBox, CheckBox, RadioButton, CheckedListBox and Button.
+        /// Other controls can be monitored by calling 
+        /// </summary>
+        /// <param name="controls">Controls to be monitored</param>
+        /// <returns>A reference to this instance</returns>
+        public IFormController<Control> AddDataControl(params Control[] controls)
+        {
+            foreach (var control in controls)
+            {
+                if (control is null)
+                {
+                    throw new ArgumentNullException(nameof(controls));
+                }
+                else if (control is TextBoxBase textBoxBase)
+                {
+                    textBoxBase.TextChanged += SetDataChanged;
+                }
+                else if (control is ComboBox comboBox)
+                {
+                    comboBox.SelectedIndexChanged += SetDataChanged;
+                }
+                else if (control is CheckBox checkBox)
+                {
+                    checkBox.CheckedChanged += SetDataChanged;
+                }
+                else if (control is RadioButton radioButton)
+                {
+                    radioButton.CheckedChanged += SetDataChanged;
+                }
+                else if (control is CheckedListBox checkedListBox)
+                {
+                    checkedListBox.ItemCheck += SetDataChanged;
+                }
+                else if (control is Button button)
+                {
+                    button.Click += SetDataChanged;
+                }
+                else
+                {
+                    throw new ArgumentOutOfRangeException(control.GetType().Name);
+                }
+            }
+
+            return this;
+        }
+
+        #endregion
+
+        #region Update form text
+
+        private void UpdateFormText()
+        {
+            try
+            {
+                var text = Form.Text ?? string.Empty;
+
+                while (text.StartsWith(@"*", StringComparison.Ordinal))
+                {
+                    text = text.Substring(1);
+                }
+
+                Form.Text = ((!IsDataInvalid) && (IsDataChanged)) ? string.Concat(@"*", text) : text;
+            }
+            catch (ObjectDisposedException)
+            {
+                // Nothing to do
+            }
+        }
+
+        #endregion
+
+        #region Check data changed
+
+        /// <summary>
+        /// Check form data status before discarding the changes, and show the "Discard changes?" dialog if necessary
+        /// </summary>
+        /// <returns>True if the form data can be discarded, or false if the form data must be kept</returns>
+        public bool CheckDataChanged()
+        {
+            try
+            {
+                if ((IsDataInvalid) || (!IsDataChanged))
+                    return true;
+
+                if ((DiscardChangesDialog ?? DefaultDiscardChangesDialog ?? DefaultDiscardChangesDialogInternal).Invoke(Form) == false)
+                    return false;
+
+                IsDataChanged = false;
+                UpdateFormText();
+
+                return true;
+            }
+            catch (ObjectDisposedException)
+            {
+                return true;
+            }
+        }
+
+        #endregion
+
+        #region Default "Discard changes?" dialog
+
+        private static bool DefaultDiscardChangesDialogInternal(Form form)
+        {
+            try
+            {
+                return MessageBox.Show(
+                    owner: form,
+                    text: Win32LocalizedText.IFormController_Dialog_Body,
+                    caption: Win32LocalizedText.IFormController_Dialog_Title,
+                    buttons: MessageBoxButtons.YesNo,
+                    icon: MessageBoxIcon.None,
+                    defaultButton: MessageBoxDefaultButton.Button2) == DialogResult.Yes;
+            }
+            catch (ObjectDisposedException)
+            {
+                return true;
+            }
+        }
+
+        #endregion
+
+        #region Clear form data changed and invalid status
+
+        /// <summary>
+        /// Clear form data changed and invalid status
+        /// </summary>
+        public void ClearDataStatus()
+        {
+            try
+            {
+                IsDataInvalid = false;
+                IsDataChanged = false;
+                UpdateFormText();
+            }
+            catch (ObjectDisposedException)
+            {
+                // Nothing to do
+            }
+        }
+
+        #endregion
+
+        #region Set form data as changed
+
+        /// <summary>
+        /// Set form data as changed
+        /// </summary>
+        /// <param name="ignoreFormLocker">Indicates if <see cref="IsDataChanged"/> should be set as 'true' even if the form is locked by the FormLocker</param>
+        public void SetDataChanged(bool ignoreFormLocker = false)
+        {
+            try
+            {
+                if ((!IsDataChanged) && ((ignoreFormLocker) || (!IsLocked)))
+                {
+                    IsDataChanged = true;
+                    UpdateFormText();
+                }
+            }
+            catch (ObjectDisposedException)
+            {
+                // Nothing to do
+            }
+        }
+
+        private void SetDataChanged(object sender, EventArgs e)
+        {
+            SetDataChanged(ignoreFormLocker: false);
+        }
+
+        #endregion
+
+        #region Set data as invalid
+
+        /// <summary>
+        /// Set data as invalid, so there is no need to show the "Discard changes?" dialog
+        /// </summary>
+        public void SetDataInvalid()
+        {
+            try
+            {
+                IsDataInvalid = true;
+                UpdateFormText();
+            }
+            catch (ObjectDisposedException)
+            {
+                // Nothing to do
+            }
         }
 
         #endregion

@@ -19,7 +19,7 @@ namespace WDNUtils.Win32.Localization {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Win32LocalizedText {
@@ -126,18 +126,18 @@ namespace WDNUtils.Win32.Localization {
         /// <summary>
         ///   Looks up a localized string similar to Do you want to discard the changes?.
         /// </summary>
-        internal static string IFormDataStatus_Dialog_Body {
+        internal static string IFormController_Dialog_Body {
             get {
-                return ResourceManager.GetString("IFormDataStatus_Dialog_Body", resourceCulture);
+                return ResourceManager.GetString("IFormController_Dialog_Body", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Warning.
         /// </summary>
-        internal static string IFormDataStatus_Dialog_Title {
+        internal static string IFormController_Dialog_Title {
             get {
-                return ResourceManager.GetString("IFormDataStatus_Dialog_Title", resourceCulture);
+                return ResourceManager.GetString("IFormController_Dialog_Title", resourceCulture);
             }
         }
     }
