@@ -46,8 +46,8 @@
 
   <ItemGroup>
     <PackageReference Include="System.Data.SqlClient" Version="4.6.0" />
-    <!-- <PackageReference Include="WDNUtils.Common" Version="1.0.7-beta" /> -->
-    <ProjectReference Include="..\..\src\WDNUtils.Common\WDNUtils.Common.csproj" />
+    <PackageReference Include="WDNUtils.Common" Version="1.0.8-beta" />
+    <!-- <ProjectReference Include="..\..\src\WDNUtils.Common\WDNUtils.Common.csproj" /> -->
   </ItemGroup>
 
   <ItemGroup>
