@@ -62,6 +62,16 @@ namespace WDNUtils.Win32
         public bool IsLocked => (lockStatus != LockStatus_Unlocked);
 
         /// <summary>
+        /// Indicates if the form is loaded
+        /// </summary>
+        public bool IsLoaded => ((Form.IsHandleCreated) && (!Form.IsDisposed));
+
+        /// <summary>
+        /// Indicates if the form can change the focused control
+        /// </summary>
+        public bool IsFocusable => (IsLoaded) && ((Form.ActiveForm == Form) || ((Form.ActiveForm == Form.MdiParent) && (Form.MdiParent?.ActiveMdiChild == Form)));
+
+        /// <summary>
         /// Indicates if the data loaded in the form is invalid and cannot be saved, so there is no need to show the "Discard changes?" dialog
         /// </summary>
         public bool IsDataInvalid { get; private set; } = false;
@@ -74,12 +84,17 @@ namespace WDNUtils.Win32
         /// <summary>
         /// Custom "Discard changes?" dialog box for this instance
         /// </summary>
-        public Func<Form, bool> DiscardChangesDialog { get; set; }
+        public Func<Control, bool> DiscardChangesDialog { get; set; }
 
         /// <summary>
         /// Default "Discard changes?" dialog box for all instances
         /// </summary>
-        public static Func<Form, bool> DefaultDiscardChangesDialog { get; set; }
+        private static Func<Control, bool> DefaultDiscardChangesDialog { get; set; }
+
+        /// <summary>
+        /// Indicates if the "discard changes" dialog box should be suppressed
+        /// </summary>
+        public Func<bool> BypassCheckDataChanged { get; set; } = null;
 
         private Control ActiveControlAfterUnlock { get; set; } = null;
 
@@ -92,21 +107,18 @@ namespace WDNUtils.Win32
 
             set
             {
-                if (!(value is Control control))
-                    throw new InvalidCastException();
-
-                if (!IsLocked)
+                if (IsLocked)
                 {
-                    ActiveControlAfterUnlock = control;
+                    ActiveControlAfterUnlock = value;
                 }
-                else
+                else if ((!(value is null)) && (IsFocusable))
                 {
-                    Form.ActiveControl = control;
+                    Form.ActiveControl = value;
                 }
             }
         }
 
-        internal Form Form { get; private set; }
+        private Form Form { get; set; }
         private Dictionary<Control, Func<bool, bool>> ControlList { get; set; }
         private TextBox KeepFormFocus { get; set; }
 
@@ -133,6 +145,11 @@ namespace WDNUtils.Win32
 
             if ((addKeepFormFocus) && (!(Form is null)))
             {
+                // The form must have at least one control that accept keyboard focus, with both Enabled and TabStop
+                // set to true, otherwise the keyboard focus is lost. To prevent this, a hidden TextBox with ReadOnly
+                // set to true is added, so it can receive the keyboard focus when all other controls are disabled.
+                // This is not necessary when the form already have other TextBox controls.
+
                 KeepFormFocus = new TextBox()
                 {
                     Location = new Point(Screen.AllScreens.Min(screen => screen.Bounds.Left) - 8000, Screen.AllScreens.Min(screen => screen.Bounds.Top) - 8000),
@@ -184,6 +201,7 @@ namespace WDNUtils.Win32
         /// <summary>
         /// Scan the controls of the form that should be locked/unlocked by this class
         /// </summary>
+        /// <param name="resetCustom">Indicates if the custom control locking should be removed</param>
         /// <returns>A reference to this instance</returns>
         public IFormController<Control> ScanControls(bool resetCustom = false)
         {
@@ -253,10 +271,10 @@ namespace WDNUtils.Win32
 
                 foreach (var control in controls)
                 {
-                    if ((!(control is Control winformsControl)) || (ReferenceEquals(control, KeepFormFocus)))
+                    if ((control is null) || (ReferenceEquals(control, KeepFormFocus)))
                         continue;
 
-                    newControlList[winformsControl] = getLocked ?? DefaultGetLocked;
+                    newControlList[control] = getLocked ?? DefaultGetLocked;
                 }
 
                 ControlList = newControlList;
@@ -358,7 +376,10 @@ namespace WDNUtils.Win32
                     {
                         #region Check control and getLocked method
 
-                        if ((!(item.Value is Func<bool, bool> getLocked)) || (!(item.Key is Control control)))
+                        var control = item.Key;
+                        var getLocked = item.Value;
+
+                        if ((control is null) || (getLocked is null))
                             continue;
 
                         var controlLocked = getLocked(locked);
@@ -520,38 +541,33 @@ namespace WDNUtils.Win32
         /// </summary>
         private void LockControls()
         {
-            if ((Interlocked.Increment(ref _lockCount) <= 0) ||
-                (!InterlockedEx.TryCompareExchange(ref lockStatus, newValue: LockStatus_Changing, oldValue: LockStatus_Unlocked)))
-                return;
-
-            Control activeControlAfterUnlock;
-
-            try
+            try { }
+            finally
             {
-                activeControlAfterUnlock = Form.ActiveControl;
-                Thread.MemoryBarrier();
+                if ((Interlocked.Increment(ref _lockCount) > 0) &&
+                    (InterlockedEx.TryCompareExchange(location1: ref lockStatus, newValue: LockStatus_Changing, oldValue: LockStatus_Unlocked)))
+                {
+                    try
+                    {
+                        var activeControlAfterUnlock = Form.ActiveControl;
+                        Thread.MemoryBarrier();
 
-                if ((Form.IsHandleCreated) && (!Form.IsDisposed))
-                {
-                    SetLockedStatusControls(locked: true);
-                }
-                else
-                {
-                    // Cannot lock the controls because the form is not loaded yet, or it was already unloaded (closed)
-                    lockStatus = LockStatus_Unlocked;
-                    return;
+                        if (!IsLoaded)
+                            throw new ObjectDisposedException(Form.Name);
+
+                        SetLockedStatusControls(locked: true);
+
+                        Thread.MemoryBarrier();
+                        lockStatus = LockStatus_Locked;
+                        ActiveControlAfterUnlock = activeControlAfterUnlock;
+                    }
+                    catch (ObjectDisposedException)
+                    {
+                        // Cannot lock the controls because the form is not loaded yet, or it was already unloaded (closed)
+                        lockStatus = LockStatus_Unlocked;
+                    }
                 }
             }
-            catch (ObjectDisposedException)
-            {
-                // Cannot lock the controls because the form is not loaded yet, or it was already unloaded (closed)
-                lockStatus = LockStatus_Unlocked;
-                return;
-            }
-
-            Thread.MemoryBarrier();
-            lockStatus = LockStatus_Locked;
-            ActiveControlAfterUnlock = activeControlAfterUnlock;
         }
 
         #endregion
@@ -563,53 +579,45 @@ namespace WDNUtils.Win32
         /// </summary>
         private void UnlockControls()
         {
-            if ((Interlocked.Decrement(location: ref _lockCount) > 0) ||
-                (!InterlockedEx.TryCompareExchange(ref lockStatus, newValue: LockStatus_Changing, oldValue: LockStatus_Locked)))
-                return;
-
-            Control activeControlAfterUnlock;
-
-            try
+            try { }
+            finally
             {
-                activeControlAfterUnlock = ActiveControlAfterUnlock;
-                Thread.MemoryBarrier();
-
-                if ((Form.IsHandleCreated) && (!Form.IsDisposed))
+                if ((Interlocked.Decrement(location: ref _lockCount) <= 0) &&
+                    (InterlockedEx.TryCompareExchange(location1: ref lockStatus, newValue: LockStatus_Changing, oldValue: LockStatus_Locked)))
                 {
-                    SetLockedStatusControls(locked: false);
-                }
-                else
-                {
-                    // Cannot unlock the controls because the form is not loaded yet, or it was already unloaded (closed)
-                    lockStatus = LockStatus_Locked;
-                    return;
-                }
-            }
-            catch (ObjectDisposedException)
-            {
-                // Cannot unlock the controls because the form is not loaded yet, or it was already unloaded (closed)
-                lockStatus = LockStatus_Locked;
-                return;
-            }
+                    try
+                    {
+                        var activeControlAfterUnlock = ActiveControlAfterUnlock;
+                        Thread.MemoryBarrier();
 
-            Thread.MemoryBarrier();
-            lockStatus = LockStatus_Unlocked;
+                        if (!IsLoaded)
+                            throw new ObjectDisposedException(Form.Name);
 
-            try
-            {
-                // Set the active control only if the this is the active form (or the active MDI child whose MDI parent is the active form), to prevent bringing a background form to the foreground
+                        SetLockedStatusControls(locked: false);
 
-                if ((!(activeControlAfterUnlock is null)) &&
-                    (Form.IsHandleCreated) &&
-                    (!Form.IsDisposed) &&
-                    ((Form.ActiveForm == Form) || ((Form.ActiveForm == Form.MdiParent) && (Form.MdiParent?.ActiveMdiChild == Form))))
-                {
-                    Form.ActiveControl = activeControlAfterUnlock;
+                        Thread.MemoryBarrier();
+                        lockStatus = LockStatus_Unlocked;
+
+                        try
+                        {
+                            // Set the active control only if the this is the active form (or the active MDI child whose MDI parent is the active form), to prevent bringing a background form to the foreground
+
+                            if ((!(activeControlAfterUnlock is null)) && (IsFocusable))
+                            {
+                                Form.ActiveControl = activeControlAfterUnlock;
+                            }
+                        }
+                        catch (ObjectDisposedException)
+                        {
+                            // Nothing to do, failed to set the active control because the form is not loaded yet, or it was already unloaded (closed)
+                        }
+                    }
+                    catch (ObjectDisposedException)
+                    {
+                        // Cannot unlock the controls because the form is not loaded yet, or it was already unloaded (closed)
+                        lockStatus = LockStatus_Locked;
+                    }
                 }
-            }
-            catch (ObjectDisposedException)
-            {
-                // Nothing to do, failed to set the active control because the form is not loaded yet, or it was already unloaded (closed)
             }
         }
 
@@ -638,7 +646,7 @@ namespace WDNUtils.Win32
         /// <summary>
         /// IDisposable object that unlocks the form when disposed
         /// </summary>
-        private class WinFormsLockerDiposable : IDisposable
+        private sealed class WinFormsLockerDiposable : IDisposable
         {
             #region Properties
 
@@ -679,25 +687,46 @@ namespace WDNUtils.Win32
 
             #region IDisposable Support
 
+            /// <summary>
+            /// Indicates if this instance was already disposed, to detect redundant calls.
+            /// This is part of the default IDisposable implementation pattern.
+            /// </summary>
             private bool disposedValue = false;
 
-            protected virtual void Dispose(bool disposing)
+            /// <summary>
+            /// Internal implementation of the dispose method, to release managed and/or
+            /// non-managed resources, as necessary.
+            /// </summary>
+            /// <param name="disposing">True if the Dispose(bool) method is being called
+            /// during the diposal of this instance (by calling Dispose() or at the end
+            /// of using clause), or false if this method is being called by the finalizer
+            /// of this class. This is part of the default IDisposable implementation
+            /// pattern.</param>
+            private void Dispose(bool disposing)
             {
                 if (!disposedValue)
                 {
+                    // Dispose managed resources
+
                     if (disposing)
                     {
-                        // Nothing do to
+                        InvokeUnlockControls();
                     }
 
-                    InvokeUnlockControls();
+                    // We don't have non-managed resources to be released.
 
                     disposedValue = true;
                 }
             }
 
+            /// <summary>
+            /// Public implementation of IDisposable.Dispose(), to be called explicity by
+            /// the application, or implicity at the end of the using clause. This is part
+            /// of the default IDisposable implementation pattern.
+            /// </summary>
             void IDisposable.Dispose()
             {
+                // Dispose managed and non-managed resources
                 Dispose(true);
             }
 
@@ -760,6 +789,9 @@ namespace WDNUtils.Win32
 
         #region Update form text
 
+        /// <summary>
+        /// Update the form text, adding a '*' at beginning if there are unsaved changes in the form
+        /// </summary>
         private void UpdateFormText()
         {
             try
@@ -791,7 +823,7 @@ namespace WDNUtils.Win32
         {
             try
             {
-                if ((IsDataInvalid) || (!IsDataChanged))
+                if ((IsDataInvalid) || (!IsDataChanged) || (BypassCheckDataChanged?.Invoke() == true))
                     return true;
 
                 if ((DiscardChangesDialog ?? DefaultDiscardChangesDialog ?? DefaultDiscardChangesDialogInternal).Invoke(Form) == false)
@@ -812,7 +844,12 @@ namespace WDNUtils.Win32
 
         #region Default "Discard changes?" dialog
 
-        private static bool DefaultDiscardChangesDialogInternal(Form form)
+        /// <summary>
+        /// Default dialog to confirm discarding the changes
+        /// </summary>
+        /// <param name="form">Parent form</param>
+        /// <returns>True if the form data can be discarded, or false if the form data must be kept</returns>
+        private static bool DefaultDiscardChangesDialogInternal(Control form)
         {
             try
             {
@@ -875,6 +912,11 @@ namespace WDNUtils.Win32
             }
         }
 
+        /// <summary>
+        /// Event handler to set form data as changed
+        /// </summary>
+        /// <param name="sender">Control that raised the event</param>
+        /// <param name="e">Event arguments</param>
         private void SetDataChanged(object sender, EventArgs e)
         {
             SetDataChanged(ignoreFormLocker: false);

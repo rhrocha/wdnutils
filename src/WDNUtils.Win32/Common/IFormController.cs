@@ -14,6 +14,16 @@ namespace WDNUtils.Win32
         bool IsLocked { get; }
 
         /// <summary>
+        /// Indicates if the form is loaded
+        /// </summary>
+        bool IsLoaded { get; }
+
+        /// <summary>
+        /// Indicates if the form can change the focused control
+        /// </summary>
+        bool IsFocusable { get; }
+
+        /// <summary>
         /// Indicates if the data loaded in the form is invalid and cannot be saved, so there is no need to show the "Discard changes?" dialog.
         /// </summary>
         bool IsDataInvalid { get; }
@@ -22,6 +32,16 @@ namespace WDNUtils.Win32
         /// Indicates if the data in the form was changed by the user, so the "Discard changes?" dialog must be displayed before overwriting the data.
         /// </summary>
         bool IsDataChanged { get; }
+
+        /// <summary>
+        /// Custom "Discard changes?" dialog box for this instance
+        /// </summary>
+        Func<T, bool> DiscardChangesDialog { get; set; }
+
+        /// <summary>
+        /// Indicates if the "discard changes" dialog box should be suppressed
+        /// </summary>
+        Func<bool> BypassCheckDataChanged { get; set; }
 
         /// <summary>
         /// The control that should be active when the form is unlocked
